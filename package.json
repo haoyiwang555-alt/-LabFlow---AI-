@@ -1,0 +1,13 @@
+{
+  "name": "labflow-ai-rd-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "晶流 LabFlow - AI 实验研发加速器竞赛演示项目",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check public/app.js"
+  },
+  "engines": { "node": ">=20" }
+}

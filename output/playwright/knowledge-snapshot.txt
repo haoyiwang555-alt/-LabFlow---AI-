@@ -1,0 +1,143 @@
+### Open tabs
+- 0: [2026 AI 先锋未来人才大赛](https://activity.feishu.cn/future-talent)
+- 1: [2026 AI 先锋未来人才大赛](https://activity.feishu.cn/future-talent?detail=jingtaikeji)
+- 2: [赛事命题热度排行榜](https://bytedance.aiforce.cloud/app/app_179zj7bnq5m)
+- 3: (current) [晶流 LabFlow · AI 实验研发加速器](http://127.0.0.1:4173/)
+### Page
+- Page URL: http://127.0.0.1:4173/
+- Page Title: 晶流 LabFlow · AI 实验研发加速器
+### Snapshot
+```yaml
+- generic [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - complementary [ref=f2e3]:
+      - generic [ref=f2e8]:
+        - strong [ref=f2e9]: 晶流
+        - generic [ref=f2e10]: LABFLOW / R&D OS
+      - generic [ref=f2e11]:
+        - generic [ref=f2e13]:
+          - generic [ref=f2e14]: Autonomous Lab
+          - generic [ref=f2e15]: 晶泰科技 · Sandbox
+        - generic [ref=f2e16]: ⌄
+      - navigation "主导航" [ref=f2e17]:
+        - paragraph [ref=f2e18]: WORKSPACE
+        - button "研发总览 01" [ref=f2e19] [cursor=pointer]:
+          - generic [ref=f2e21]: 研发总览
+          - generic [ref=f2e22]: "01"
+        - button "实验流转 02" [ref=f2e23] [cursor=pointer]:
+          - generic [ref=f2e25]: 实验流转
+          - generic [ref=f2e26]: "02"
+        - button "知识湖 03" [active] [ref=f2e27] [cursor=pointer]:
+          - generic [ref=f2e29]: 知识湖
+          - generic [ref=f2e30]: "03"
+        - button "+ AI 助理 04" [ref=f2e31] [cursor=pointer]:
+          - generic [ref=f2e32]: +
+          - generic [ref=f2e33]: AI 助理
+          - generic [ref=f2e34]: "04"
+        - paragraph [ref=f2e35]: SYSTEM
+        - button "连接器 3" [ref=f2e36] [cursor=pointer]:
+          - generic [ref=f2e38]: 连接器
+          - generic [ref=f2e39]: "3"
+        - button "偏好设置" [ref=f2e40] [cursor=pointer]
+      - generic [ref=f2e43]:
+        - generic [ref=f2e44]:
+          - generic [ref=f2e45]:
+            - generic [ref=f2e46]: AI 额度
+            - generic [ref=f2e47]: 68%
+          - text: 本月已节省 42.0 人时
+        - generic [ref=f2e50]:
+          - generic [ref=f2e51]: LH
+          - generic [ref=f2e52]:
+            - generic [ref=f2e53]: 林岚
+            - generic [ref=f2e54]: 研发效能负责人
+          - button "更多选项" [ref=f2e55] [cursor=pointer]: ···
+    - main [ref=f2e56]:
+      - generic [ref=f2e57]:
+        - generic [ref=f2e58]:
+          - generic [ref=f2e258]: R&D OS
+          - generic [ref=f2e259]: /
+          - strong [ref=f2e260]: 知识湖
+        - generic [ref=f2e60]:
+          - generic [ref=f2e61]:
+            - searchbox "搜索实验、结论、风险" [ref=f2e261]
+            - generic [ref=f2e262]: ⌘ K
+          - button "通知" [ref=f2e63] [cursor=pointer]
+          - button "帮助" [ref=f2e263] [cursor=pointer]: "?"
+      - generic [ref=f2e264]:
+        - generic [ref=f2e265]:
+          - generic [ref=f2e266]:
+            - generic [ref=f2e267]: KNOWLEDGE LAKE
+            - heading [level=1] [ref=f2e269]:
+              - text: 知识湖，
+              - emphasis [ref=f2e270]: 让经验产生复利。
+            - paragraph [ref=f2e271]: 会议、实验和失败经验被连接成可查询的研发记忆。
+          - button "⌕ 搜索知识" [ref=f2e272] [cursor=pointer]
+        - generic [ref=f2e273]:
+          - generic [ref=f2e274]:
+            - generic [ref=f2e275]:
+              - generic [ref=f2e276]:
+                - text: RESEARCH GRAPH
+                - heading "研发知识网络" [level=3] [ref=f2e277]
+              - generic [ref=f2e278]: 6,842 节点
+            - generic [ref=f2e280]:
+              - generic [ref=f2e282]:
+                - strong [ref=f2e283]: B-17
+                - generic [ref=f2e284]: 晶型筛选
+              - generic [ref=f2e285]:
+                - strong [ref=f2e286]: B-11
+                - generic [ref=f2e287]: 历史方案
+              - generic [ref=f2e288]:
+                - strong [ref=f2e289]: A-09
+                - generic [ref=f2e290]: 失败案例
+              - generic [ref=f2e291]:
+                - strong [ref=f2e292]: SOP-17
+                - generic [ref=f2e293]: 流程规范
+              - generic [ref=f2e294]:
+                - strong [ref=f2e295]: mt-2407
+                - generic [ref=f2e296]: 会议证据
+              - generic [ref=f2e297]: 实验 结论 风险
+          - generic [ref=f2e301]:
+            - generic [ref=f2e302]:
+              - generic [ref=f2e303]:
+                - text: REUSABLE ASSETS
+                - heading "最近沉淀" [level=3] [ref=f2e304]
+              - generic [ref=f2e305]: 排序：相关度⌄
+            - generic [ref=f2e307]:
+              - article [ref=f2e308]:
+                - img "最优参数素材" [ref=f2e310]
+                - generic [ref=f2e311]:
+                  - heading "B-11 低温梯度晶型筛选最优参数" [level=4] [ref=f2e312]
+                  - paragraph [ref=f2e313]: "最优参数 · 会议 mt-2388 / 结论 #3"
+                - strong [ref=f2e314]: 94%
+              - article [ref=f2e315]:
+                - img "失败经验素材" [ref=f2e317]
+                - generic [ref=f2e318]:
+                  - heading "A-09 失败案例：湿度波动导致结晶异常" [level=4] [ref=f2e319]
+                  - paragraph [ref=f2e320]: "失败经验 · 复盘会 mt-2406 / 风险 #2"
+                - strong [ref=f2e321]: 91%
+              - article [ref=f2e322]:
+                - img "流程规范素材" [ref=f2e324]
+                - generic [ref=f2e325]:
+                  - heading "自动化工作站换液顺序与污染控制 SOP" [level=4] [ref=f2e326]
+                  - paragraph [ref=f2e327]: 流程规范 · 文档 SOP-17
+                - strong [ref=f2e328]: 87%
+              - article [ref=f2e329]:
+                - img "方案争议素材" [ref=f2e331]
+                - generic [ref=f2e332]:
+                  - heading "B-17-03 方案争议：溶剂比例对晶型稳定性的影响" [level=4] [ref=f2e333]
+                  - paragraph [ref=f2e334]: "方案争议 · 会议 mt-2407 / 议题 #2"
+                - strong [ref=f2e335]: 84%
+              - article [ref=f2e336]:
+                - img "数据资产素材" [ref=f2e338]
+                - generic [ref=f2e339]:
+                  - heading "高通量实验数据字段字典 v2.3" [level=4] [ref=f2e340]
+                  - paragraph [ref=f2e341]: 数据资产 · 知识库 / 数据治理
+                - strong [ref=f2e342]: 79%
+              - article [ref=f2e343]:
+                - img "协作规则素材" [ref=f2e345]
+                - generic [ref=f2e346]:
+                  - heading "实验异常上报与责任分派规则" [level=4] [ref=f2e347]
+                  - paragraph [ref=f2e348]: 协作规则 · 多维表 / R&D-OPS
+                - strong [ref=f2e349]: 75%
+  - status
+```

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0e1c24" />
+  <meta name="description" content="晶流 LabFlow：面向智能自主实验室的 AI 实验研发加速器" />
+  <title>晶流 LabFlow · AI 实验研发加速器</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true"><span></span><i></i></div>
+        <div><strong>晶流</strong><small>LABFLOW / R&D OS</small></div>
+      </div>
+      <div class="workspace-switcher">
+        <span class="workspace-dot"></span>
+        <div><b>Autonomous Lab</b><small>晶泰科技 · Sandbox</small></div>
+        <span class="chevron">⌄</span>
+      </div>
+      <nav class="main-nav" aria-label="主导航">
+        <p class="nav-label">WORKSPACE</p>
+        <button class="nav-item is-active" data-view="overview"><span class="nav-icon icon-grid"></span><span>研发总览</span><kbd>01</kbd></button>
+        <button class="nav-item" data-view="experiments"><span class="nav-icon icon-flask"></span><span>实验流转</span><kbd>02</kbd></button>
+        <button class="nav-item" data-view="knowledge"><span class="nav-icon icon-network"></span><span>知识湖</span><kbd>03</kbd></button>
+        <button class="nav-item" data-view="agents"><span class="nav-icon icon-spark"></span><span>AI 助理</span><kbd>04</kbd></button>
+        <p class="nav-label nav-label-spaced">SYSTEM</p>
+        <button class="nav-item nav-muted" data-view="integrations"><span class="nav-icon icon-link"></span><span>连接器</span><span class="status-mini">3</span></button>
+        <button class="nav-item nav-muted" data-view="settings"><span class="nav-icon icon-sliders"></span><span>偏好设置</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="usage-card">
+          <div class="usage-top"><span>AI 额度</span><b>68%</b></div>
+          <div class="usage-bar"><span style="width:68%"></span></div>
+          <small>本月已节省 42.0 人时</small>
+        </div>
+        <div class="profile-card">
+          <div class="avatar avatar-coral">LH</div>
+          <div><b>林岚</b><small>研发效能负责人</small></div>
+          <button class="more-button" aria-label="更多选项">···</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left"><button class="mobile-menu" id="mobileMenu" aria-label="打开导航">☰</button><span class="crumb-muted">R&D OS</span><span class="crumb-divider">/</span><strong>研发总览</strong></div>
+        <div class="topbar-right">
+          <label class="global-search"><span class="search-icon"></span><input id="globalSearch" type="search" placeholder="搜索实验、结论、风险…" aria-label="搜索实验、结论、风险" /><kbd>⌘ K</kbd></label>
+          <button class="icon-button" aria-label="通知"><span class="bell-icon"></span><i class="notification-dot"></i></button>
+          <button class="help-button" aria-label="帮助">?</button>
+        </div>
+      </header>
+
+      <section class="page-view is-visible" data-page="overview">
+        <div class="page-intro compact-intro"><div><span class="eyebrow"><i></i> 周一 · 07 月 19 日 · 广州实验室</span><h1>让每一次讨论，<em>成为下一次发现。</em></h1><p>AI 将会议里的参数、争议与结论，编织成全团队可检索的研发记忆。</p></div><div class="intro-actions"><button class="button button-dark" data-action="open-analyzer"><span class="button-spark">✦</span>打开 AI 会议解析器</button><button class="button button-quiet" data-view="experiments">查看研发流 <span>↗</span></button></div></div>
+        <div class="hero-card">
+          <div class="hero-copy"><div class="hero-tag">AI R&amp;D ACCELERATOR <span>LIVE</span></div><h2>从会议到知识资产，<br /><strong>不再让好结论失联。</strong></h2><p>今日已有 7 场会议进入自动解析队列，其中 4 条结论已被新实验复用。</p><div class="hero-cta-row"><button class="button button-lime" data-action="open-analyzer">解析一场会议 <span>→</span></button><span class="hero-note"><span class="pulse-dot"></span> 数据每 15 分钟同步</span></div></div>
+          <div class="hero-visual"><img src="/assets/lab-hero.jpg" alt="实验室玻璃器皿与光影" /><div class="hero-visual-wash"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-node node-a"><b>01</b><span>实验参数</span></div><div class="orbit-node node-b"><b>02</b><span>决策证据</span></div><div class="orbit-node node-c"><b>03</b><span>知识复用</span></div><div class="hero-float-card"><span class="float-label">KNOWLEDGE SLA</span><strong>24<span>h</span></strong><small>从会议结束到全员可复用</small></div></div>
+        </div>
+
+        <div class="metric-grid" id="metricGrid"></div>
+
+        <div class="content-grid content-grid-main">
+          <div class="stack-column">
+            <section class="panel panel-pipeline"><div class="panel-heading"><div><span class="panel-kicker">R&amp;D FLOW</span><h3>实验研发闭环</h3></div><button class="text-button" data-view="experiments">查看全部 <span>↗</span></button></div><p class="panel-desc">从方案研讨到知识复用，每一步都留下一条可追溯的证据链。</p><div class="pipeline" id="pipeline"></div><div class="pipeline-foot"><span><i class="legend-dot legend-mint"></i>已完成</span><span><i class="legend-dot legend-blue"></i>进行中</span><span><i class="legend-dot legend-coral"></i>需关注</span><b>本周闭环率 <strong>84.6%</strong></b></div></section>
+            <section class="panel panel-meetings"><div class="panel-heading"><div><span class="panel-kicker">MEETING INTELLIGENCE</span><h3>会议智能解析</h3></div><button class="text-button" data-view="agents">解析记录 <span>↗</span></button></div><div class="meeting-list" id="meetingList"></div></section>
+          </div>
+          <div class="stack-column side-stack">
+            <section class="panel panel-signal"><div class="panel-heading"><div><span class="panel-kicker">KNOWLEDGE SIGNAL</span><h3>知识复用雷达</h3></div><span class="live-chip"><i></i> LIVE</span></div><div class="signal-score"><div class="score-ring"><span>87</span><small>%</small></div><div><b>24h 知识 SLA</b><p>本周较上周 <strong>+12.4%</strong></p></div></div><div class="signal-bars"><div><span>B-17</span><i><b style="width:94%"></b></i><strong>94%</strong></div><div><span>A-09</span><i><b style="width:78%"></b></i><strong>78%</strong></div><div><span>C-04</span><i><b style="width:63%"></b></i><strong>63%</strong></div></div><button class="button button-outline full-width" data-view="knowledge">进入知识湖 <span>↗</span></button></section>
+            <section class="panel panel-activity"><div class="panel-heading"><div><span class="panel-kicker">ACTIVITY</span><h3>实时活动</h3></div><button class="icon-button small" aria-label="刷新活动" id="refreshActivity">↻</button></div><div class="activity-list" id="activityList"></div></section>
+            <section class="quote-card"><div class="quote-mark">“</div><p>真正高效的 AI，不是替你做决定，而是让每一个决定都不会被遗忘。</p><span>— 晶流设计原则 01</span></section>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-view" data-page="experiments"><div class="page-intro"><div><span class="eyebrow"><i></i> EXPERIMENT STREAM</span><h1>实验流转，<em>从混乱到可见。</em></h1><p>每一个批次、风险和下一步，都在同一条上下文里被看见。</p></div><button class="button button-dark" data-action="new-task">+ 新建行动项</button></div><div class="view-toolbar"><div class="filter-pills"><button class="filter-pill is-active">全部实验 <span id="experimentCount">12</span></button><button class="filter-pill">高优先级 <span>3</span></button><button class="filter-pill">我负责 <span>4</span></button></div><button class="button button-quiet">看板视图 <span>▦</span></button></div><div class="experiment-grid" id="experimentGrid"></div></section>
+
+      <section class="page-view" data-page="knowledge"><div class="page-intro"><div><span class="eyebrow"><i></i> KNOWLEDGE LAKE</span><h1>知识湖，<em>让经验产生复利。</em></h1><p>会议、实验和失败经验被连接成可查询的研发记忆。</p></div><button class="button button-lime" data-action="open-search">⌕ 搜索知识</button></div><div class="knowledge-layout"><div class="knowledge-map panel"><div class="panel-heading"><div><span class="panel-kicker">RESEARCH GRAPH</span><h3>研发知识网络</h3></div><span class="live-chip"><i></i> 6,842 节点</span></div><div class="graph-canvas"><div class="graph-lines"></div><div class="graph-node center"><strong>B-17</strong><small>晶型筛选</small></div><div class="graph-node graph-node-a"><strong>B-11</strong><small>历史方案</small></div><div class="graph-node graph-node-b"><strong>A-09</strong><small>失败案例</small></div><div class="graph-node graph-node-c"><strong>SOP-17</strong><small>流程规范</small></div><div class="graph-node graph-node-d"><strong>mt-2407</strong><small>会议证据</small></div><div class="graph-caption"><span class="legend-dot legend-mint"></span>实验 <span class="legend-dot legend-violet"></span>结论 <span class="legend-dot legend-coral"></span>风险</div></div></div><div class="knowledge-list panel"><div class="panel-heading"><div><span class="panel-kicker">REUSABLE ASSETS</span><h3>最近沉淀</h3></div><span class="text-button">排序：相关度⌄</span></div><div id="knowledgeList"></div></div></div></section>
+
+      <section class="page-view" data-page="agents"><div class="page-intro"><div><span class="eyebrow"><i></i> AI ASSISTANTS</span><h1>AI 助理，<em>把研发上下文带在身边。</em></h1><p>不是一个聊天框，而是一组能读懂研发流程的专用 Agent。</p></div><button class="button button-dark" data-action="open-analyzer">开始一次解析</button></div><div class="agent-grid"><article class="agent-card agent-card-primary"><div class="agent-card-top"><span class="agent-icon agent-icon-lime">✦</span><span class="agent-status">可用</span></div><h3>会议解析器</h3><p>从飞书会议转写中提炼决策、争议、风险和行动项，并带上原文时间戳。</p><div class="agent-spec"><span>领域模型</span><b>Meeting → Knowledge</b></div><button class="button button-lime full-width" data-action="open-analyzer">解析最近一场会议 <span>→</span></button></article><article class="agent-card"><div class="agent-card-top"><span class="agent-icon agent-icon-violet">⌁</span><span class="agent-status">可用</span></div><h3>实验相似检索</h3><p>跨会议、实验和 SOP 找到最相似的历史证据，给出可复用的原因与边界。</p><div class="agent-spec"><span>向量检索</span><b>pgvector + Rerank</b></div><button class="button button-outline full-width" data-action="open-search">查看命中结果 <span>↗</span></button></article><article class="agent-card"><div class="agent-card-top"><span class="agent-icon agent-icon-coral">!</span><span class="agent-status">可用</span></div><h3>风险守门员</h3><p>识别参数漂移、数据缺口和未闭环行动项，在实验进入下一阶段前主动提醒。</p><div class="agent-spec"><span>规则 + LLM</span><b>3 个待处理风险</b></div><button class="button button-outline full-width" data-view="experiments">处理风险 <span>↗</span></button></article></div><section class="agent-console panel"><div class="panel-heading"><div><span class="panel-kicker">AGENT RUNS</span><h3>最近运行记录</h3></div><span class="live-chip"><i></i> 流式输出</span></div><div class="console-row"><span class="console-time">09:52:14</span><span class="console-dot dot-mint"></span><b>MeetingParser</b><span>提取 B-17 参数决策 · 0.96 confidence</span><span class="console-done">DONE</span></div><div class="console-row"><span class="console-time">09:41:03</span><span class="console-dot dot-violet"></span><b>SimilarityReranker</b><span>关联 B-11 历史方案 · 6 个候选</span><span class="console-done">DONE</span></div><div class="console-row"><span class="console-time">09:27:56</span><span class="console-dot dot-coral"></span><b>RiskGuard</b><span>检测 A-09 环境数据缺口 · P1</span><span class="console-running">ACTION</span></div></section></section>
+
+      <section class="page-view" data-page="integrations"><div class="page-intro"><div><span class="eyebrow"><i></i> CONNECTORS</span><h1>连接器，<em>让信息自动流动。</em></h1><p>演示环境已准备好飞书会议、文档、知识库与多维表的接入契约。</p></div></div><div class="integration-grid"><article class="integration-card connected"><div class="integration-logo feishu-logo">F</div><div><h3>飞书会议 AI</h3><p>转写 · 纪要 · 时间戳 · 参会人</p></div><span>已连接</span></article><article class="integration-card connected"><div class="integration-logo docs-logo">D</div><div><h3>飞书文档</h3><p>结论写入 · 引用回链 · 权限同步</p></div><span>已连接</span></article><article class="integration-card connected"><div class="integration-logo table-logo">T</div><div><h3>多维表格</h3><p>实验任务 · 负责人 · 状态机</p></div><span>已连接</span></article><article class="integration-card"><div class="integration-logo graph-logo">N</div><div><h3>Neo4j 知识图谱</h3><p>节点关联 · 证据链 · 相似实验</p></div><button class="button button-quiet">配置</button></article></div></section>
+
+      <section class="page-view" data-page="settings"><div class="page-intro"><div><span class="eyebrow"><i></i> PREFERENCES</span><h1>偏好设置，<em>把工作方式交给你。</em></h1><p>调整提醒、解析策略和默认研发视图。</p></div></div><div class="settings-card panel"><div class="setting-row"><div><h3>新会议自动进入解析队列</h3><p>会议结束 5 分钟后自动开始提炼结构化结论。</p></div><button class="toggle is-on" aria-label="切换自动解析"><i></i></button></div><div class="setting-row"><div><h3>高风险参数主动提醒</h3><p>当实验进入执行阶段仍存在 P1 风险时，通知负责人。</p></div><button class="toggle is-on" aria-label="切换风险提醒"><i></i></button></div><div class="setting-row"><div><h3>知识结论写入前需要确认</h3><p>AI 生成的结论在写入团队知识湖前由负责人审核。</p></div><button class="toggle" aria-label="切换确认策略"><i></i></button></div></div></section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" data-action="close-modal" aria-label="关闭">×</button><div id="modalContent"></div></section></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
+
+
