@@ -1,4 +1,4 @@
-# Node.js
+# Node.js dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
@@ -34,6 +34,21 @@ yarn-error.log*
 *.sw?
 .DS_Store
 Thumbs.db
+
+# Playwright & Testing outputs
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+output/playwright/
+
+# Temporary Audio/Video outputs & Preview Junk
+output/video_temp/
+output/*.wav
+output/*.webm
+output/_ftest.pdf
+output/pdf_preview/
+huihui_test.wav
 
 # Project Runtime / Temporary Files
 data/runtime.json
