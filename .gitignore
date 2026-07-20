@@ -1,58 +1,60 @@
-# Node.js dependencies
+# Dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Environment & Credentials
+# Environment & Private Keys
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
 *.env
 *.pem
 *.key
 *.cert
 
-# Sensitive Personal Materials (MUST NOT BE UPLOADED)
+# Personal Confidential & Privacy (NEVER COMMIT)
+*简历*
 *学籍*
 *验证报告*
-*简历*
-王浩毅-个人简历.pdf
-教育部学籍在线验证报告_王浩毅.pdf
-学信网在线验证报告.png
+*个人*
+我同学的简历以及信息/
+*.pdf
+*.png
+!public/assets/*.jpg
+!public/favicon.svg
+!output/screenshots/*.png
+!output/晶流LabFlow-知识闭环与架构图.png
 
-# IDEs & System files
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.DS_Store
-Thumbs.db
+# Competition Internal Planning & Draft Docs (NEVER COMMIT)
+docs/
+research/
+上一个AI最后输出的内容.txt
 
-# Playwright & Testing outputs
+# Non-Project Build & Aux Scripts
+scripts/_old_generate_brief.py.bak
+scripts/generate_brief.py
+scripts/gen_architecture.py
+scripts/git_push.js
+scripts/git_push.ps1
+scripts/generate_audio.ps1
+
+# Temporary / Build / Test Artifacts
 test-results/
 playwright-report/
-blob-report/
-playwright/.cache/
-output/playwright/
-
-# Temporary Audio/Video outputs & Preview Junk
 output/video_temp/
-output/*.wav
-output/*.webm
-output/_ftest.pdf
 output/pdf_preview/
-huihui_test.wav
+output/_ftest.pdf
+output/huihui_test.wav
+*.wav
+*.webm
+*.bak
 
-# Project Runtime / Temporary Files
-data/runtime.json
-上一个AI最后输出的内容.txt
+# System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
 .gemini/
 brain/
 scratch/

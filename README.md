@@ -1,170 +1,182 @@
-# <img src="public/favicon.svg" width="36" height="36" align="center" /> 晶流 LabFlow ｜ AI 实验研发加速器
-
 <div align="center">
 
-[![Node Version](https://img.shields.io/badge/Node.js-%3E%3D%2020-43g35a?style=for-the-badge&logo=node.js&color=339933)](https://nodejs.org/)
-[![Playwright](https://img.shields.io/badge/Playwright-v1.61-2e8b57?style=for-the-badge&logo=playwright&color=2EAD33)](https://playwright.dev/)
-[![FFmpeg](https://img.shields.io/badge/FFmpeg-v7.1-8a2be2?style=for-the-badge&logo=ffmpeg&color=0078D4)](https://ffmpeg.org/)
-[![License](https://img.shields.io/badge/License-MIT-2ee6d6?style=for-the-badge&color=2EE6D6)](LICENSE)
+<img src="public/favicon.svg" width="64" height="64" alt="LabFlow Logo" />
 
-**让一次研发讨论，在 24 小时内沉淀为全团队可检索、可理解、可复用的知识资产。**
+# 晶流 LabFlow · AI 实验研发加速器
+### Autonomous Lab AI R&D Accelerator
 
-[📖 产品与技术方案书](docs/03-产品与技术完整方案.md) · [🎬 自动生成的演示视频](output/晶流LabFlow-系统演示视频.mp4) · [📊 报名提报与答辩问答](docs/05-路演脚本与答辩问答.md)
+**让一次讨论，在 24 小时内成为下一次实验的起点。**
+
+---
+
+[![Build Status](https://img.shields.io/badge/Build-Passing-2ee6d6?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D%2020.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Architecture](https://img.shields.io/badge/Architecture-Event--Driven-8a2be2?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](#-系统架构设计)
+[![RAG Pipeline](https://img.shields.io/badge/RAG-pgvector%20%2B%20Neo4j-0078D4?style=for-the-badge&logo=postgresql&logoColor=white)](#-核心技术栈)
+[![Playwright Verified](https://img.shields.io/badge/Playwright-v1.61-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+
+[🖥️ 系统演示](#-产品视觉展示) · [🏗️ 架构设计](#-系统架构设计) · [⚡ 核心功能](#-核心功能亮点) · [🚀 快速开始](#-快速开始与本地运行)
 
 </div>
 
 ---
 
-## 🧬 1. 项目定位与核心痛点
+## 📖 项目简介
 
-在智能自主实验室中，真正昂贵的不是进行一次会议或实验，而是**同一个问题被第二次讨论、同一个错误被第二次犯下**。研发会后的决策结论、敏感实验参数、争议风控点往往零散在会议转写、文档和个人经验中，导致数据链路无法围绕“实验对象”高效流动。
+在智能自主实验室中，真正昂贵的不是单次会议或单次实验，而是**同一个问题被第二次讨论、同一个失败错误被第二次重复**。传统研讨会后，关键实验参数、争议焦点与避坑策略散落在转写文本、个人文档与临时表格中，导致研发经验无法围绕“实验对象”高效流动与沉淀。
 
-**晶流 LabFlow** 重新定义了会议总结工具。系统以**“实验编号”**为主线，打通「方案研讨—参数评审—实验执行—结果复盘—经验复用」五大生命周期。我们提出了可量化的 **24h 知识 SLA** 指标——确保会议结束 24 小时内，提炼出的关键知识单元均带有原文证据、置信度，能被团队快速索引，并在下一次相似实验开始前**主动预警风控**。
+**晶流 LabFlow** 是专为高频实验研发团队打造的 **AI 上下文操作系统**。系统以“实验编号”为主线，贯穿「方案研讨 — 参数评审 — 实验执行 — 结果复盘 — 经验复用」全生命周期。通过提出 **24h 知识 SLA** 指标，确保会议结束 24 小时内，经过确认的关键决策均附带秒级原文证据时间戳，写入研发知识图谱，并在下一次相似实验开启前自动进行**风险拦截预警**。
+
+---
+
+## 🖼️ 产品视觉展示
+
+### 🖥️ 研发总览看板 (R&D Dashboard)
+> 实时监控 24h 知识 SLA 达标率、累计节省研发人时及多阶段实验闭环图谱。
+<div align="center">
+  <img src="output/screenshots/01-dashboard-desktop.png" width="96%" alt="研发总览看板" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
+</div>
+
+<br />
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>💬 AI 会议结构化解析器</b><br />
+      <small>提炼方案决策、带秒级证据时间戳与自动分派任务</small><br /><br />
+      <img src="output/screenshots/02-analyzer-result.png" width="100%" alt="AI 会议解析器" />
+    </td>
+    <td width="50%" align="center">
+      <b>🕸️ 研发知识湖 (Hybrid RAG)</b><br />
+      <small>以实验为中心的关系网络，融合矢量召回与知识图谱</small><br /><br />
+      <img src="output/screenshots/04-knowledge-lake.png" width="100%" alt="研发知识湖" />
+    </td>
+  </tr>
+</table>
+
+<br />
 
 <div align="center">
-  <img src="output/screenshots/01-dashboard-desktop.png" width="85%" alt="晶流 LabFlow 研发总览桌面端" />
+  <b>📱 移动端响应式工作台 (Mobile Workbench)</b><br />
+  <small>适配移动端体验，方便实验室现场随时查阅风控预警与实验流转</small><br /><br />
+  <img src="output/screenshots/03-dashboard-mobile.png" width="36%" alt="移动端适配界面" />
 </div>
 
 ---
 
-## ✦ 2. 系统核心功能特性
+## ✨ 核心功能亮点
 
-### 📊 研发总览 (R&D Dashboard)
-*   **SLA 实时监控**：直观展示 24h 知识 SLA 达标率、累计节省研发人时等核心量化效能指标。
-*   **状态闭环追踪**：可视化展示实验研发状态机，通过状态流转关联相应的会议和待办事项。
-
-### 💬 AI 会议结构化解析 (Meeting Intelligence)
-*   **结构化提炼**：拒绝冗长的概括，精准识别会议中的**方案决策、技术风险、参数调整**与**知识关联**。
-*   **可信证据链**：每一条结论都带有**精确到秒的原文转写时间戳与置信度**，确保 AI 结论百分之百可追溯。
-*   **行动项闭环**：智能分派行动负责人与截止日期，一键同步飞书多维表格与待办中心。
-
-<div align="center">
-  <img src="output/screenshots/02-analyzer-result.png" width="85%" alt="AI 会议解析结果" />
-</div>
-
-### 🕸️ 以实验为中心的知识湖 (Research Graph)
-*   **图谱与向量融合 (Hybrid RAG)**：通过 `pgvector` 进行语义相似方案召回，使用 `Neo4j` 知识图谱对实验版本、前置依赖及权限进行关系推理。
-*   **失败经验规避**：对失败模式按「触发参数—症状—可能根因—规避策略」进行标准化建模，下一次相似实验前由“风险守门员”主动发出风险预警。
-
-<div align="center">
-  <img src="output/screenshots/04-knowledge-lake.png" width="85%" alt="研发知识湖" />
-</div>
-
-### 📱 响应式多端适配
-*   **移动工作台**：完美适配手机端（390×844），满足研发人员在实验室现场随时记录、查看数据监查与接收风控预警的移动化场景。
-
-<div align="center">
-  <img src="output/screenshots/03-dashboard-mobile.png" width="35%" alt="移动端适配界面" />
-</div>
+- ⚡ **24h 知识 SLA 闭环**：设定可量化的研发效能指标，会议结束 24 小时内自动提炼结构化知识单元并完成团队沉淀。
+- 🎯 **带证据时间戳的结构化解析**：基于 Structured Output 识别方案决策、核心参数调整与技术风险，**每一条结论附带精确到秒的原文转写时间戳与置信度**，拒绝生成不可追溯的正确废话。
+- 🔄 **任务自动分派与多维表闭环**：自动提取会议行动项（Action Items），智能分派负责人与截止时间，无缝同步至飞书多维表格与待办中心。
+- 🛡️ **失败经验标准化建模与风险守门员**：将历史失败案例按 `触发参数 — 异常症状 — 可能根因 — 规避策略` 单独建模，下一次相似实验启动前主动触发风险警报。
+- 🔍 **图谱 + 向量混合检索 (Hybrid RAG)**：结合 `pgvector` 语义召回与 `Neo4j` 知识图谱推演，兼顾参数重叠度、实验阶段与证据溯源。
 
 ---
 
-## 🛠️ 3. 系统技术架构
-
-本系统设计了高可靠、企业级安全的安全防线，打通飞书开放平台层至数据存储层：
+## 🏗️ 系统架构设计
 
 ```mermaid
 flowchart TD
-    subgraph FS["飞书协同与接入层"]
-        M["飞书会议 AI / 实时转写"]
-        D["飞书云文档 / 知识库"]
-        B["多维表格 / 任务待办"]
-    end
-    subgraph GW["编排与服务层"]
-        Gateway["Spring Cloud Gateway"]
-        Orch["Workflow Orchestrator (工作流编排)"]
-        Bus["Event Bus (RabbitMQ)"]
-    end
-    subgraph AG["Agent 智能体层"]
-        P["会议解析 Agent"]
-        Q["领域质检 Agent"]
-        R["知识关联 Agent"]
-        T["任务分派 Agent"]
-        Human["Human-in-the-Loop 人审校验"]
-    end
-    subgraph DATA["知识存储与安全层"]
-        PG["PostgreSQL + pgvector (语义检索)"]
-        Neo["Neo4j 知识图谱 (版本/证据网)"]
-        Redis["Redis (状态机/幂等键/Checkpoint)"]
-        Audit["不可变安全审计日志"]
+    subgraph FS["协同与接入层 (Lark/Feishu Platform)"]
+        A1["飞书会议转写 / 妙记 AI"]
+        A2["飞书云文档 / 团队知识库"]
+        A3["飞书多维表格 / 任务中心"]
     end
 
-    M --> Gateway --> Orch --> Bus
-    Bus --> P --> Q --> R --> T --> Human
-    Human --> D & B
-    P --> PG
-    R <--> PG & Neo
-    Orch <--> Redis
-    Orch --> Audit
+    subgraph GW["接入与网关编排层 (Gateway & Orchestration)"]
+        B1["Spring Cloud Gateway / Webhook"]
+        B2["Workflow Orchestrator (状态机/Checkpoint)"]
+        B3["Event Bus (RabbitMQ / 幂等去重)"]
+    end
+
+    subgraph AG["Agent 多智能体层 (Multi-Agent Swarm)"]
+        C1["MeetingParser Agent (结构化提取)"]
+        C2["QualityCheck Agent (领域 Schema 质检)"]
+        C3["GraphLinker Agent (图谱与向量关联)"]
+        C4["RiskGuard Agent (风险守门员)"]
+        C5["Human-in-the-Loop (专家二审确认)"]
+    end
+
+    subgraph DB["存储与可信数据层 (Data & Storage)"]
+        D1["PostgreSQL + pgvector (语义向量库)"]
+        D2["Neo4j Graph DB (研发知识图谱/证据链)"]
+        D3["Redis (状态机 Checkpoint / 分布式锁)"]
+        D4["Audit Engine (不可变安全审计日志)"]
+    end
+
+    A1 --> B1 --> B2 --> B3
+    B3 --> C1 --> C2 --> C3 --> C4 --> C5
+    C5 --> A2 & A3
+    C1 --> D1
+    C3 <--> D1 & D2
+    B2 <--> D3
+    B2 --> D4
 ```
 
-### 🛡️ 安全与防幻觉设计
-1.  **证据硬关联**：所有写入知识库的 AI 结论，必须有原始转写文本作为支撑。
-2.  **风控人机协同 (Human-in-the-Loop)**：高风险参数和低置信度（< 0.85）结论必须经过研发专家二审确认后方可入库。
-3.  **Prompt 注入防护**：转写文本视为不可信输入，调用工具限制于强校验白名单中。
-4.  **安全隔离**：完全继承飞书文档及组织架构权限体系，向量检索依据用户凭证执行二次过滤。
-
 ---
 
-## 💻 4. 技术栈列表
+## 🛠️ 核心技术栈
 
-| 模块层级 | 选用技术 | 说明 |
+| 层级 | 技术选型 | 场景说明 |
 | :--- | :--- | :--- |
-| **前端展现** | Vanilla HTML5 / CSS3 / ES Modules JS | 零第三方包依赖，纯原生高性能，采用暗黑微拟态科技视觉 |
-| **后端编排** | Node.js / Spring Boot & Spring AI | 提供模块化 Web API 与工作流调度控制 |
-| **智能体组** | LLM (DeepSeek-V3 / Doubao-Pro) | 负责 Structured Output 解析、Schema 校验与 Reranker |
-| **混合存储** | PostgreSQL + pgvector / Neo4j / Redis | 提供语义向量召回、知识图谱关联及分布式锁/幂等去重 |
-| **录制与媒体** | Playwright (v1.61) / FFmpeg / Windows SAPI | 驱动无头浏览器执行自动演示流，合成演示视频及旁白 |
+| **前端展现** | Vanilla HTML5 / CSS3 / ES Modules JS | 零第三方包依赖，纯原生高性能，暗黑微拟态科技视觉 |
+| **后端 API** | Node.js Server / Spring Boot 模块化 | 原生 HTTP / RESTful API / SSE 流式推送响应 |
+| **Agent 编排** | DeepSeek-V3 / Doubao-Pro / Spring AI | 执行 Structured Output 结构化提炼与领域 Schema 校验 |
+| **数据存储** | PostgreSQL + pgvector / Neo4j / Redis | 提供高维矢量语义检索、图关系推演与分布式幂等锁 |
+| **测试与媒体** | Playwright (v1.61) / FFmpeg / SAPI TTS | 无头浏览器自动演示脚本录制、语音合成与 MP4 音视频压制 |
 
 ---
 
-## 🚀 5. 本地运行与快速开始
+## 🚀 快速开始与本地运行
 
-### 开发要求
-*   **Node.js** >= 20.0
-*   **PowerShell** (用于执行环境初始化脚本)
+### 环境要求
+* **Node.js**: `>= 20.0`
+* **PowerShell** (Windows 环境推荐)
 
-### 步骤一：一键配置环境
-在项目根目录下打开 PowerShell 终端，运行：
+### 1. 初始化环境
+在项目根目录运行初始化脚本（自动自检并校验环境变量）：
 ```powershell
 .\setup.ps1
 ```
-*(如果系统限制执行策略，可使用 `powershell -ExecutionPolicy Bypass -File setup.ps1` 启动。脚本会自动创建 `.env` 并执行代码语法自检。)*
 
-### 步骤二：启动服务器
-执行以下命令启动本地静态服务与 mock API：
+### 2. 启动本地服务
+运行语法静态检查并启动开发服务器：
 ```powershell
 npm run check
 npm start
 ```
-服务启动后，在浏览器访问：**`http://localhost:4173`** 即可进行交互式功能体验。
+启动成功后，在浏览器访问：**`http://localhost:4173`** 即可体验完整的交互功能。
 
-### 📚 常用 API 列表
+### 3. 常用 REST API
 ```text
 GET  /api/health            # 服务健康度检查
-GET  /api/overview          # 研发效能与看板指标获取
-GET  /api/experiments       # 获取实验流转明细
-GET  /api/knowledge         # 获取最近沉淀知识列表
-POST /api/meetings/:id/analyze # 触发飞书会议 AI 结构化提炼
-POST /api/search            # 执行混合语义搜索
-POST /api/tasks             # 新建闭环行动项
+GET  /api/overview          # 研发总览与看板指标获取
+GET  /api/experiments       # 实验流转列表查询
+GET  /api/knowledge         # 最近沉淀知识资产列表
+POST /api/meetings/:id/analyze # 触发 AI 会议结构化解析
+POST /api/search            # 研发知识湖统一语义搜索
+POST /api/tasks             # 创建新行动项任务
 ```
 
----
-
-## 📽️ 6. 自动视频生成管线说明
-
-本仓库包含一个全自动视频生成流水线，开发者可运行下述命令在本地全自动录制并导出系统演示视频：
+### 4. 恢复初始演示数据
+在现场演示或测试后，如需还原初始种子数据，请执行：
 ```powershell
-node scripts/generate_video.js
+.\scripts\reset-demo.ps1
 ```
-**管线工作机制**：
-1.  **语音合成**：Node 自动组装 PowerShell 脚本，利用 Windows 语音库（微软 Huihui 中文语音）合成各段演示旁白 WAV 文件，并计算各音频段精确时长。
-2.  **浏览器自动化**：Playwright 启动 Chromium，与旁白时长精确同步在页面上模拟点击、解析、拓扑展示、检索和流转等步骤，并将其捕获为 WebM 高清视频轨。
-3.  **压制合并**：FFmpeg 将多段旁白合并，并与 WebM 视频轨压制导出为标准的 **[output/晶流LabFlow-系统演示视频.mp4](file:///M:/%E9%A1%B9%E7%9B%AE/%E6%AF%94%E8%B5%9B/AI%E5%85%88%E9%94%8B%E6%9C%AA%E6%9D%A5%E4%BA%BA%E6%89%8D%E5%A4%A7%E8%B5%9B/output/%E6%99%B6%E6%B5%81LabFlow-%E7%B3%BB%E7%BB%9F%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4)**。
 
 ---
 
-## 📄 7. 开源声明与许可
+## 🛡️ 可信 AI 与安全设计
 
-本项目根据 **[MIT License](LICENSE)** 许可协议开源。所有演示数据均为构造/脱敏数据，不包含任何真实商业机密。
+1. **证据强关联 (Evidence Timestamping)**：每条结论强制映射原文时间戳，杜绝生成式 AI 的无根据“幻觉”。
+2. **专家二审机制 (Human-in-the-Loop)**：高风险参数调整与置信度低于 `0.85` 的结论需经过专家确认后方可写入正式知识库。
+3. **Prompt 注入防护**：转写文本视为不可信输入，工具调用严格限制于白名单与类型校验。
+4. **ACL 权限继承**：继承团队既有协同权限，向量与图谱检索自动执行二次过滤。
+
+---
+
+## 📄 开源许可证
+
+本项目基于 [MIT License](LICENSE) 许可协议开源。
