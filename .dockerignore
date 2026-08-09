@@ -1,0 +1,21 @@
+# Keep the image deterministic and do not copy personal or generated material.
+node_modules
+.git
+.gitignore
+.env
+.env.*
+output
+outputs
+test-results
+PPT
+我的信息
+我同学的简历以及信息
+research
+2026 AI Agent 行业趋势调研
+晶泰科技信息调研
+*.pdf
+*.mp4
+*.wav
+*.zip
+npm-debug.log*
+.DS_Store

@@ -1,0 +1,81 @@
+name: labflow-demo
+
+services:
+  labflow-app:
+    build:
+      context: .
+      target: production
+    container_name: labflow-app
+    working_dir: /app
+    command: ["node", "server.js"]
+    ports:
+      - "4173:4173"
+    environment:
+      PORT: 4173
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+      LLM_MODEL: ${LLM_MODEL:-gpt-4o-mini}
+      NEO4J_URI: bolt://labflow-neo4j:7687
+      REDIS_URL: redis://labflow-redis:6379
+    volumes:
+      - .:/app
+    depends_on:
+      labflow-neo4j:
+        condition: service_healthy
+      labflow-redis:
+        condition: service_healthy
+    networks:
+      - labflow-net
+    restart: unless-stopped
+
+  labflow-neo4j:
+    image: neo4j:5.24-community
+    container_name: labflow-neo4j
+    ports:
+      - "7475:7474"
+      - "7688:7687"
+    environment:
+      NEO4J_AUTH: neo4j/labflow-demo-password
+      NEO4J_server_memory_heap_initial__size: 256m
+      NEO4J_server_memory_heap_max__size: 512m
+    volumes:
+      - labflow-neo4j-data:/data
+      - labflow-neo4j-logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks:
+      - labflow-net
+    restart: unless-stopped
+
+  labflow-redis:
+    image: redis:7.4-alpine
+    container_name: labflow-redis
+    ports:
+      - "6380:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - labflow-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+    networks:
+      - labflow-net
+    restart: unless-stopped
+
+networks:
+  labflow-net:
+    name: labflow-net
+    driver: bridge
+
+volumes:
+  labflow-neo4j-data:
+    name: labflow-neo4j-data
+  labflow-neo4j-logs:
+    name: labflow-neo4j-logs
+  labflow-redis-data:
+    name: labflow-redis-data

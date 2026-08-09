@@ -3,96 +3,701 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0e1c24" />
+  <meta name="theme-color" content="#fafaf9" />
   <meta name="description" content="晶流 LabFlow：面向智能自主实验室的 AI 实验研发加速器" />
   <title>晶流 LabFlow · AI 实验研发加速器</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://cdn-font.hyperos.mi.com/font/css?family=MiSans:400,500,600,700:Chinese_Simplify,Latin&display=swap" />
+  <link rel="stylesheet" href="/assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="/styles.css?v=40" />
 </head>
 <body>
   <div class="app-shell">
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
+      <!-- Brand -->
       <div class="brand-lockup">
-        <div class="brand-mark" aria-hidden="true"><span></span><i></i></div>
-        <div><strong>晶流</strong><small>LABFLOW / R&D OS</small></div>
-      </div>
-      <div class="workspace-switcher">
-        <span class="workspace-dot"></span>
-        <div><b>Autonomous Lab</b><small>晶泰科技 · Sandbox</small></div>
-        <span class="chevron">⌄</span>
-      </div>
-      <nav class="main-nav" aria-label="主导航">
-        <p class="nav-label">WORKSPACE</p>
-        <button class="nav-item is-active" data-view="overview"><span class="nav-icon icon-grid"></span><span>研发总览</span><kbd>01</kbd></button>
-        <button class="nav-item" data-view="experiments"><span class="nav-icon icon-flask"></span><span>实验流转</span><kbd>02</kbd></button>
-        <button class="nav-item" data-view="knowledge"><span class="nav-icon icon-network"></span><span>知识湖</span><kbd>03</kbd></button>
-        <button class="nav-item" data-view="agents"><span class="nav-icon icon-spark"></span><span>AI 助理</span><kbd>04</kbd></button>
-        <p class="nav-label nav-label-spaced">SYSTEM</p>
-        <button class="nav-item nav-muted" data-view="integrations"><span class="nav-icon icon-link"></span><span>连接器</span><span class="status-mini">3</span></button>
-        <button class="nav-item nav-muted" data-view="settings"><span class="nav-icon icon-sliders"></span><span>偏好设置</span></button>
-      </nav>
-      <div class="sidebar-bottom">
-        <div class="usage-card">
-          <div class="usage-top"><span>AI 额度</span><b>68%</b></div>
-          <div class="usage-bar"><span style="width:68%"></span></div>
-          <small>本月已节省 42.0 人时</small>
+        <div class="brand-logo">晶</div>
+        <div class="brand-text">
+          <span class="brand-name">晶流 LabFlow</span>
+          <span class="brand-tagline">R&D OS</span>
         </div>
-        <div class="profile-card">
-          <div class="avatar avatar-coral">LH</div>
-          <div><b>林岚</b><small>研发效能负责人</small></div>
-          <button class="more-button" aria-label="更多选项">···</button>
+      </div>
+
+      <!-- Workspace Switcher -->
+      <div class="workspace-switcher">
+        <div class="workspace-current">
+          <div class="workspace-icon">A</div>
+          <div class="workspace-info">
+            <div class="workspace-name">Autonomous Lab</div>
+            <div class="workspace-type">晶泰科技 · Sandbox</div>
+          </div>
+          <span class="workspace-chevron">⌄</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="main-nav" aria-label="主导航">
+        <p class="nav-section-label">WORKSPACE</p>
+        <button class="nav-item active" data-view="overview">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          <span>研发总览</span>
+          <kbd class="kbd">01</kbd>
+        </button>
+        <button class="nav-item" data-view="experiments">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v7.2c0 .3-.1.6-.2.8L4.5 17.2c-.8 1.1.2 2.8 1.5 2.8h12c1.3 0 2.3-1.7 1.5-2.8L15.2 11c-.1-.2-.2-.5-.2-.8V3"/><path d="M9 3h6"/><circle cx="12" cy="15" r="1.5"/></svg>
+          </span>
+          <span>实验流转</span>
+          <kbd class="kbd">02</kbd>
+        </button>
+        <button class="nav-item" data-view="risks">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
+          </span>
+          <span>风险守门</span>
+          <kbd class="kbd">03</kbd>
+        </button>
+        <button class="nav-item" data-view="knowledge">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="8" r="2"/><circle cx="19" cy="8" r="2"/><circle cx="5" cy="16" r="2"/><circle cx="19" cy="16" r="2"/><line x1="9.5" y1="10.5" x2="6.5" y2="9"/><line x1="14.5" y1="10.5" x2="17.5" y2="9"/><line x1="9.5" y1="13.5" x2="6.5" y2="15"/><line x1="14.5" y1="13.5" x2="17.5" y2="15"/></svg>
+          </span>
+          <span>知识湖</span>
+          <kbd class="kbd">04</kbd>
+        </button>
+        <button class="nav-item" data-view="agents">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M5 16l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z"/><path d="M19 16l0.5 1.5 1.5 0.5-1.5 0.5L19 20l-0.5-1.5L17 18l1.5-0.5L19 16z"/></svg>
+          </span>
+          <span>AI 助理</span>
+          <kbd class="kbd">05</kbd>
+        </button>
+
+        <p class="nav-section-label">SYSTEM</p>
+        <button class="nav-item" data-view="integrations">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </span>
+          <span>连接器</span>
+          <span class="nav-item-badge">3</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <span class="nav-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+          <span>偏好设置</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="quota-card">
+          <div class="between">
+            <span class="text-xs text-tertiary">AI 额度</span>
+            <span class="quota-value">68%</span>
+          </div>
+          <div class="quota-track">
+            <div class="quota-fill" style="width:68%;"></div>
+          </div>
+          <span class="text-xs text-tertiary">本月已节省 42.0 人时</span>
+        </div>
+        <div class="user-profile">
+          <div class="user-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">林</div>
+          <div class="user-info">
+            <div class="user-name">林岚</div>
+            <div class="user-role">研发效能负责人</div>
+          </div>
+          <button class="icon-button" aria-label="更多选项" style="color:var(--color-text-tertiary);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+          </button>
         </div>
       </div>
     </aside>
 
+    <!-- Main Content -->
     <main class="main-content">
+      <!-- Topbar -->
       <header class="topbar">
-        <div class="topbar-left"><button class="mobile-menu" id="mobileMenu" aria-label="打开导航">☰</button><span class="crumb-muted">R&D OS</span><span class="crumb-divider">/</span><strong>研发总览</strong></div>
+        <div class="topbar-left">
+          <button class="icon-button" id="mobileMenu" aria-label="打开导航">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="breadcrumb">
+            <span class="crumb-muted">R&D OS</span>
+            <span class="breadcrumb-separator">/</span>
+            <strong class="breadcrumb-current">研发总览</strong>
+          </div>
+        </div>
         <div class="topbar-right">
-          <label class="global-search"><span class="search-icon"></span><input id="globalSearch" type="search" placeholder="搜索实验、结论、风险…" aria-label="搜索实验、结论、风险" /><kbd>⌘ K</kbd></label>
-          <button class="icon-button" aria-label="通知"><span class="bell-icon"></span><i class="notification-dot"></i></button>
-          <button class="help-button" aria-label="帮助">?</button>
+          <div class="search-box" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="commandMenu" aria-expanded="false">
+            <span class="search-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            <input id="globalSearch" type="search" placeholder="搜索实验、结论、风险…" aria-label="搜索实验、结论、风险" class="search-input" />
+            <div class="search-shortcut">
+              <kbd class="kbd">⌘</kbd>
+              <kbd class="kbd">K</kbd>
+            </div>
+          </div>
+          <button class="icon-button" aria-label="通知">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="icon-button-badge"></span>
+          </button>
+          <button class="icon-button" aria-label="帮助">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+          </button>
         </div>
       </header>
 
+      <!-- Page: Overview -->
       <section class="page-view is-visible" data-page="overview">
-        <div class="page-intro compact-intro"><div><span class="eyebrow"><i></i> 周一 · 07 月 19 日 · 广州实验室</span><h1>让每一次讨论，<em>成为下一次发现。</em></h1><p>AI 将会议里的参数、争议与结论，编织成全团队可检索的研发记忆。</p></div><div class="intro-actions"><button class="button button-dark" data-action="open-analyzer"><span class="button-spark">✦</span>打开 AI 会议解析器</button><button class="button button-quiet" data-view="experiments">查看研发流 <span>↗</span></button></div></div>
-        <div class="hero-card">
-          <div class="hero-copy"><div class="hero-tag">AI R&amp;D ACCELERATOR <span>LIVE</span></div><h2>从会议到知识资产，<br /><strong>不再让好结论失联。</strong></h2><p>今日已有 7 场会议进入自动解析队列，其中 4 条结论已被新实验复用。</p><div class="hero-cta-row"><button class="button button-lime" data-action="open-analyzer">解析一场会议 <span>→</span></button><span class="hero-note"><span class="pulse-dot"></span> 数据每 15 分钟同步</span></div></div>
-          <div class="hero-visual"><img src="/assets/lab-hero.jpg" alt="实验室玻璃器皿与光影" /><div class="hero-visual-wash"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-node node-a"><b>01</b><span>实验参数</span></div><div class="orbit-node node-b"><b>02</b><span>决策证据</span></div><div class="orbit-node node-c"><b>03</b><span>知识复用</span></div><div class="hero-float-card"><span class="float-label">KNOWLEDGE SLA</span><strong>24<span>h</span></strong><small>从会议结束到全员可复用</small></div></div>
+        <!-- Page Header -->
+        <div class="page-intro">
+          <div class="page-eyebrow">
+            <span class="eyebrow-dot"></span>
+            周一 · 07 月 19 日 · 广州实验室
+          </div>
+          <h1 class="page-title">研发总览</h1>
+          <p class="page-description">让每一次讨论，成为下一次发现。AI 将会议里的参数、争议与结论，编织成全团队可检索的研发记忆。</p>
         </div>
 
-        <div class="metric-grid" id="metricGrid"></div>
-
-        <div class="content-grid content-grid-main">
-          <div class="stack-column">
-            <section class="panel panel-pipeline"><div class="panel-heading"><div><span class="panel-kicker">R&amp;D FLOW</span><h3>实验研发闭环</h3></div><button class="text-button" data-view="experiments">查看全部 <span>↗</span></button></div><p class="panel-desc">从方案研讨到知识复用，每一步都留下一条可追溯的证据链。</p><div class="pipeline" id="pipeline"></div><div class="pipeline-foot"><span><i class="legend-dot legend-mint"></i>已完成</span><span><i class="legend-dot legend-blue"></i>进行中</span><span><i class="legend-dot legend-coral"></i>需关注</span><b>本周闭环率 <strong>84.6%</strong></b></div></section>
-            <section class="panel panel-meetings"><div class="panel-heading"><div><span class="panel-kicker">MEETING INTELLIGENCE</span><h3>会议智能解析</h3></div><button class="text-button" data-view="agents">解析记录 <span>↗</span></button></div><div class="meeting-list" id="meetingList"></div></section>
+        <!-- Hero: 24h SLA axis (docs 16 · 2.4) -->
+        <div class="hero-card mb-8">
+          <div class="hero-content">
+            <div class="badge-row">
+              <span class="badge badge-primary badge-dot">AI R&D ACCELERATOR</span>
+              <span class="badge badge-success badge-dot">LIVE</span>
+            </div>
+            <h2 class="hero-title">从会议到知识资产，<br/><span>不再让好结论失联。</span></h2>
+            <p class="hero-desc">今日已有 7 场会议进入自动解析队列，其中 4 条结论已被新实验复用。</p>
+            <div class="hero-actions">
+              <button class="button button-primary button-lg" data-action="open-analyzer">
+                解析一场会议
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+              <span class="hero-sync">
+                <span class="pulse-dot"></span>
+                数据每 15 分钟同步
+              </span>
+            </div>
           </div>
-          <div class="stack-column side-stack">
-            <section class="panel panel-signal"><div class="panel-heading"><div><span class="panel-kicker">KNOWLEDGE SIGNAL</span><h3>知识复用雷达</h3></div><span class="live-chip"><i></i> LIVE</span></div><div class="signal-score"><div class="score-ring"><span>87</span><small>%</small></div><div><b>24h 知识 SLA</b><p>本周较上周 <strong>+12.4%</strong></p></div></div><div class="signal-bars"><div><span>B-17</span><i><b style="width:94%"></b></i><strong>94%</strong></div><div><span>A-09</span><i><b style="width:78%"></b></i><strong>78%</strong></div><div><span>C-04</span><i><b style="width:63%"></b></i><strong>63%</strong></div></div><button class="button button-outline full-width" data-view="knowledge">进入知识湖 <span>↗</span></button></section>
-            <section class="panel panel-activity"><div class="panel-heading"><div><span class="panel-kicker">ACTIVITY</span><h3>实时活动</h3></div><button class="icon-button small" aria-label="刷新活动" id="refreshActivity">↻</button></div><div class="activity-list" id="activityList"></div></section>
-            <section class="quote-card"><div class="quote-mark">“</div><p>真正高效的 AI，不是替你做决定，而是让每一个决定都不会被遗忘。</p><span>— 晶流设计原则 01</span></section>
+          <div class="hero-axis" aria-label="会议知识 24 小时 SLA 时间轴">
+            <div class="hero-axis-head">
+              <span class="hero-axis-eyebrow">24H KNOWLEDGE SLA</span>
+              <span class="hero-axis-summary">会议结束 → 24 小时内 → 可复用</span>
+            </div>
+            <div class="hero-axis-track">
+              <div class="hero-axis-point is-complete" data-state="done" data-x="0">
+                <span class="hero-axis-node" aria-hidden="true"></span>
+                <time class="hero-axis-time" datetime="09:30">09:30</time>
+                <span class="hero-axis-label">转写就绪</span>
+              </div>
+              <div class="hero-axis-point is-complete" data-state="done" data-x="0.833">
+                <span class="hero-axis-node" aria-hidden="true"></span>
+                <time class="hero-axis-time" datetime="09:42">09:42</time>
+                <span class="hero-axis-label">Agent 解析完</span>
+              </div>
+              <div class="hero-axis-point is-complete" data-state="done" data-x="18.75">
+                <span class="hero-axis-node" aria-hidden="true"></span>
+                <time class="hero-axis-time" datetime="14:00">14:00</time>
+                <span class="hero-axis-label">人工确认 4 条</span>
+              </div>
+              <div class="hero-axis-point is-complete" data-state="done" data-x="94.583">
+                <span class="hero-axis-node" aria-hidden="true"></span>
+                <time class="hero-axis-time" datetime="08:12">次日 08:12</time>
+                <span class="hero-axis-label">写入知识湖</span>
+              </div>
+              <div class="hero-axis-pass" data-x="100">
+                <span class="hero-axis-pass-line" aria-hidden="true"></span>
+                <span class="hero-axis-pass-node" aria-hidden="true"></span>
+                <div class="hero-axis-pass-caption">
+                  <span class="hero-axis-pass-value">实际 22.7h</span>
+                  <span class="hero-axis-pass-target">目标 ≤24h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid" id="metricGrid"><div class="skeleton-hook" aria-hidden="true"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span></div></div>
+
+        <!-- Content Grid -->
+        <div class="content-grid" id="overviewGrid">
+          <div class="stack">
+            <!-- Pipeline -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="page-eyebrow mb-1">R&D FLOW</div>
+                  <h3 class="card-title">实验研发闭环</h3>
+                </div>
+                <button class="card-action" data-view="experiments">
+                  查看全部
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+              <p class="card-desc">从方案研讨到知识复用，每一步都留下一条可追溯的证据链。</p>
+              <div class="pipeline-container" id="pipeline"></div>
+              <div class="legend-row">
+                <span class="flex-gap-1"><span class="legend-dot" style="background:var(--color-success);"></span>已完成</span>
+                <span class="flex-gap-1"><span class="legend-dot" style="background:var(--color-primary);"></span>进行中</span>
+                <span class="flex-gap-1"><span class="legend-dot" style="background:var(--color-error);"></span>需关注</span>
+                <span class="spacer rate-strong">本周闭环率 <b>84.6%</b></span>
+              </div>
+            </div>
+
+            <!-- Meetings -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="page-eyebrow mb-1">MEETING INTELLIGENCE</div>
+                  <h3 class="card-title">会议智能解析</h3>
+                </div>
+                <button class="card-action" data-view="agents">
+                  解析记录
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+              </div>
+              <div class="list" id="meetingList"><div class="skeleton-hook" aria-hidden="true"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span></div></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <!-- Knowledge Signal -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="page-eyebrow mb-1">KNOWLEDGE SIGNAL</div>
+                  <h3 class="card-title">知识复用雷达</h3>
+                </div>
+                <span class="badge badge-success badge-dot">LIVE</span>
+              </div>
+              <div class="sla-ring-wrap">
+                <div class="sla-ring">
+                <span class="sla-ring-inner" id="slaRingValue">87<small>%</small></span>
+              </div>
+                <div>
+                  <div class="sla-rings-title">24h 知识 SLA</div>
+                  <div class="sla-rings-sub" id="slaRingSub">本周较上周 <b>+12.4%</b></div>
+                </div>
+              </div>
+              <div class="progress-row">
+                <div class="grid-progress">
+                  <span class="text-secondary">B-17</span>
+                  <div class="progress-track"><div style="width:94%;height:100%;background:var(--color-primary);border-radius:var(--radius-full);"></div></div>
+                  <span class="progress-value">94%</span>
+                </div>
+                <div class="grid-progress">
+                  <span class="text-secondary">A-09</span>
+                  <div class="progress-track"><div style="width:78%;height:100%;background:var(--color-warning);border-radius:var(--radius-full);"></div></div>
+                  <span class="progress-value">78%</span>
+                </div>
+                <div class="grid-progress">
+                  <span class="text-secondary">C-04</span>
+                  <div class="progress-track"><div style="width:63%;height:100%;background:var(--color-success);border-radius:var(--radius-full);"></div></div>
+                  <span class="progress-value">63%</span>
+                </div>
+              </div>
+              <button class="button button-secondary button-full-width" data-view="knowledge">
+                进入知识湖
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+
+            <!-- Activity -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="page-eyebrow mb-1">ACTIVITY</div>
+                  <h3 class="card-title">实时活动</h3>
+                </div>
+                <button class="icon-button button-sm" aria-label="刷新活动" id="refreshActivity">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+              <div class="list" id="activityList"><div class="skeleton-hook" aria-hidden="true"><span class="skeleton"></span><span class="skeleton"></span><span class="skeleton"></span></div></div>
+            </div>
+
+            <!-- Statement -->
+            <div class="card statement-card">
+              <div class="statement-mark">"</div>
+              <p class="statement-text">
+                真正高效的 AI，不是替你做决定，而是让每一个决定都不会被遗忘。
+              </p>
+              <span class="text-xs text-tertiary">— 晶流设计原则 01</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="page-view" data-page="experiments"><div class="page-intro"><div><span class="eyebrow"><i></i> EXPERIMENT STREAM</span><h1>实验流转，<em>从混乱到可见。</em></h1><p>每一个批次、风险和下一步，都在同一条上下文里被看见。</p></div><button class="button button-dark" data-action="new-task">+ 新建行动项</button></div><div class="view-toolbar"><div class="filter-pills"><button class="filter-pill is-active">全部实验 <span id="experimentCount">12</span></button><button class="filter-pill">高优先级 <span>3</span></button><button class="filter-pill">我负责 <span>4</span></button></div><button class="button button-quiet">看板视图 <span>▦</span></button></div><div class="experiment-grid" id="experimentGrid"></div></section>
+      <!-- Page: Experiments -->
+      <section class="page-view" data-page="experiments">
+        <div class="page-intro page-intro-row">
+          <div>
+            <div class="page-eyebrow"><span class="eyebrow-dot"></span>EXPERIMENT STREAM</div>
+            <h1 class="page-title">实验流转</h1>
+            <p class="page-description">每一个批次、风险和下一步，都在同一条上下文里被看见。</p>
+          </div>
+          <button class="button button-primary" data-action="new-task">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            新建行动项
+          </button>
+        </div>
+        <div class="filter-bar">
+          <div class="filter-group">
+            <button class="button button-secondary button-sm" style="background:var(--color-primary);color:white;border-color:var(--color-primary);">全部实验 <span id="experimentCount" class="filter-count">12</span></button>
+            <button class="button button-secondary button-sm">高优先级 <span class="filter-count">3</span></button>
+            <button class="button button-secondary button-sm">我负责 <span class="filter-count">4</span></button>
+          </div>
+          <button class="button button-ghost button-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            看板视图
+          </button>
+        </div>
+        <div class="grid grid-responsive" id="experimentGrid"><div class="skeleton-hook" aria-hidden="true"><span class="skeleton"></span><span class="skeleton"></span></div></div>
+      </section>
 
-      <section class="page-view" data-page="knowledge"><div class="page-intro"><div><span class="eyebrow"><i></i> KNOWLEDGE LAKE</span><h1>知识湖，<em>让经验产生复利。</em></h1><p>会议、实验和失败经验被连接成可查询的研发记忆。</p></div><button class="button button-lime" data-action="open-search">⌕ 搜索知识</button></div><div class="knowledge-layout"><div class="knowledge-map panel"><div class="panel-heading"><div><span class="panel-kicker">RESEARCH GRAPH</span><h3>研发知识网络</h3></div><span class="live-chip"><i></i> 6,842 节点</span></div><div class="graph-canvas"><div class="graph-lines"></div><div class="graph-node center"><strong>B-17</strong><small>晶型筛选</small></div><div class="graph-node graph-node-a"><strong>B-11</strong><small>历史方案</small></div><div class="graph-node graph-node-b"><strong>A-09</strong><small>失败案例</small></div><div class="graph-node graph-node-c"><strong>SOP-17</strong><small>流程规范</small></div><div class="graph-node graph-node-d"><strong>mt-2407</strong><small>会议证据</small></div><div class="graph-caption"><span class="legend-dot legend-mint"></span>实验 <span class="legend-dot legend-violet"></span>结论 <span class="legend-dot legend-coral"></span>风险</div></div></div><div class="knowledge-list panel"><div class="panel-heading"><div><span class="panel-kicker">REUSABLE ASSETS</span><h3>最近沉淀</h3></div><span class="text-button">排序：相关度⌄</span></div><div id="knowledgeList"></div></div></div></section>
+      <!-- Page: Risks -->
+      <section class="page-view" data-page="risks">
+        <div class="page-intro page-intro-row">
+          <div>
+            <div class="page-eyebrow"><span class="eyebrow-dot"></span>RISK GUARD</div>
+            <h1 class="page-title">风险守门</h1>
+            <p class="page-description">在实验进入下一阶段前，AI 自动检测参数漂移、数据缺口和未闭环行动项。</p>
+          </div>
+          <button class="button button-secondary" data-view="experiments">
+            查看实验
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+        <div class="metrics-grid mb-8" id="riskOverview"></div>
+        <div class="risk-grid" id="riskGrid"><div class="skeleton-hook" aria-hidden="true"><span class="skeleton"></span><span class="skeleton"></span></div></div>
+      </section>
 
-      <section class="page-view" data-page="agents"><div class="page-intro"><div><span class="eyebrow"><i></i> AI ASSISTANTS</span><h1>AI 助理，<em>把研发上下文带在身边。</em></h1><p>不是一个聊天框，而是一组能读懂研发流程的专用 Agent。</p></div><button class="button button-dark" data-action="open-analyzer">开始一次解析</button></div><div class="agent-grid"><article class="agent-card agent-card-primary"><div class="agent-card-top"><span class="agent-icon agent-icon-lime">✦</span><span class="agent-status">可用</span></div><h3>会议解析器</h3><p>从飞书会议转写中提炼决策、争议、风险和行动项，并带上原文时间戳。</p><div class="agent-spec"><span>领域模型</span><b>Meeting → Knowledge</b></div><button class="button button-lime full-width" data-action="open-analyzer">解析最近一场会议 <span>→</span></button></article><article class="agent-card"><div class="agent-card-top"><span class="agent-icon agent-icon-violet">⌁</span><span class="agent-status">可用</span></div><h3>实验相似检索</h3><p>跨会议、实验和 SOP 找到最相似的历史证据，给出可复用的原因与边界。</p><div class="agent-spec"><span>向量检索</span><b>pgvector + Rerank</b></div><button class="button button-outline full-width" data-action="open-search">查看命中结果 <span>↗</span></button></article><article class="agent-card"><div class="agent-card-top"><span class="agent-icon agent-icon-coral">!</span><span class="agent-status">可用</span></div><h3>风险守门员</h3><p>识别参数漂移、数据缺口和未闭环行动项，在实验进入下一阶段前主动提醒。</p><div class="agent-spec"><span>规则 + LLM</span><b>3 个待处理风险</b></div><button class="button button-outline full-width" data-view="experiments">处理风险 <span>↗</span></button></article></div><section class="agent-console panel"><div class="panel-heading"><div><span class="panel-kicker">AGENT RUNS</span><h3>最近运行记录</h3></div><span class="live-chip"><i></i> 流式输出</span></div><div class="console-row"><span class="console-time">09:52:14</span><span class="console-dot dot-mint"></span><b>MeetingParser</b><span>提取 B-17 参数决策 · 0.96 confidence</span><span class="console-done">DONE</span></div><div class="console-row"><span class="console-time">09:41:03</span><span class="console-dot dot-violet"></span><b>SimilarityReranker</b><span>关联 B-11 历史方案 · 6 个候选</span><span class="console-done">DONE</span></div><div class="console-row"><span class="console-time">09:27:56</span><span class="console-dot dot-coral"></span><b>RiskGuard</b><span>检测 A-09 环境数据缺口 · P1</span><span class="console-running">ACTION</span></div></section></section>
+      <!-- Page: Knowledge -->
+      <section class="page-view" data-page="knowledge">
+        <div class="page-intro page-intro-row">
+          <div>
+            <div class="page-eyebrow"><span class="eyebrow-dot"></span>KNOWLEDGE LAKE</div>
+            <h1 class="page-title">知识湖</h1>
+            <p class="page-description">会议、实验和失败经验被连接成可查询的研发记忆。</p>
+          </div>
+          <button class="button button-primary" data-action="open-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            搜索知识
+          </button>
+        </div>
+        <div class="knowledge-layout">
+          <!-- Graph -->
+          <div class="card graph-card">
+            <div class="card-header graph-card-header">
+              <div>
+                <div class="page-eyebrow mb-1">RESEARCH GRAPH</div>
+                <h3 class="card-title">研发知识网络</h3>
+              </div>
+              <span class="badge badge-neutral badge-dot" id="graphCount">连线中…</span>
+            </div>
+            <div class="knowledge-graph-container" id="graphContainer">
+              <canvas id="knowledgeCanvas"></canvas>
+              <div class="graph-tooltip" id="graphTooltip"></div>
+              <div class="knowledge-graph-legend">
+                <span class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>实验</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#a78bfa;"></span>结论</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#f87171;"></span>风险</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#22d3ee;"></span>规范</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#34d399;"></span>会议</span>
+              </div>
+            </div>
+          </div>
+          <!-- List -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="page-eyebrow mb-1">REUSABLE ASSETS</div>
+                <h3 class="card-title">最近沉淀</h3>
+              </div>
+              <button class="card-action">排序：相关度 ⌄</button>
+            </div>
+            <div class="knowledge-balance" id="knowledgeList" aria-label="知识资产：成功经验与失败经验">
+              <div class="balance-axis" aria-hidden="true"></div>
+              <section class="balance-column balance-column--left">
+                <header class="balance-column-head">
+                  <span class="balance-column-title">成功经验</span>
+                  <span class="balance-column-caption">最优参数 · 流程规范</span>
+                </header>
+                <article class="balance-card skeleton" aria-hidden="true"></article>
+                <article class="balance-card skeleton" aria-hidden="true"></article>
+                <article class="balance-card skeleton" aria-hidden="true"></article>
+              </section>
+              <section class="balance-column balance-column--right">
+                <header class="balance-column-head">
+                  <span class="balance-column-title">失败经验</span>
+                  <span class="balance-column-caption">方案争议</span>
+                </header>
+                <article class="balance-card skeleton" aria-hidden="true"></article>
+                <article class="balance-card skeleton" aria-hidden="true"></article>
+                <article class="balance-card skeleton" aria-hidden="true"></article>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section class="page-view" data-page="integrations"><div class="page-intro"><div><span class="eyebrow"><i></i> CONNECTORS</span><h1>连接器，<em>让信息自动流动。</em></h1><p>演示环境已准备好飞书会议、文档、知识库与多维表的接入契约。</p></div></div><div class="integration-grid"><article class="integration-card connected"><div class="integration-logo feishu-logo">F</div><div><h3>飞书会议 AI</h3><p>转写 · 纪要 · 时间戳 · 参会人</p></div><span>已连接</span></article><article class="integration-card connected"><div class="integration-logo docs-logo">D</div><div><h3>飞书文档</h3><p>结论写入 · 引用回链 · 权限同步</p></div><span>已连接</span></article><article class="integration-card connected"><div class="integration-logo table-logo">T</div><div><h3>多维表格</h3><p>实验任务 · 负责人 · 状态机</p></div><span>已连接</span></article><article class="integration-card"><div class="integration-logo graph-logo">N</div><div><h3>Neo4j 知识图谱</h3><p>节点关联 · 证据链 · 相似实验</p></div><button class="button button-quiet">配置</button></article></div></section>
+      <!-- Page: Agents -->
+      <section class="page-view" data-page="agents">
+        <div class="page-intro page-intro-row">
+          <div>
+            <div class="page-eyebrow"><span class="eyebrow-dot"></span>AI ASSISTANTS</div>
+            <h1 class="page-title">AI 助理</h1>
+            <p class="page-description">不是一个聊天框，而是一组能读懂研发流程的专用 Agent。</p>
+          </div>
+          <button class="button button-primary" data-action="open-analyzer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/></svg>
+            开始一次解析
+          </button>
+        </div>
+        <div class="agents-grid">
+          <!-- Meeting Parser -->
+          <div class="card agent-card-dark">
+            <div class="agent-card-header">
+              <div class="agent-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/></svg>
+              </div>
+              <span class="agent-status online">可用</span>
+            </div>
+            <h3 class="agent-title agent-title-light">会议解析器</h3>
+            <p class="agent-desc agent-desc-light">
+              从飞书会议转写中提炼决策、争议、风险和行动项，并带上原文时间戳。
+            </p>
+            <div class="agent-meta agent-meta-light">
+              <span>领域模型</span>
+              <span class="agent-meta-value agent-meta-value-light">Meeting → Knowledge</span>
+            </div>
+            <button class="button button-primary button-full-width" data-action="open-analyzer">
+              解析最近一场会议
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+          <!-- Similarity Search -->
+          <div class="card">
+            <div class="agent-card-header">
+              <div class="agent-icon agent-icon-soft">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <span class="agent-status online">可用</span>
+            </div>
+            <h3 class="agent-title">实验相似检索</h3>
+            <p class="agent-desc">
+              跨会议、实验和 SOP 找到最相似的历史证据，给出可复用的原因与边界。
+            </p>
+            <div class="agent-meta">
+              <span>向量检索</span>
+              <span class="agent-meta-value">pgvector + Rerank</span>
+            </div>
+            <button class="button button-secondary button-full-width" data-action="open-search">
+              查看命中结果
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+          <!-- Risk Guard -->
+          <div class="card">
+            <div class="agent-card-header">
+              <div class="agent-icon agent-icon-error">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-error)" stroke-width="2" stroke-linecap="round"><path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.5" fill="currentColor"/></svg>
+              </div>
+              <span class="agent-status online">可用</span>
+            </div>
+            <h3 class="agent-title">风险守门员</h3>
+            <p class="agent-desc">
+              识别参数漂移、数据缺口和未闭环行动项，在实验进入下一阶段前主动提醒。
+            </p>
+            <div class="agent-meta">
+              <span>规则 + LLM</span>
+              <span class="agent-meta-value" style="color:var(--color-error);">3 个待处理风险</span>
+            </div>
+            <button class="button button-secondary button-full-width" data-view="risks">
+              处理风险
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+        <!-- Agent Console -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="page-eyebrow mb-1">AGENT RUNS</div>
+              <h3 class="card-title">最近运行记录</h3>
+            </div>
+            <span class="badge badge-success badge-dot">流式输出</span>
+          </div>
+          <div class="run-list">
+            <div class="run-row">
+              <span class="run-time">09:52:14</span>
+              <span class="run-dot" style="background:var(--color-success);"></span>
+              <span class="font-semibold">MeetingParser</span>
+              <span class="text-secondary">提取 B-17 参数决策 · 0.96 confidence</span>
+              <span class="badge badge-success">DONE</span>
+            </div>
+            <div class="run-row">
+              <span class="run-time">09:41:03</span>
+              <span class="run-dot" style="background:var(--color-primary);"></span>
+              <span class="font-semibold">SimilarityReranker</span>
+              <span class="text-secondary">关联 B-11 历史方案 · 6 个候选</span>
+              <span class="badge badge-success">DONE</span>
+            </div>
+            <div class="run-row">
+              <span class="run-time">09:27:56</span>
+              <span class="run-dot" style="background:var(--color-error);"></span>
+              <span class="font-semibold">RiskGuard</span>
+              <span class="text-secondary">检测 A-09 环境数据缺口 · P1</span>
+              <span class="badge badge-error">ACTION</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <section class="page-view" data-page="settings"><div class="page-intro"><div><span class="eyebrow"><i></i> PREFERENCES</span><h1>偏好设置，<em>把工作方式交给你。</em></h1><p>调整提醒、解析策略和默认研发视图。</p></div></div><div class="settings-card panel"><div class="setting-row"><div><h3>新会议自动进入解析队列</h3><p>会议结束 5 分钟后自动开始提炼结构化结论。</p></div><button class="toggle is-on" aria-label="切换自动解析"><i></i></button></div><div class="setting-row"><div><h3>高风险参数主动提醒</h3><p>当实验进入执行阶段仍存在 P1 风险时，通知负责人。</p></div><button class="toggle is-on" aria-label="切换风险提醒"><i></i></button></div><div class="setting-row"><div><h3>知识结论写入前需要确认</h3><p>AI 生成的结论在写入团队知识湖前由负责人审核。</p></div><button class="toggle" aria-label="切换确认策略"><i></i></button></div></div></section>
+      <!-- Page: Integrations -->
+      <section class="page-view" data-page="integrations">
+        <div class="page-intro page-intro-row">
+          <div>
+            <div class="page-eyebrow"><span class="eyebrow-dot"></span>CONNECTORS</div>
+            <h1 class="page-title">连接器</h1>
+            <p class="page-description">演示环境已准备好飞书会议、文档、知识库与多维表的接入契约。</p>
+          </div>
+          <button class="button button-secondary" id="refreshInfra" data-action="refresh-infra">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            刷新状态
+          </button>
+        </div>
+        <div class="infra-strip" id="infraStrip" aria-label="基础设施实时状态">
+          <span class="infra-chip"><span class="infra-dot is-idle"></span>正在探测…</span>
+        </div>
+        <div class="grid grid-2">
+          <div class="card connector-card" data-connector="feishu">
+            <div class="agent-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="flex-1-min">
+              <h3 class="connector-title">飞书会议 AI</h3>
+              <p class="text-sm text-secondary">转写 · 纪要 · 时间戳 · 参会人</p>
+            </div>
+            <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+          </div>
+          <div class="card connector-card" data-connector="feishu">
+            <div class="agent-icon connector-icon docs">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="flex-1-min">
+              <h3 class="connector-title">飞书文档</h3>
+              <p class="text-sm text-secondary">结论写入 · 引用回链 · 权限同步</p>
+            </div>
+            <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+          </div>
+          <div class="card connector-card" data-connector="feishu">
+            <div class="agent-icon connector-icon sheet">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+            </div>
+            <div class="flex-1-min">
+              <h3 class="connector-title">多维表格</h3>
+              <p class="text-sm text-secondary">实验任务 · 负责人 · 状态机</p>
+            </div>
+            <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+          </div>
+          <div class="card connector-card" data-connector="neo4j">
+            <div class="agent-icon connector-icon graph">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="6.5" y1="7.5" x2="11" y2="16.5"/><line x1="17.5" y1="7.5" x2="13" y2="16.5"/></svg>
+            </div>
+            <div class="flex-1-min">
+              <h3 class="connector-title">Neo4j 知识图谱</h3>
+              <p class="text-sm text-secondary">节点关联 · 证据链 · 相似实验</p>
+            </div>
+            <span class="badge badge-neutral" data-connector-badge="neo4j">未配置</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page: Settings -->
+      <section class="page-view" data-page="settings">
+        <div class="page-intro">
+          <div class="page-eyebrow"><span class="eyebrow-dot"></span>PREFERENCES</div>
+          <h1 class="page-title">偏好设置</h1>
+          <p class="page-description">调整提醒、解析策略和默认研发视图。</p>
+        </div>
+        <div class="card settings-card">
+          <div class="settings-row">
+            <div>
+              <h3 class="settings-title">新会议自动进入解析队列</h3>
+              <p class="text-sm text-secondary">会议结束 5 分钟后自动开始提炼结构化结论。</p>
+            </div>
+            <button class="toggle is-on" aria-label="切换自动解析"><i></i></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <h3 class="settings-title">高风险参数主动提醒</h3>
+              <p class="text-sm text-secondary">当实验进入执行阶段仍存在 P1 风险时，通知负责人。</p>
+            </div>
+            <button class="toggle is-on" aria-label="切换风险提醒"><i></i></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <h3 class="settings-title">深色模式</h3>
+              <p class="text-sm text-secondary">切换界面主题为深色模式，减少眼睛疲劳。</p>
+            </div>
+            <button class="toggle" id="themeToggle" aria-label="切换深色模式"><i></i></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <h3 class="settings-title">知识结论写入前需要确认</h3>
+              <p class="text-sm text-secondary">AI 生成的结论在写入团队知识湖前由负责人审核。</p>
+            </div>
+            <button class="toggle" aria-label="切换确认策略"><i></i></button>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
-  <div class="toast" id="toast" role="status"></div>
-  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" data-action="close-modal" aria-label="关闭">×</button><div id="modalContent"></div></section></div>
+  <!-- Toast -->
+  <div class="toast-container">
+    <div class="toast" id="toast" role="status" style="display:none;"></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <button class="modal-close" data-action="close-modal" aria-label="关闭">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalContent"></div>
+    </section>
+  </div>
+
+  <!-- Command Menu -->
+  <div class="command-menu-backdrop" id="commandBackdrop"></div>
+  <div class="command-menu" id="commandMenu" aria-hidden="true">
+    <div class="command-menu-input-wrapper">
+      <svg class="command-menu-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input id="commandInput" class="command-menu-input" type="text" placeholder="输入命令或搜索…" autocomplete="off" />
+    </div>
+    <div class="command-menu-list" id="commandList"></div>
+    <div class="command-menu-footer">
+      <div class="command-menu-hint">
+        <kbd>↑</kbd><kbd>↓</kbd> 导航
+        <kbd>↵</kbd> 执行
+        <kbd>ESC</kbd> 关闭
+      </div>
+    </div>
+  </div>
+
   <script src="/app.js" defer></script>
 </body>
 </html>
-
-

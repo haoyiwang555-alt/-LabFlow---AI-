@@ -28,7 +28,12 @@
       "participants": 6,
       "status": "ready",
       "summary": "围绕溶剂比例、搅拌速率和冷却梯度的三组方案进行取舍，最终确定 B-17-03 进入小试。",
-      "tags": ["B-17", "晶型筛选", "参数决策"]
+      "tags": ["B-17", "晶型筛选", "参数决策"],
+      "segments": [
+        { "id": "ev-mt-2407-1", "start": "00:21:06", "end": "00:23:40", "transcriptRef": "B-17 参数评审 / 转写片段 #1", "content": "林岚提出 B-17-03 采用低温梯度方案进入小试，冷却速率 0.5 °C/min，预计较 B-11 减少 1.5 天试错。", "confidence": 0.96 },
+        { "id": "ev-mt-2407-2", "start": "00:27:12", "end": "00:29:04", "transcriptRef": "B-17 参数评审 / 转写片段 #2", "content": "陈默提醒溶剂比例接近历史失败案例临界值，高风险场景应增加中间检测点。", "confidence": 0.88 },
+        { "id": "ev-mt-2407-3", "start": "00:32:10", "end": "00:35:36", "transcriptRef": "B-17 参数评审 / 转写片段 #3", "content": "AI 命中 B-11 历史方案参数结构高度相似（相似度 0.94），建议复用低温梯度排程。", "confidence": 0.94 }
+      ]
     },
     {
       "id": "mt-2406",
@@ -39,7 +44,12 @@
       "participants": 8,
       "status": "analyzed",
       "summary": "发现失败主因与预热时间和湿度波动有关，建议将环境传感器数据纳入下一轮实验上下文。",
-      "tags": ["A-09", "失败经验", "环境变量"]
+      "tags": ["A-09", "失败经验", "环境变量"],
+      "segments": [
+        { "id": "ev-mt-2406-1", "start": "00:18:22", "end": "00:23:10", "transcriptRef": "A-09 复盘 / 转写片段 #1", "content": "周启明指出预热阶段湿度记录仪故障，湿度波动超过 15%，与结晶异常相关性 0.78。", "confidence": 0.93 },
+        { "id": "ev-mt-2406-2", "start": "00:31:08", "end": "00:34:42", "transcriptRef": "A-09 复盘 / 转写片段 #2", "content": "调整策略：下一轮将环境传感器数据绑定至实验上下文，作为强上下文变量。", "confidence": 0.9 },
+        { "id": "ev-mt-2406-3", "start": "00:45:02", "end": "00:49:18", "transcriptRef": "A-09 复盘 / 转写片段 #3", "content": "复用结论：同步至失败案例库，作为 A-09 风险规则样本。", "confidence": 0.88 }
+      ]
     },
     {
       "id": "mt-2405",
@@ -112,12 +122,12 @@
     }
   ],
   "knowledge": [
-    { "id": "k-01", "title": "B-11 低温梯度晶型筛选最优参数", "kind": "最优参数", "score": 0.94, "source": "会议 mt-2388 / 结论 #3", "freshness": "2 天前", "image": "/assets/microscope.jpg" },
-    { "id": "k-02", "title": "A-09 失败案例：湿度波动导致结晶异常", "kind": "失败经验", "score": 0.91, "source": "复盘会 mt-2406 / 风险 #2", "freshness": "昨天", "image": "/assets/lab-team.jpg" },
-    { "id": "k-03", "title": "自动化工作站换液顺序与污染控制 SOP", "kind": "流程规范", "score": 0.87, "source": "文档 SOP-17", "freshness": "5 天前", "image": "/assets/robotics.jpg" },
-    { "id": "k-04", "title": "B-17-03 方案争议：溶剂比例对晶型稳定性的影响", "kind": "方案争议", "score": 0.84, "source": "会议 mt-2407 / 议题 #2", "freshness": "12 分钟前", "image": "/assets/data-room.jpg" },
-    { "id": "k-05", "title": "高通量实验数据字段字典 v2.3", "kind": "数据资产", "score": 0.79, "source": "知识库 / 数据治理", "freshness": "1 周前", "image": "/assets/analytics.jpg" },
-    { "id": "k-06", "title": "实验异常上报与责任分派规则", "kind": "协作规则", "score": 0.75, "source": "多维表 / R&D-OPS", "freshness": "2 周前", "image": "/assets/office.jpg" }
+    { "id": "k-01", "title": "B-11 低温梯度晶型筛选最优参数", "kind": "最优参数", "score": 0.94, "source": "会议 mt-2388 / 结论 #3", "freshness": "2 天前", "image": "/assets/microscope.jpg", "status": "approved" },
+    { "id": "k-02", "title": "A-09 失败案例：湿度波动导致结晶异常", "kind": "失败经验", "score": 0.91, "source": "复盘会 mt-2406 / 风险 #2", "freshness": "昨天", "image": "/assets/lab-team.jpg", "status": "approved" },
+    { "id": "k-03", "title": "自动化工作站换液顺序与污染控制 SOP", "kind": "流程规范", "score": 0.87, "source": "文档 SOP-17", "freshness": "5 天前", "image": "/assets/robotics.jpg", "status": "approved" },
+    { "id": "k-04", "title": "B-17-03 方案争议：溶剂比例对晶型稳定性的影响", "kind": "方案争议", "score": 0.84, "source": "会议 mt-2407 / 议题 #2", "freshness": "12 分钟前", "image": "/assets/data-room.jpg", "status": "pending" },
+    { "id": "k-05", "title": "高通量实验数据字段字典 v2.3", "kind": "数据资产", "score": 0.79, "source": "知识库 / 数据治理", "freshness": "1 周前", "image": "/assets/analytics.jpg", "status": "pending" },
+    { "id": "k-06", "title": "实验异常上报与责任分派规则", "kind": "协作规则", "score": 0.75, "source": "多维表 / R&D-OPS", "freshness": "2 周前", "image": "/assets/office.jpg", "status": "pending" }
   ],
   "tasks": [
     { "id": "task-01", "title": "补录 A-09 批次环境湿度曲线", "owner": "周启明", "due": "今天 18:00", "priority": "high", "status": "todo", "source": "mt-2406" },
@@ -129,6 +139,97 @@
     { "time": "09:52", "title": "AI 解析完成", "detail": "B-17 参数评审已提炼 3 条决策与 2 个行动项", "tone": "mint" },
     { "time": "09:41", "title": "知识命中", "detail": "为 B-17 关联 B-11 历史方案，证据相似度 0.94", "tone": "violet" },
     { "time": "09:27", "title": "风险升级", "detail": "A-09 湿度数据缺口标记为高优先级任务", "tone": "coral" },
-    { "time": "08:55", "title": "协同同步", "detail": "自动化工作站已确认 C-04 物料排程", "tone": "blue" }
+    { "time": "08:55", "title": "协同同步", "detail": "自动化工作站已确认 C-04 物料排程", "tone": "blue" },
+    { "time": "08:30", "title": "知识写入", "detail": "D-22 溶剂迁移结论已同步至团队知识库", "tone": "mint" },
+    { "time": "08:15", "title": "风险关闭", "detail": "C-04 物料延迟风险已解除，ETA 已更新", "tone": "violet" },
+    { "time": "07:50", "title": "实验启动", "detail": "E-15 酶催化反应动力学实验进入参数评审阶段", "tone": "blue" },
+    { "time": "07:20", "title": "AI 解析完成", "detail": "Q3 周例会已提炼 5 条决策与 3 个行动项", "tone": "mint" }
+  ],
+  "risks": [
+    {
+      "id": "risk-01",
+      "experimentId": "exp-a09",
+      "experimentCode": "A-09",
+      "level": "P1",
+      "category": "数据缺口",
+      "title": "环境湿度数据缺失",
+      "description": "A-09 实验批次缺少环境传感器数据，无法确认湿度波动与结晶异常的因果关系",
+      "triggerParams": ["温度 ≥ 28°C", "湿度波动 > 15%"],
+      "evidence": "会议 mt-2406 中周启明提到预热阶段湿度记录仪故障",
+      "aiSuggestion": "建议补录72小时环境数据后重新运行相关性分析",
+      "status": "open",
+      "owner": "周启明",
+      "createdAt": "2026-07-18T16:45:00+08:00",
+      "relatedKnowledge": ["k-02"]
+    },
+    {
+      "id": "risk-02",
+      "experimentId": "exp-b17",
+      "experimentCode": "B-17",
+      "level": "P2",
+      "category": "参数漂移",
+      "title": "溶剂比例临界值风险",
+      "description": "B-17-03 方案中溶剂比例接近历史失败案例的临界值，存在晶型漂移风险",
+      "triggerParams": ["溶剂比例 > 65%", "搅拌速率 < 200 rpm"],
+      "evidence": "会议 mt-2407 中林岚提到高浓度溶剂可能导致晶型不稳定",
+      "aiSuggestion": "建议增加中间检测点，每2小时取样验证晶型稳定性",
+      "status": "open",
+      "owner": "林岚",
+      "createdAt": "2026-07-19T09:30:00+08:00",
+      "relatedKnowledge": ["k-04"]
+    },
+    {
+      "id": "risk-03",
+      "experimentId": "exp-c04",
+      "experimentCode": "C-04",
+      "level": "P3",
+      "category": "物料延迟",
+      "title": "关键物料到货延迟",
+      "description": "C-04 实验所需的高纯度试剂供应商发货延迟，预计延迟2-3天",
+      "triggerParams": ["物料 ETA > 当前日期 + 3天"],
+      "evidence": "自动化工作站物料跟踪系统检测到供应商物流异常",
+      "aiSuggestion": "建议启动备选供应商采购流程，或调整实验优先级",
+      "status": "resolved",
+      "owner": "陈默",
+      "createdAt": "2026-07-17T14:20:00+08:00",
+      "resolvedAt": "2026-07-18T10:15:00+08:00",
+      "relatedKnowledge": ["k-06"]
+    },
+    {
+      "id": "risk-04",
+      "experimentId": "exp-e15",
+      "experimentCode": "E-15",
+      "level": "P1",
+      "category": "权限冲突",
+      "title": "跨团队数据访问权限未确认",
+      "description": "E-15 实验需要访问算法组的历史数据，但跨团队权限审批尚未完成",
+      "triggerParams": ["跨团队数据请求", "权限审批状态 = pending"],
+      "evidence": "权限管理系统显示算法组数据访问申请待审批",
+      "aiSuggestion": "建议联系算法组负责人加速审批，或申请临时只读权限",
+      "status": "open",
+      "owner": "林岚",
+      "createdAt": "2026-07-19T08:00:00+08:00",
+      "relatedKnowledge": ["k-06"]
+    },
+    {
+      "id": "risk-05",
+      "experimentId": "exp-b17",
+      "experimentCode": "B-17",
+      "level": "P2",
+      "category": "模型降级",
+      "title": "LLM API 响应延迟",
+      "description": "近期 LLM API 响应时间不稳定，可能影响会议解析的实时性",
+      "triggerParams": ["API 响应时间 > 5s", "连续失败 > 3次"],
+      "evidence": "系统监控显示过去24小时内 LLM API P95 延迟达到 8.2s",
+      "aiSuggestion": "建议启用本地缓存模型作为降级方案，或切换到备用 API",
+      "status": "open",
+      "owner": "AI 研发助理",
+      "createdAt": "2026-07-19T07:45:00+08:00",
+      "relatedKnowledge": ["k-05"]
+    }
+  ],
+  "audit": [
+    { "id": "audit-seed-1", "entityType": "meeting", "entityId": "mt-2406", "action": "meeting-analyzed", "detail": "A-09 失败样本复盘会 解析完成，mode=seed", "source": "seed", "createdAt": "2026-07-18T16:30:00+08:00", "traceId": "trace-seed-1" },
+    { "id": "audit-seed-2", "entityType": "knowledge", "entityId": "k-02", "action": "knowledge-written", "detail": "写入知识「A-09 失败案例：湿度波动导致结晶异常」", "source": "seed", "createdAt": "2026-07-18T16:35:00+08:00", "traceId": "trace-seed-2" }
   ]
 }

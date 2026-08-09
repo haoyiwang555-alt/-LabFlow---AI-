@@ -1,0 +1,12 @@
+/* LabFlow self-hosted font faces.
+ * Inter (variable, wght 100-900) is vendored from the repo probe font.
+ * MiSans is loaded via the Xiaomi web CDN link in index.html (Chinese fallback for CJK).
+ * JetBrains Mono is intentionally NOT vendored; --font-mono falls back to system monospace.
+ */
+@font-face {
+  font-family: 'Inter';
+  src: url('./Inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
