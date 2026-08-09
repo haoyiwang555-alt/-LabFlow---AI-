@@ -52,6 +52,7 @@ output/huihui_test.wav
 *.webm
 *.bak
 *.bak.*
+*.bak-*
 
 # System Files
 .vscode/
