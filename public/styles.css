@@ -133,13 +133,14 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
 
 /* Metrics: single bordered container, cards separated by 1px rules (instrument scale) */
 .metrics-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6); }
-.metric-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); min-height: 158px; background: var(--surface); }
+.metric-card { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); min-height: 158px; background: var(--surface); transition: background var(--dur-n) var(--ease); }
+.metric-card:hover { background: var(--line-soft); }
 .metric-card + .metric-card { border-left: 1px solid var(--line); }
 .metric-label { font-size: var(--text-xs); font-weight: var(--w-med); color: var(--ink-3); text-transform: uppercase; letter-spacing: var(--ls-wide); }
 .metric-value { font-size: var(--text-2xl); font-weight: var(--w-semi); color: var(--ink-1); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-tight); line-height: 1.1; }
 .metric-trend { font-size: var(--text-xs); color: var(--ink-3); display: inline-flex; align-items: center; gap: 2px; }
 .metric-trend.up { color: var(--success); }
-.metric-trend.down { color: var(--success); }
+.metric-trend.down { color: var(--warning); }
 .metric-sparkline { margin-top: auto; width: 100%; height: 32px; display: block; }
 .metric-sparkline { color: var(--ink-3); }
 .metric-sparkline.is-current { color: var(--action); }
@@ -150,9 +151,9 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
 .hero-card { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); background: var(--rail); border: 0; border-radius: var(--r-xl); overflow: hidden; margin-bottom: var(--s8); }
 .hero-content { padding: var(--s10); display: flex; flex-direction: column; justify-content: center; }
 .badge-row { display: inline-flex; align-items: center; gap: var(--s2); margin-bottom: var(--s4); }
-.hero-title { font-size: var(--t-2xl); font-weight: var(--w-semi); letter-spacing: var(--ls-tight); line-height: var(--lh-snug); color: #fafaf9; margin-bottom: var(--s4); }
+.hero-title { font-size: var(--t-3xl); font-weight: var(--w-semi); letter-spacing: var(--ls-tight); line-height: var(--lh-tight); color: #fafaf9; margin-bottom: var(--s4); }
 .hero-title span { color: var(--rail-bar); }
-.hero-desc { color: rgba(250,250,249,.6); font-size: var(--t-base); line-height: var(--lh-relax); margin-bottom: var(--s6); }
+.hero-desc { color: rgba(250,250,249,.72); font-size: var(--t-base); line-height: var(--lh-relax); margin-bottom: var(--s6); max-width: 46ch; }
 .hero-actions { display: flex; align-items: center; gap: var(--s4); }
 .hero-sync { display: flex; align-items: center; gap: var(--s1); font-size: var(--t-xs); color: rgba(250,250,249,.42); }
 .pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block; animation: pulse 2s ease-in-out infinite; }
@@ -194,6 +195,11 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
   font-size: var(--t-xs);
   color: var(--ink-rail-2);
 }
+.hero-axis-summary .hl {
+  font-style: normal;
+  font-weight: var(--w-semi);
+  color: var(--rail-bar);
+}
 .hero-axis-track {
   position: relative;
   height: 108px;
@@ -206,7 +212,7 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
   right: 0;
   top: 50%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.16);
+  background: linear-gradient(90deg, rgba(96,165,250,.55), rgba(96,165,250,.12) 62%, rgba(255,255,255,.16));
 }
 .hero-axis-point {
   position: absolute;
@@ -215,7 +221,7 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
   transform: translateX(-50%);
 }
 .hero-axis-point[data-x="0"] { left: 0; }
-.hero-axis-point[data-x="0.833"] { left: 0.833%; }
+.hero-axis-point[data-x="4.5"] { left: 4.5%; }
 .hero-axis-point[data-x="18.75"] { left: 18.75%; }
 .hero-axis-point[data-x="94.583"] { left: 94.583%; }
 .hero-axis-node {
@@ -244,12 +250,12 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: var(--t-xs);
-  color: var(--ink-rail);
+  color: #fafaf9;
 }
 .hero-axis-label {
   font-size: var(--t-sm);
   font-weight: var(--w-med);
-  color: var(--ink-rail);
+  color: rgba(250,250,249,.62);
 }
 /* alternate bands above (odd) / below (even) the rail to avoid near-node collision */
 .hero-axis-point .hero-axis-time { top: 0; }
@@ -295,9 +301,20 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
 .hero-axis-pass-value {
   font-size: var(--t-sm);
   font-weight: var(--w-semi);
-  color: var(--rail-bar);
+  color: var(--success);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+}
+.hero-axis-pass-value::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s ease-in-out infinite;
 }
 .hero-axis-pass-target {
   font-size: var(--t-xs);
@@ -370,6 +387,9 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
     top: auto;
     align-items: flex-start;
   }
+  .hero-content { padding: var(--s6) var(--s5); }
+  .hero-title { font-size: var(--t-2xl); }
+  .hero-actions { flex-wrap: wrap; gap: var(--s3); }
 }
 
 /* Pipeline */
@@ -455,9 +475,9 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
 .knowledge-type-mark { width: 40px; height: 40px; border-radius: var(--r-md); font-family: var(--font-mono); font-size: var(--t-xs); font-weight: var(--w-semi); letter-spacing: .05em; }
 .knowledge-type-mark[data-kind="最优参数"] { background: var(--action-softer); color: var(--action); }
 .knowledge-type-mark[data-kind="失败经验"] { background: var(--danger-soft); color: var(--danger); }
-.knowledge-type-mark[data-kind="流程规范"] { background: #ecfeff; color: #0891b2; }
-.knowledge-type-mark[data-kind="方案争议"] { background: #f5f3ff; color: #7c3aed; }
-.knowledge-type-mark[data-kind="数据资产"] { background: #eff6ff; color: #2563eb; }
+.knowledge-type-mark[data-kind="流程规范"] { background: var(--success-soft); color: var(--success); }
+.knowledge-type-mark[data-kind="方案争议"] { background: var(--warning-soft); color: var(--warning); }
+.knowledge-type-mark[data-kind="数据资产"] { background: var(--action-softer); color: var(--action); }
 .knowledge-type-mark[data-kind="协作规则"] { background: var(--success-soft); color: var(--success); }
 
 /* ===== Knowledge lake: dual-asset symmetric layout (docs16 · 2.6) =====
@@ -765,8 +785,8 @@ a:hover { color: var(--action-hover); text-decoration: underline; text-underline
 [data-theme="dark"] .knowledge-type-mark { background: #211e1a; }
 [data-theme="dark"] .knowledge-type-mark[data-kind="最优参数"] { background: rgba(96,165,250,.13); color: #93c5fd; }
 [data-theme="dark"] .knowledge-type-mark[data-kind="失败经验"] { background: rgba(248,113,113,.12); color: #fca5a5; }
-[data-theme="dark"] .knowledge-type-mark[data-kind="流程规范"] { background: rgba(34,211,238,.11); color: #67e8f9; }
-[data-theme="dark"] .knowledge-type-mark[data-kind="方案争议"] { background: rgba(167,139,250,.13); color: #c4b5fd; }
+[data-theme="dark"] .knowledge-type-mark[data-kind="流程规范"] { background: rgba(52,211,153,.11); color: #6ee7b7; }
+[data-theme="dark"] .knowledge-type-mark[data-kind="方案争议"] { background: rgba(251,191,36,.12); color: #fcd34d; }
 [data-theme="dark"] .knowledge-type-mark[data-kind="数据资产"] { background: rgba(96,165,250,.10); color: #7dd3fc; }
 [data-theme="dark"] .knowledge-type-mark[data-kind="协作规则"] { background: rgba(52,211,153,.11); color: #6ee7b7; }
 [data-theme="dark"] .hero-card > div:last-child > div:last-child { background: rgba(22,20,18,.88); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.14); color: #f5f5f4; }

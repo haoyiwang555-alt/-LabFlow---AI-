@@ -55,10 +55,16 @@ const state = loadState();
 const mime = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
-  '.png': 'image/png', '.webp': 'image/webp', '.ico': 'image/x-icon'
+  '.png': 'image/png', '.webp': 'image/webp', '.ico': 'image/x-icon',
+  '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf', '.otf': 'font/otf',
+  '.eot': 'application/vnd.ms-fontobject'
 };
 
+// 优化点: persist() 仅由写操作调用（读操作从不触发写盘，避免多余磁盘 IO）。
+// 引入 stateEpoch：每次写盘自增，作为「状态派生数据」（图谱/SLA）内存缓存的失效键，保证数据新鲜。
+let stateEpoch = 0;
 function persist() {
+  stateEpoch += 1;
   fs.writeFileSync(RUNTIME_FILE, JSON.stringify(state, null, 2), 'utf8');
 }
 
@@ -235,10 +241,13 @@ ${isFailure ? '这是失败复盘会议，请重点关注根因分析、调整�
 }
 
 /* ── Meeting evidence (seed segments, else deterministic generation) ── */
+// 优化点: 确定性生成结果按 meeting 对象缓存（WeakMap 无需手动失效、随 GC 回收），避免对同一会议重复推导。
+const evidenceCache = new WeakMap();
 function meetingEvidence(meeting) {
   if (Array.isArray(meeting.segments) && meeting.segments.length) return meeting.segments;
+  if (evidenceCache.has(meeting)) return evidenceCache.get(meeting);
   const analysis = deterministicAnalysis(meeting);
-  return analysis.decisions.map((d, i) => {
+  const items = analysis.decisions.map((d, i) => {
     const m = String(d.evidence || '').match(/(\d{2}:\d{2}(?::\d{2})?)\s*[-–—]\s*(\d{2}:\d{2}(?::\d{2})?)/);
     return {
       id: `ev-${meeting.id}-${i + 1}`,
@@ -249,6 +258,8 @@ function meetingEvidence(meeting) {
       confidence: analysis.confidence
     };
   });
+  evidenceCache.set(meeting, items);
+  return items;
 }
 
 /* ── Infra status (honest probing) ── */
@@ -272,7 +283,13 @@ function parseBoltUri(uri) {
     return { host: u.hostname || '127.0.0.1', port: Number(u.port || 7687) };
   } catch { return null; }
 }
+// 优化点: TCP 探测有网络延迟且结果仅在配置变化后变化，加 10s 短时缓存，避免每个请求都探测 Redis/Neo4j。
+const INFRA_TTL_MS = 10000;
+let infraCache = null;
+let infraCacheAt = 0;
 async function infraStatus() {
+  const now = Date.now();
+  if (infraCache && now - infraCacheAt < INFRA_TTL_MS) return infraCache;
   const started = Date.now();
   const jsonMs = Date.now() - started;
 
@@ -304,18 +321,27 @@ async function infraStatus() {
     ? { status: 'configured', detail: '已配置 LLM_API_KEY，按需调用 ' + LLM_MODEL, latencyMs: 0 }
     : { status: 'fallback', detail: '未配置 LLM_API_KEY，使用确定性适配器', latencyMs: 0 };
 
-  return {
+  const result = {
     json: { status: 'connected', detail: 'JSON 持久化已生效（seed + runtime）', latencyMs: jsonMs },
     redis,
     neo4j,
     llm,
     feishu: { status: 'contract-ready', detail: '契约就绪 · 演示适配器（demo-adapter）', latencyMs: 0 }
   };
+  infraCache = result;
+  infraCacheAt = now;
+  return result;
 }
 
 /* ── Knowledge Graph (deterministic derivation from seed/runtime) ── */
 const KNOWLEDGE_TYPE = kind => (kind === '失败经验' ? 'risk' : (kind === '流程规范' || kind === '协作规则') ? 'spec' : 'conclusion');
+// 优化点: 图谱为确定性推导，按 (stateEpoch, filter) 缓存，写操作后自动失效，避免每个请求重复遍历全量数据。
+const graphCache = new Map();
 function buildGraph(filterExperimentCode) {
+  const key = `${stateEpoch}:${filterExperimentCode || ''}`;
+  const hit = graphCache.get(key);
+  if (hit) return hit;
+  if (graphCache.size > 100) graphCache.clear(); // 防止跨 epoch 的过滤组合无限累积
   const nodes = [];
   const nodeMap = new Map();
   const edges = [];
@@ -349,20 +375,27 @@ function buildGraph(filterExperimentCode) {
   if (filterExperimentCode) {
     const keep = new Set([filterExperimentCode]);
     for (const e of edges) { if (e.source === filterExperimentCode) keep.add(e.target); if (e.target === filterExperimentCode) keep.add(e.source); }
-    return { nodes: nodes.filter(n => keep.has(n.id)), edges: edges.filter(e => keep.has(e.source) && keep.has(e.target)) };
+    const result = { nodes: nodes.filter(n => keep.has(n.id)), edges: edges.filter(e => keep.has(e.source) && keep.has(e.target)) };
+    graphCache.set(key, result);
+    return result;
   }
-  return { nodes, edges };
+  const result = { nodes, edges };
+  graphCache.set(key, result);
+  return result;
 }
 
 /* ── SLA metrics ── */
+// 优化点: SLA 由 audit/metrics 确定性推导，按 stateEpoch 缓存，写操作后自动失效，避免每个请求重复归并统计。
+const slaCache = new Map();
 function slaMetrics() {
+  if (slaCache.has(stateEpoch)) return slaCache.get(stateEpoch);
   const targetHours = 24;
   const audit = state.audit || [];
   const relevant = audit.filter(r => ['meeting-analyzed', 'knowledge-written', '知识写入', 'AI 解析完成'].includes(r.action));
   if (state.metrics && relevant.length === 0) {
     // Honest seed fallback — mark the source explicitly.
     const slaRate = state.metrics.knowledgeSla ?? 87;
-    return {
+    const result = {
       targetHours, total: 28, met: Math.round(28 * slaRate / 100), slaRate,
       avgHours: state.metrics.avgReuseHours ?? 6.4,
       daily: [
@@ -373,6 +406,8 @@ function slaMetrics() {
       ],
       source: 'seed'
     };
+    slaCache.set(stateEpoch, result);
+    return result;
   }
   // Compute from audit timestamps (daily buckets).
   const dayKey = iso => String(iso || '').slice(0, 10);
@@ -387,7 +422,9 @@ function slaMetrics() {
   const rows = [...daily.values()].map(b => ({ date: b.date.slice(5), met: b.met, total: b.total })).sort((a, b) => a.date.localeCompare(b.date));
   const total = rows.reduce((s, r) => s + r.total, 0);
   const met = rows.reduce((s, r) => s + r.met, 0);
-  return { targetHours, total, met, slaRate: total ? Math.round(met / total * 100) : 100, avgHours: state.metrics.avgReuseHours ?? 6.4, daily: rows, source: 'computed' };
+  const result = { targetHours, total, met, slaRate: total ? Math.round(met / total * 100) : 100, avgHours: state.metrics.avgReuseHours ?? 6.4, daily: rows, source: 'computed' };
+  slaCache.set(stateEpoch, result);
+  return result;
 }
 
 /* ── SSE aids ── */
@@ -527,21 +564,26 @@ async function api(req, res, url) {
     if (cached && lastEventId) {
       // Resume from the checkpoint: replay events after the given one.
       // Event ids look like `run-<uuid>-step<N>`; extract the numeric step.
+      // 优化点: 重放事件一次性批量写入（单次 res.write），而非逐条多次写。
       const stepOf = id => { const m = String(id).match(/(?:-step|-)(\d+)$/); return m ? Number(m[1]) : 0; };
       const resumeStep = stepOf(lastEventId);
+      const buffer = [];
       for (const ev of cached.events) {
         const evStep = stepOf(ev.id);
         if (evStep <= resumeStep) continue;
-        if (!writeEvent(ev.id, ev.payload)) break;
+        buffer.push(`id: ${ev.id}\ndata: ${JSON.stringify(ev.payload)}\n\n`);
       }
-      writeEvent(`${cached.runId}-7`, { step: 7, runId: cached.runId, analysis: cached.analysis, done: true });
+      buffer.push(`id: ${cached.runId}-7\ndata: ${JSON.stringify({ step: 7, runId: cached.runId, analysis: cached.analysis, done: true })}\n\n`);
+      if (!closed && !res.writableEnded) res.write(buffer.join(''));
       finish();
       return;
     }
     if (cached) {
       // Same meeting + same transcript → replay cached result
-      for (const ev of cached.events) if (!writeEvent(ev.id, ev.payload)) break;
-      writeEvent(`${cached.runId}-7`, { step: 7, runId: cached.runId, analysis: cached.analysis, done: true });
+      // 优化点: 重放事件一次性批量写入。
+      const buffer = cached.events.map(ev => `id: ${ev.id}\ndata: ${JSON.stringify(ev.payload)}\n\n`);
+      buffer.push(`id: ${cached.runId}-7\ndata: ${JSON.stringify({ step: 7, runId: cached.runId, analysis: cached.analysis, done: true })}\n\n`);
+      if (!closed && !res.writableEnded) res.write(buffer.join(''));
       finish();
       return;
     }
@@ -722,7 +764,21 @@ function serveStatic(req, res, url) {
   if (!file.startsWith(PUBLIC_DIR)) return notFound(res);
   fs.stat(file, (error, info) => {
     if (error || !info.isFile()) return notFound(res);
-    res.writeHead(200, { 'Content-Type': mime[path.extname(file).toLowerCase()] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+    const ext = path.extname(file).toLowerCase();
+    // 优化点: 图片/字体走长缓存（30 天），浏览器不再重复请求；HTML/CSS/JS 走 no-cache + ETag 协商缓存，
+    // 未变更时返回 304 空响应体，避免每次请求都重复读文件并回传全文。
+    const isLongCache = ['.jpg', '.jpeg', '.png', '.webp', '.svg', '.ico', '.woff', '.woff2', '.ttf', '.otf', '.eot'].includes(ext);
+    const etag = `"${info.size}-${Math.floor(info.mtimeMs)}"`;
+    if (req.headers['if-none-match'] === etag) {
+      res.writeHead(304, { 'ETag': etag, 'Cache-Control': isLongCache ? 'public, max-age=2592000' : 'no-cache' });
+      res.end();
+      return;
+    }
+    res.writeHead(200, {
+      'Content-Type': mime[ext] || 'application/octet-stream',
+      'Cache-Control': isLongCache ? 'public, max-age=2592000' : 'no-cache',
+      'ETag': etag
+    });
     fs.createReadStream(file).pipe(res);
   });
 }

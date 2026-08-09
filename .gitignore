@@ -42,6 +42,8 @@ scripts/generate_audio.ps1
 # Temporary / Build / Test Artifacts
 test-results/
 playwright-report/
+output/.vision-tmp/
+output/playwright/
 output/video_temp/
 output/pdf_preview/
 output/_ftest.pdf
