@@ -381,11 +381,8 @@ function renderRisks(items) {
         </li>
       </ol>
       <div class="risk-foot">
-        <span class="risk-foot-key">实验</span>
-        <span class="risk-foot-val">${esc(item.experimentCode)}</span>
-        <span class="risk-foot-divider" aria-hidden="true"></span>
-        <span class="risk-foot-key">负责人</span>
-        <span class="risk-foot-val">${esc(item.owner)}</span>
+        <span class="risk-foot-chip"><span class="risk-foot-chip-key">实验</span><span class="risk-foot-chip-val">${esc(item.experimentCode)}</span></span>
+        <span class="risk-foot-chip"><span class="risk-foot-chip-key">负责人</span><span class="risk-foot-chip-val">${esc(item.owner)}</span></span>
       </div>
     </div>
   `;}).join('');
@@ -493,12 +490,24 @@ async function renderInfra() {
 async function renderSla() {
   const valueEl = $('#slaRingValue');
   const subEl = $('#slaRingSub');
+  const barEl = $('#slaRingBar');
   if (!valueEl) return;
   try {
     const sla = await api('/api/metrics/sla');
-    valueEl.innerHTML = `${sla.slaRate}<small>%</small>`;
+    const rate = Number(sla.slaRate) || 0;
+    valueEl.innerHTML = `${Math.round(rate)}<small>%</small>`;
     const met = sla.met ?? '-', total = sla.total ?? '-';
     if (subEl) subEl.innerHTML = `目标 ≤${sla.targetHours}h · 达标 ${met}/${total} · ${sla.source === 'seed' ? '演示数据' : '实时计算'}`;
+    if (barEl) {
+      // Circumference of r=42 ≈ 263.9; offset = C * (1 - rate)
+      const C = 2 * Math.PI * 42;
+      barEl.setAttribute('stroke-dasharray', C.toFixed(2));
+      // Defer one frame so the CSS transition runs from 0% to current value
+      requestAnimationFrame(() => { barEl.setAttribute('stroke-dashoffset', (C * (1 - Math.max(0, Math.min(100, rate)) / 100)).toFixed(2)); });
+      // Color the bar by tier: ≥90 primary, 70-89 amber, <70 error
+      const tone = rate >= 90 ? 'var(--color-success)' : rate >= 70 ? 'var(--color-warning)' : 'var(--color-error)';
+      barEl.setAttribute('stroke', tone);
+    }
   } catch (error) {
     if (subEl) subEl.innerHTML = `目标 ≤24h · 演示数据（接口暂不可用）`;
   }
@@ -877,10 +886,15 @@ $$('.segmented').forEach(group => {
   });
 });
 
-/* Range slider: live-update the value label */
+/* Range slider: live-update the value label and the track progress */
 $$('.range').forEach(range => {
   const out = range.parentElement?.querySelector('.range-value');
-  const update = () => { if (out) out.textContent = (range.value / 100).toFixed(2); };
+  const update = () => {
+    if (out) out.textContent = (range.value / 100).toFixed(2);
+    const min = Number(range.min || 0), max = Number(range.max || 100);
+    const pct = ((Number(range.value) - min) / Math.max(1, max - min)) * 100;
+    range.style.setProperty('--range-progress', `${pct.toFixed(1)}%`);
+  };
   range.addEventListener('input', update);
   update();
 });
@@ -1001,10 +1015,20 @@ class KnowledgeGraph {
         const satellites = nodes.length - 1;
         const angle = (idx / Math.max(1, satellites)) * Math.PI * 2 - Math.PI / 2;
         const ring = idx < 4 ? ring1 : idx < 8 ? ring2 : ring3;
+        // Derive labelDir from the actual angle so a label is always on the *outward* side
+        // of its node — never pointing back at the hub.
+        let dir = dirs[(idx - 1) % dirs.length] || 'top';
+        const cosA = Math.cos(angle), sinA = Math.sin(angle);
+        if (Math.abs(cosA) > 0.6) dir = cosA > 0 ? 'right' : 'left';
+        else if (Math.abs(sinA) > 0.6) dir = sinA > 0 ? 'bottom' : 'top';
+        else if (cosA > 0 && sinA < 0) dir = 'top-right';
+        else if (cosA > 0 && sinA > 0) dir = 'bottom-right';
+        else if (cosA < 0 && sinA > 0) dir = 'bottom-left';
+        else if (cosA < 0 && sinA < 0) dir = 'top-left';
         return {
           id: n.id, label: n.label, type: n.type || 'conclusion', detail: n.meta?.detail || '',
           r: this._radiusFor(n.type), x: cx + Math.cos(angle) * ring, y: cy + Math.sin(angle) * ring, vx: 0, vy: 0,
-          labelDir: dirs[(idx - 1) % dirs.length] || 'top'
+          labelDir: dir
         };
       });
       this.edges = (edges || []).map(e => ({ from: e.source, to: e.target, label: e.relation || '' }));
@@ -1021,16 +1045,15 @@ class KnowledgeGraph {
 
   _tick() {
     if (this.dragNode) return; // dragging is a deliberate inspection mode; freeze the layout.
-    // Static radial layout: keep nodes on their assigned ring with a very gentle centripetal pull.
-    // Strong forces were causing node overlap on the hub; the radial positions are already optimal.
-    const damping = 0.78, centerPull = 0.0015, separation = 2.0;
-    const cx = this.width / 2, cy = this.height / 2;
+    // Static radial layout: keep nodes on their assigned ring. We only resolve *real*
+    // collisions (nodes pushed by the browser into each other), never a soft center pull,
+    // so cardinals stay at the cardinals and never migrate toward the hub.
+    const damping = 0.78, separation = 2.2;
     for (let i = 0; i < this.nodes.length; i++) {
       const a = this.nodes[i];
       if (a === this.dragNode) continue;
-      let fx = (cx - a.x) * centerPull;
-      let fy = (cy - a.y) * centerPull;
-      // Soft separation: only push apart when nodes are far too close
+      let fx = 0, fy = 0;
+      // Hard separation: push apart only when nodes are *visibly* colliding
       for (let j = 0; j < this.nodes.length; j++) {
         if (i === j) continue;
         const b = this.nodes[j];
