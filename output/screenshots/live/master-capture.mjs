@@ -21,8 +21,14 @@ async function capture(view, theme, viewport, name, light = false) {
   await page.goto(baseUrl, { waitUntil: 'networkidle', timeout: 30000 });
   await sleep(400);
   if (view) {
+    // Mobile sidebar is a transform-translated drawer; open it before clicking nav-item.
+    if (viewport.width < 600) {
+      await page.locator('#mobileMenu').click({ force: true }).catch(() => {});
+      await sleep(280);
+    }
     await page.locator(`[data-view="${view}"]`).first().click({ force: true }).catch(() => {});
-    await sleep(700);
+    // Knowledge graph needs a beat to fetch data and lay out its first frame.
+    await sleep(view === 'knowledge' ? 1300 : 700);
   }
   const file = path.join(__dirname, `${name}.png`);
   await page.screenshot({ path: file, fullPage: true });

@@ -165,6 +165,41 @@ function renderOverview(data) {
     </div>
   `).join('');
 
+  // Action items (今日行动项) — fills the left column whitespace under the meetings list
+  const tasks = (data.tasks || []).slice(0, 4);
+  const taskEl = $('#taskListOverview');
+  if (taskEl) {
+    const priorityMeta = {
+      high:   { label: '紧急', cls: 'tone-bad' },
+      normal: { label: '常规', cls: 'tone-good' },
+      low:    { label: '低优', cls: 'tone-soft' }
+    };
+    const statusMeta = {
+      todo:  { label: '待办', cls: 'badge-warning' },
+      doing: { label: '进行', cls: 'badge-primary' },
+      done:  { label: '完成', cls: 'badge-success' }
+    };
+    taskEl.innerHTML = tasks.map(t => {
+      const p = priorityMeta[t.priority] || priorityMeta.normal;
+      const s = statusMeta[t.status] || statusMeta.todo;
+      return `
+        <div class="list-item task-row">
+          <div class="task-check ${t.status === 'done' ? 'is-done' : ''}" aria-hidden="true">
+            ${t.status === 'done' ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+          </div>
+          <div class="list-item-content">
+            <div class="list-item-title">${esc(t.title)}</div>
+            <div class="list-item-description">${esc(t.owner)} · ${esc(t.due)} · 来源 ${esc(t.source)}</div>
+          </div>
+          <div class="task-meta">
+            <span class="task-priority ${p.cls}">${p.label}</span>
+            <span class="badge ${s.cls}">${s.label}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
   // Activity
   $('#activityList').innerHTML = `
     <ol class="spine spine--done">
@@ -1179,12 +1214,21 @@ class KnowledgeGraph {
         ctx.stroke();
       }
 
-      // ID inside the bubble (centered)
+      // ID inside the bubble (centered, font shrinks for long IDs so it never clips)
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       const isLarge = n.r > 24;
+      const idLen = (n.id || '').length;
+      // Auto-fit: pick a font size that always fits inside the bubble diameter.
+      const idMaxWidth = (n.r * 2) - 6; // 3px padding each side
+      let idFontPx = isLarge ? 12 : 11;
+      for (const tryPx of (isLarge ? [12, 11, 10, 9] : [11, 10, 9, 8])) {
+        ctx.font = `700 ${tryPx}px Inter, sans-serif`;
+        if (ctx.measureText(n.id || '').width <= idMaxWidth) { idFontPx = tryPx; break; }
+        idFontPx = tryPx;
+      }
       ctx.fillStyle = dimmed ? 'rgba(210,224,235,0.3)' : (isHover ? '#071019' : '#e6edf3');
-      ctx.font = `600 ${isLarge ? 12 : 10}px Inter, sans-serif`;
+      ctx.font = `700 ${idFontPx}px Inter, sans-serif`;
       ctx.fillText(n.id, n.x, n.y);
 
       // External label positioned per labelDir so labels never overlap nodes or each other.
@@ -1214,8 +1258,8 @@ class KnowledgeGraph {
         else if (ta === 'right') rx = lx - w;
         const ry = ly - h / 2;
         // Pill background for readability against the dark canvas
-        ctx.fillStyle = dimmed ? 'rgba(12, 23, 34, 0.55)' : 'rgba(12, 23, 34, 0.78)';
-        if (isHover) ctx.fillStyle = 'rgba(31, 138, 109, 0.92)';
+        ctx.fillStyle = dimmed ? 'rgba(12, 23, 34, 0.45)' : 'rgba(8, 18, 26, 0.88)';
+        if (isHover) ctx.fillStyle = 'rgba(31, 138, 109, 0.95)';
         const radius = h / 2;
         ctx.beginPath();
         ctx.moveTo(rx + radius, ry);
@@ -1228,10 +1272,16 @@ class KnowledgeGraph {
         ctx.lineTo(rx, ry + radius);
         ctx.arcTo(rx, ry, rx + radius, ry, radius);
         ctx.closePath();
+        // Drop shadow for separation from node bubbles
+        ctx.shadowColor = isHover ? 'rgba(31, 138, 109, 0.35)' : 'rgba(0, 0, 0, 0.55)';
+        ctx.shadowBlur = isHover ? 10 : 8;
+        ctx.shadowOffsetY = 1;
         ctx.fill();
-        // 1px hairline ring
-        ctx.strokeStyle = isHover ? 'rgba(94, 234, 212, 0.6)' : 'rgba(122, 219, 211, 0.18)';
-        ctx.lineWidth = 1;
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        // 1.5px brighter hairline ring so the pill clearly separates from node circles
+        ctx.strokeStyle = isHover ? 'rgba(94, 234, 212, 0.75)' : 'rgba(122, 219, 211, 0.40)';
+        ctx.lineWidth = 1.5;
         ctx.stroke();
         // Text
         ctx.textAlign = ta;

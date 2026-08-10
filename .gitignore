@@ -48,6 +48,13 @@ output/video_temp/
 output/pdf_preview/
 output/_ftest.pdf
 output/huihui_test.wav
+# One-off screenshot diagnostics (keep master/round/view/qck-equivalent flow)
+output/screenshots/live/baseline-*
+output/screenshots/live/opt-*
+output/screenshots/live/debug-*
+output/screenshots/live/qck-*
+output/screenshots/live/vision-*.md
+output/screenshots/live/*.mjs.bak
 *.wav
 *.webm
 *.bak
