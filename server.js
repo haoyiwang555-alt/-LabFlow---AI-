@@ -356,17 +356,27 @@ function buildGraph(filterExperimentCode) {
 
   for (const exp of state.experiments || []) addNode(exp.code, exp.name, 'experiment', `${exp.name} · ${exp.stage} · 进度 ${exp.progress}%`);
   for (const k of state.knowledge || []) addNode(k.id, k.title.slice(0, 10), KNOWLEDGE_TYPE(k.kind), `${k.title} · 置信度 ${Math.round(k.score * 100)}%`);
-  for (const r of state.risks || []) addNode(`risk-${r.id}`, r.title.slice(0, 10), 'risk', `${r.title} · ${r.level}`);
+  // Risk id: strip "risk-" prefix from r.id to keep canvas labels compact (e.g. "R-01" instead of "risk-risk-01")
+  for (const r of state.risks || []) {
+    const rid = String(r.id || '').replace(/^risk-/, '');
+    addNode(`R-${rid.replace(/^risk-/, '')}`, r.title.slice(0, 10), 'risk', `${r.title} · ${r.level}`);
+  }
   for (const m of state.meetings || []) addNode(m.id, m.title.slice(0, 10), 'meeting', `${m.title} · ${m.duration}`);
 
   for (const exp of state.experiments || []) {
     for (const k of state.knowledge || []) {
       if ((k.title || '').includes(exp.code) || (k.source || '').includes(exp.code)) addEdge(exp.code, k.id, '产出');
     }
-    for (const r of state.risks || []) if (r.experimentId === exp.id) addEdge(exp.code, `risk-${r.id}`, '风险关联');
+    for (const r of state.risks || []) if (r.experimentId === exp.id) {
+      const rid = String(r.id || '').replace(/^risk-/, '');
+      addEdge(exp.code, `R-${rid}`, '风险关联');
+    }
     for (const m of state.meetings || []) if ((m.tags || []).includes(exp.code)) addEdge(m.id, exp.code, '结论来源');
   }
-  for (const r of state.risks || []) for (const kid of r.relatedKnowledge || []) addEdge(`risk-${r.id}`, kid, '引用');
+  for (const r of state.risks || []) for (const kid of r.relatedKnowledge || []) {
+    const rid = String(r.id || '').replace(/^risk-/, '');
+    addEdge(`R-${rid}`, kid, '引用');
+  }
   for (const k of state.knowledge || []) {
     const m = String(k.source || '').match(/mt-\d+/);
     if (m && nodeMap.has(m[0])) addEdge(m[0], k.id, '沉淀');

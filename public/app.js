@@ -69,11 +69,17 @@ function sparkline(data, isCurrent = false, w = 180, h = 32) {
   const area = `${line} ${w},${h} 0,${h}`;
   const last = pts[pts.length - 1];
   const gid = `spark_${sparklineId++}`;
+  // Build 5-point grid baseline: y=10% / 30% / 50% / 70% / 90% of usable height
+  const gridLines = [0.15, 0.4, 0.65, 0.9].map(r => {
+    const y = h - 3 - r * (h - 8);
+    return `<line x1="0" y1="${y.toFixed(1)}" x2="${w}" y2="${y.toFixed(1)}" stroke="currentColor" stroke-opacity="0.06" stroke-width="1" stroke-dasharray="2 3"/>`;
+  }).join('');
   return `<svg class="metric-sparkline${isCurrent ? ' is-current' : ''}" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="趋势图" preserveAspectRatio="none">
-    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="currentColor" stop-opacity="0.16"/><stop offset="100%" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>
-    <polygon points="${area}" fill="url(#${gid})"/>
-    <polyline points="${line}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="${last[0]}" cy="${last[1]}" r="2.5" fill="currentColor" stroke="var(--surface)" stroke-width="1.5"/>
+    <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="currentColor" stop-opacity="0.22"/><stop offset="100%" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>
+    ${gridLines}
+    <polygon class="spark-area" points="${area}" fill="url(#${gid})"/>
+    <polyline points="${line}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${last[0]}" cy="${last[1]}" r="3" fill="currentColor" stroke="var(--surface)" stroke-width="1.5"/>
   </svg>`;
 }
 
@@ -112,24 +118,33 @@ function renderOverview(data) {
     risks: [5, 4, 5, 3, 4, 3, 3]
   };
   const metricDefs = [
-    { label: '24H 知识 SLA', value: data.metrics.knowledgeSla, unit: '%', target: '目标 ≥90%', trend: '↑ +12.4% 较上周', dir: 'up', spark: sparkline(sparkData.sla, true) },
-    { label: '平均复用耗时', value: data.metrics.avgReuseHours, unit: '小时', target: '目标 ≤6h', trend: '↓ −2.1h 较上周', dir: 'up', spark: sparkline(sparkData.hours) },
-    { label: '进行中实验', value: data.metrics.activeExperiments, unit: '项', target: '目标 ≥12 项', trend: '3 项今天有更新', dir: '', spark: sparkline(sparkData.experiments) },
-    { label: '待处理风险', value: data.metrics.pendingRisks, unit: '项', target: '目标 ≤2 项', trend: '1 项 P1 优先级', dir: 'down', spark: sparkline(sparkData.risks) }
+    { label: '24H 知识 SLA', value: data.metrics.knowledgeSla, unit: '%', target: '目标 ≥90%', trend: '12.4% 较上周', delta: '+12.4%', dir: 'up', tone: 'is-primary', sparkTone: 'is-current', spark: sparkline(sparkData.sla, true, 240, 36), footKey: '本周样本', footVal: '28 场会议' },
+    { label: '平均复用耗时', value: data.metrics.avgReuseHours, unit: '小时', target: '目标 ≤6h', trend: '2.1h 较上周', delta: '−2.1h', dir: 'up', tone: '', sparkTone: '', spark: sparkline(sparkData.hours, false, 240, 36), footKey: '基线', footVal: '8.5 小时' },
+    { label: '进行中实验', value: data.metrics.activeExperiments, unit: '项', target: '目标 ≥12 项', trend: '3 项今日有更新', delta: '+3 今日', dir: 'up', tone: '', sparkTone: '', spark: sparkline(sparkData.experiments, false, 240, 36), footKey: '本周闭环', footVal: '9 项完成' },
+    { label: '待处理风险', value: data.metrics.pendingRisks, unit: '项', target: '目标 ≤2 项', trend: '1 项 P1 优先级', delta: '−1 较昨日', dir: 'up', tone: 'is-risk', sparkTone: 'is-risk', spark: sparkline(sparkData.risks, false, 240, 36), footKey: 'P0 / P1', footVal: '1 / 2' }
   ];
   $('#metricGrid').innerHTML = metricDefs.map(m => `
-    <div class="metric-card">
-      <span class="metric-label">${m.label}</span>
-      <span class="metric-value">${m.value}<small class="metric-unit">${m.unit}</small></span>
-      <span class="metric-target">${m.target}</span>
-      <span class="metric-trend ${m.dir}">${m.trend}</span>
-      ${m.spark}
+    <div class="metric-card ${m.tone}">
+      <div class="metric-head">
+        <span class="metric-label"><span class="metric-label-glyph" aria-hidden="true"></span>${m.label}</span>
+        <span class="metric-delta ${m.dir}"><span class="metric-delta-arrow" aria-hidden="true">${m.dir === 'up' ? '↑' : m.dir === 'down' ? '↓' : '·'}</span>${m.delta}</span>
+      </div>
+      <div class="metric-value-row">
+        <span class="metric-value">${m.value}</span>
+        <small class="metric-unit">${m.unit}</small>
+      </div>
+      ${m.spark.replace('metric-sparkline', 'metric-sparkline ' + (m.sparkTone || ''))}
+      <div class="metric-foot">
+        <span class="metric-foot-key">${m.footKey}</span>
+        <span class="metric-trend ${m.dir}">${m.trend}</span>
+        <span class="metric-foot-key">${m.footVal}</span>
+      </div>
     </div>
   `).join('');
 
   // Pipeline
   $('#pipeline').innerHTML = data.pipeline.map((item, i) => `
-    <div class="pipeline-step ${item.state === 'done' ? 'completed' : item.state === 'active' ? 'active' : ''}">
+    <div class="pipeline-step ${item.state === 'done' ? 'completed' : item.state === 'active' ? 'active' : item.state === 'watch' ? 'watch' : ''}">
       <div class="pipeline-icon">${item.state === 'done' ? '✓' : i + 1}</div>
       <span class="pipeline-label">${esc(item.label)}</span>
       <span class="pipeline-count">${item.count} 项</span>
@@ -172,21 +187,39 @@ function renderOverview(data) {
 /* ── Render: Experiments ── */
 function renderExperiments(items) {
   const riskLabels = { high: '高风险', watch: '需关注', low: '运行正常' };
-  const experimentImages = {
-    'exp-b17': '/assets/lab-vials.jpg',
-    'exp-a09': '/assets/microscope.jpg',
-    'exp-c04': '/assets/researcher.jpg',
-    'exp-d22': '/assets/lab-atmosphere.jpg'
-  };
   const riskBadges = { high: 'badge-error', watch: 'badge-warning', low: 'badge-success' };
+  // 类型色板：4 种实验类型 = 4 种晶流主题色，对应不同微观意象
+  const kindPalette = {
+    'screening':  { tone: 'mint',   label: '晶型', glyph: '◇' },
+    'stability':  { tone: 'coral',  label: '稳定', glyph: '⬡' },
+    'efficacy':   { tone: 'aqua',   label: '药效', glyph: '○' },
+    'migration':  { tone: 'amber',  label: '迁移', glyph: '▣' }
+  };
+  // 根据实验 id 推断类型
+  function paletteFor(item) {
+    const code = (item.code || '').toLowerCase();
+    if (code.startsWith('b-')) return kindPalette.screening;
+    if (code.startsWith('a-')) return kindPalette.stability;
+    if (code.startsWith('c-')) return kindPalette.efficacy;
+    if (code.startsWith('d-')) return kindPalette.migration;
+    return kindPalette.screening;
+  }
 
-  $('#experimentGrid').innerHTML = items.map(item => `
+  $('#experimentGrid').innerHTML = items.map(item => {
+    const tone = item.risk === 'high' ? 'tone-danger' : item.risk === 'watch' ? 'tone-warning' : 'tone-success';
+    const fillTone = item.risk === 'high' ? 'fill-danger' : item.risk === 'watch' ? 'fill-warning' : 'fill-action';
+    const palette = paletteFor(item);
+    return `
     <div class="card exp-card" data-action="experiment-detail" data-id="${esc(item.id)}">
-      <div class="exp-status-bar"></div>
+      <div class="exp-status-bar ${tone}"></div>
       <div class="exp-head">
-        <img class="exp-thumb" src="${esc(experimentImages[item.id] || item.image)}" alt="${esc(item.name)}" />
+        <div class="exp-thumb exp-thumb--${palette.tone}" aria-hidden="true">
+          ${item.image ? `<img class="exp-thumb-img" src="${esc(item.image)}" alt="" loading="lazy" onerror="this.remove()" />` : ''}
+          <span class="exp-thumb-glyph">${palette.glyph}</span>
+          <svg class="exp-thumb-rings" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1"><circle cx="28" cy="28" r="10"/><circle cx="28" cy="28" r="18" stroke-opacity="0.45"/><circle cx="28" cy="28" r="26" stroke-opacity="0.22"/></svg>
+        </div>
         <div class="exp-head-text">
-          <span class="exp-code">${esc(item.code)}</span>
+          <span class="exp-code">${esc(item.code)} · ${palette.label}</span>
           <h3 class="exp-name">${esc(item.name)}</h3>
         </div>
         <span class="exp-arrow">→</span>
@@ -197,12 +230,16 @@ function renderExperiments(items) {
         <span class="badge ${riskBadges[item.risk] || 'badge-neutral'}">${riskLabels[item.risk] || '正常'}</span>
       </div>
       <div class="exp-insight"><span class="exp-insight-label">AI 洞察：</span>${esc(item.insight)}</div>
+      <div class="exp-progress-row">
+        <div class="exp-progress-track"><span class="exp-progress-fill ${fillTone}" style="width:${item.progress}%;"></span></div>
+        <span class="exp-progress-label">${item.progress}<small>%</small></span>
+      </div>
       <div class="exp-foot">
-        <span class="exp-progress">${item.progress}% 完成</span>
         <span class="mono-time">BATCH ${esc(item.code)}</span>
+        <span class="exp-progress-meta">完成度</span>
       </div>
     </div>
-  `).join('');
+  `;}).join('');
 }
 
 /* ── Render: Loading state (injected before first fetch) ── */
@@ -237,20 +274,28 @@ function renderLoadingState() {
 /* ── Render: Knowledge (success / failure balance) ── */
 function renderKnowledge(items) {
   const kindLabel = { '最优参数': 'PARAM', '失败经验': 'RISK', '流程规范': 'SOP', '方案争议': 'DEBATE', '数据资产': 'DATA', '协作规则': 'OPS' };
+  const kindMarkClass = { '最优参数': 'param', '失败经验': 'risk', '流程规范': 'sop', '方案争议': 'debate', '数据资产': 'data', '协作规则': 'collab' };
   const successKinds = ['最优参数', '流程规范', '数据资产', '协作规则'];
   const failureKinds = ['失败经验', '方案争议'];
   const success = items.filter(item => successKinds.includes(item.kind));
   const failure = items.filter(item => failureKinds.includes(item.kind));
-  const asset = item => `
-    <article class="balance-card js-knowledge-card" aria-label="${esc(item.title)}" data-id="${esc(item.id)}" data-status="${esc(item.status || 'approved')}">
-      <div class="balance-card-mark">
-        <span class="knowledge-type-mark" data-kind="${esc(item.kind)}" aria-hidden="true">${kindLabel[item.kind] || 'ASSET'}</span>
-        <span class="knowledge-score">${Math.round(item.score * 100)}<small>%</small></span>
+  const asset = item => {
+    const score = Math.round((item.score || 0) * 100);
+    const mark = kindMarkClass[item.kind] || 'param';
+    return `
+    <article class="balance-card js-knowledge-card" aria-label="${esc(item.title)}" data-id="${esc(item.id)}" data-status="${esc(item.status || 'approved')}" data-kind="${esc(item.kind)}">
+      <div class="balance-card-mark balance-card-mark--${mark}">
+        <span class="balance-card-mark-text">${kindLabel[item.kind] || 'ASSET'}</span>
+        <span class="balance-card-mark-score">${score}<small>%</small></span>
       </div>
       <div class="balance-card-body">
         <h4 class="balance-card-title list-item-title">${esc(item.title)}</h4>
-        <p class="balance-card-desc text-sm text-secondary">${esc(item.kind)} · ${esc(item.source)}</p>
-        <p class="balance-card-desc text-xs text-tertiary">${esc(item.freshness || '')}</p>
+        <p class="balance-card-desc text-sm text-secondary">${esc(item.source || '')}</p>
+        <div class="balance-card-meta">
+          <span>${esc(item.freshness || '')}</span>
+          <span class="balance-card-dot">·</span>
+          <span class="balance-card-score">相关度 ${score}%</span>
+        </div>
         <div class="knowledge-status-row">
           ${item.status === 'pending'
             ? `<span class="badge badge-warning badge-dot">待人工确认</span>
@@ -265,6 +310,7 @@ function renderKnowledge(items) {
       </div>
     </article>
   `;
+  };
   const column = (modifier, title, caption, list) => `
     <div class="balance-column ${modifier}" aria-label="${esc(title)}">
       <div class="balance-column-head">
@@ -292,27 +338,39 @@ function renderRisks(items) {
   const p2 = items.filter(r => r.level === 'P2').length;
   const open = items.filter(r => r.status === 'open').length;
 
+  // KPI color semantics: P0=red(阻断) / P1=amber(高优) / P2=neutral-blue(中低优) / 未关闭=ink(累计)
   const statDefs = [
-    { label: 'P0 紧急', value: p0, tone: 'tone-danger' },
-    { label: 'P1 高', value: p1, tone: 'tone-warning' },
-    { label: 'P2 中', value: p2, tone: 'tone-action' },
-    { label: '未关闭', value: open, tone: 'tone-ink' }
+    { label: 'P0 紧急', value: p0, tone: 'tone-danger', foot: '立刻阻断', tone2: 'danger' },
+    { label: 'P1 高', value: p1, tone: 'tone-warning', foot: '24h 内响应', tone2: 'warning' },
+    { label: 'P2 中', value: p2, tone: 'tone-info', foot: '72h 内跟进', tone2: 'info' },
+    { label: '未关闭', value: open, tone: 'tone-ink', foot: '合计待处理', tone2: 'ink' }
   ];
   $('#riskOverview').innerHTML = statDefs.map(s => `
-    <div class="metric-card">
-      <span class="metric-label">${s.label}</span>
+    <div class="metric-card risk-kpi risk-kpi--${s.tone2}">
+      <div class="risk-kpi-head">
+        <span class="metric-label">${s.label}</span>
+        <span class="risk-kpi-dot" aria-hidden="true"></span>
+      </div>
       <span class="metric-value ${s.tone}">${s.value}</span>
+      <span class="risk-kpi-foot">${s.foot}</span>
     </div>
   `).join('');
 
   const levelClass = { P0: 'p0', P1: 'p1', P2: 'p2' };
-  const levelBadges = { P0: 'risk-level-badge', P1: 'risk-level-badge', P2: 'risk-level-badge' };
-  riskGrid.innerHTML = items.map(item => `
-    <div class="card risk-card ${levelClass[item.level] || ''} ${item.status === 'resolved' ? 'is-resolved' : ''}" data-action="risk-detail" data-id="${esc(item.id)}">
-      <div class="risk-head">
-        <span class="badge ${levelBadges[item.level] || 'badge-neutral'}">${esc(item.level)}</span>
-        <span class="badge badge-neutral">${esc(item.category)}</span>
-        <span class="badge risk-status ${item.status === 'resolved' ? 'badge-success' : 'badge-error'}">${item.status === 'resolved' ? '已关闭' : '待处理'}</span>
+  const levelTone = { P0: 'tone-danger', P1: 'tone-warning', P2: 'tone-action' };
+  const levelGlyph = { P0: '◉', P1: '◐', P2: '◌' };
+  const levelCopy = { P0: '立刻阻断', P1: '24 小时内响应', P2: '72 小时内跟进' };
+  riskGrid.innerHTML = items.map(item => {
+    const lvl = item.level || 'P2';
+    return `
+    <div class="card risk-card ${levelClass[lvl] || ''} ${item.status === 'resolved' ? 'is-resolved' : ''}" data-action="risk-detail" data-id="${esc(item.id)}">
+      <div class="risk-banner">
+        <span class="risk-banner-glyph ${levelTone[lvl] || ''}" aria-hidden="true">${levelGlyph[lvl] || '◌'}</span>
+        <div class="risk-banner-text">
+          <div class="risk-banner-level">${esc(lvl)} <span class="risk-banner-divider">·</span> <span class="risk-banner-name">${levelCopy[lvl] || ''}</span></div>
+          <div class="risk-banner-category">${esc(item.category || '通用风险')}</div>
+        </div>
+        <span class="risk-banner-status ${item.status === 'resolved' ? 'is-resolved' : 'is-open'}">${item.status === 'resolved' ? '已闭环' : '待处理'}</span>
       </div>
       <h3 class="risk-title">${esc(item.title)}</h3>
       <p class="risk-desc">${esc(item.description)}</p>
@@ -323,11 +381,14 @@ function renderRisks(items) {
         </li>
       </ol>
       <div class="risk-foot">
-        <span>实验 ${esc(item.experimentCode)}</span>
-        <span>${esc(item.owner)}</span>
+        <span class="risk-foot-key">实验</span>
+        <span class="risk-foot-val">${esc(item.experimentCode)}</span>
+        <span class="risk-foot-divider" aria-hidden="true"></span>
+        <span class="risk-foot-key">负责人</span>
+        <span class="risk-foot-val">${esc(item.owner)}</span>
       </div>
     </div>
-  `).join('');
+  `;}).join('');
 }
 
 /* ── Modal: Risk Detail ── */
@@ -802,6 +863,32 @@ $$('.toggle').forEach(button => button.addEventListener('click', () => {
     toast('偏好已在当前演示会话中更新');
   }
 }));
+
+/* Segmented control: single-select within each .segmented group */
+$$('.segmented').forEach(group => {
+  group.addEventListener('click', event => {
+    const item = event.target.closest('.segmented-item');
+    if (!item || !group.contains(item)) return;
+    group.querySelectorAll('.segmented-item').forEach(el => el.classList.remove('is-active'));
+    item.classList.add('is-active');
+    const label = item.textContent.trim();
+    const attr = item.dataset.density || item.dataset.size || '';
+    toast(`已切换到 ${label}${attr ? ' (' + attr + ')' : ''}`);
+  });
+});
+
+/* Range slider: live-update the value label */
+$$('.range').forEach(range => {
+  const out = range.parentElement?.querySelector('.range-value');
+  const update = () => { if (out) out.textContent = (range.value / 100).toFixed(2); };
+  range.addEventListener('input', update);
+  update();
+});
+
+/* Select: confirm on change */
+$$('.select').forEach(sel => sel.addEventListener('change', e => {
+  toast(`已选择：${e.target.value}`);
+}));
 $('#refreshActivity').addEventListener('click', async () => {
   try {
     const fresh = await api('/api/overview');
@@ -852,52 +939,74 @@ class KnowledgeGraph {
   }
 
   _fallbackGraph() {
+    // Radial layout: hub dead-center, 4 inner satellites on the cardinals, 4 on the diagonals,
+    // 2 on the far ring. Ring radii are generous so labels never collide with the hub or each other.
     const cx = this.width / 2, cy = this.height / 2;
+    const r = Math.min(this.width, this.height);
+    const ring1 = r * 0.28; // inner cardinals
+    const ring2 = r * 0.42; // outer diagonals
+    const ring3 = r * 0.50; // far satellites
     this.nodes = [
-      { id: 'B-17', label: '晶型筛选', type: 'experiment', x: cx, y: cy, r: 34, detail: '候选化合物晶型筛选 · 参数评审阶段 · 进度72%' },
-      { id: 'B-11', label: '历史方案', type: 'conclusion', x: cx - 160, y: cy - 100, r: 24, detail: '低温梯度晶型筛选最优参数 · 置信度94%' },
-      { id: 'A-09', label: '失败案例', type: 'risk', x: cx + 160, y: cy - 90, r: 24, detail: '湿度波动导致结晶异常 · P1风险' },
-      { id: 'SOP-17', label: '流程规范', type: 'spec', x: cx - 150, y: cy + 110, r: 22, detail: '自动化工作站换液顺序与污染控制SOP' },
-      { id: 'mt-2407', label: '会议证据', type: 'meeting', x: cx + 150, y: cy + 100, r: 22, detail: 'B-17参数评审会 · 38min · 6人参会' },
-      { id: 'k-01', label: '最优参数', type: 'conclusion', x: cx - 80, y: cy - 150, r: 18, detail: 'B-11低温梯度方案 · 来源mt-2388' },
-      { id: 'k-02', label: '失败经验', type: 'risk', x: cx + 90, y: cy - 145, r: 18, detail: 'A-09湿度波动根因分析 · 来源mt-2406' },
-      { id: 'k-03', label: '换液SOP', type: 'spec', x: cx - 200, y: cy + 30, r: 16, detail: '污染控制标准操作流程 v2.1' },
-      { id: 'k-04', label: '方案争议', type: 'conclusion', x: cx + 60, y: cy + 155, r: 18, detail: '溶剂比例对晶型稳定性影响 · 置信度84%' },
-      { id: 'C-04', label: '药效测试', type: 'experiment', x: cx + 210, y: cy + 10, r: 20, detail: '药效测试样本队列优化 · 实验执行中' },
-      { id: 'D-22', label: '溶剂迁移', type: 'experiment', x: cx - 210, y: cy - 20, r: 20, detail: '溶剂体系迁移验证 · 知识复用阶段' }
+      // Hub
+      { id: 'B-17', label: '晶型筛选', type: 'experiment', x: cx, y: cy, r: 30, vx: 0, vy: 0, detail: '候选化合物晶型筛选 · 参数评审 · 进度 72%' },
+      // Inner ring — 4 cardinals
+      { id: 'B-11', label: '历史方案', type: 'conclusion', x: cx, y: cy - ring1, r: 18, vx: 0, vy: 0, detail: '低温梯度晶型筛选最优参数 · 置信度 94%', labelDir: 'top' },
+      { id: 'A-09', label: '失败案例', type: 'risk', x: cx + ring1, y: cy, r: 18, vx: 0, vy: 0, detail: '湿度波动导致结晶异常 · P1 风险', labelDir: 'right' },
+      { id: 'SOP-17', label: '流程规范', type: 'spec', x: cx, y: cy + ring1, r: 18, vx: 0, vy: 0, detail: '自动化工作站换液顺序与污染控制 SOP', labelDir: 'bottom' },
+      { id: 'mt-2407', label: '会议证据', type: 'meeting', x: cx - ring1, y: cy, r: 18, vx: 0, vy: 0, detail: 'B-17 参数评审会 · 38 min · 6 人参会', labelDir: 'left' },
+      // Outer ring — 4 diagonals
+      { id: 'k-01', label: '最优参数', type: 'conclusion', x: cx + ring2 * 0.72, y: cy - ring2 * 0.72, r: 14, vx: 0, vy: 0, detail: 'B-11 低温梯度方案 · 来源 mt-2388', labelDir: 'top-right' },
+      { id: 'C-04', label: '药效测试', type: 'experiment', x: cx + ring2 * 0.72, y: cy + ring2 * 0.72, r: 14, vx: 0, vy: 0, detail: '药效测试样本队列优化 · 实验执行中', labelDir: 'bottom-right' },
+      { id: 'D-22', label: '溶剂迁移', type: 'experiment', x: cx - ring2 * 0.72, y: cy + ring2 * 0.72, r: 14, vx: 0, vy: 0, detail: '溶剂体系迁移验证 · 知识复用阶段', labelDir: 'bottom-left' },
+      { id: 'k-04', label: '方案争议', type: 'conclusion', x: cx - ring2 * 0.72, y: cy - ring2 * 0.72, r: 14, vx: 0, vy: 0, detail: '溶剂比例对晶型稳定性影响 · 置信度 84%', labelDir: 'top-left' },
+      // Far satellites (outermost)
+      { id: 'k-02', label: '失败经验', type: 'risk', x: cx + ring3, y: cy - ring3 * 0.55, r: 12, vx: 0, vy: 0, detail: 'A-09 湿度波动根因分析 · 来源 mt-2406', labelDir: 'right' },
+      { id: 'k-03', label: '换液 SOP', type: 'spec', x: cx - ring3, y: cy + ring3 * 0.55, r: 12, vx: 0, vy: 0, detail: '污染控制标准操作流程 v2.1', labelDir: 'left' }
     ];
-    this.nodes.forEach(n => { n.vx = 0; n.vy = 0; });
     this.edges = [
       { from: 'B-17', to: 'B-11', label: '相似方案' },
       { from: 'B-17', to: 'A-09', label: '风险关联' },
       { from: 'B-17', to: 'SOP-17', label: '遵循' },
       { from: 'B-17', to: 'mt-2407', label: '证据来源' },
-      { from: 'B-17', to: 'k-01', label: '参数复用' },
-      { from: 'B-17', to: 'k-04', label: '争议记录' },
-      { from: 'A-09', to: 'k-02', label: '根因分析' },
-      { from: 'SOP-17', to: 'k-03', label: '引用' },
       { from: 'B-11', to: 'k-01', label: '产出' },
+      { from: 'A-09', to: 'k-02', label: '根因' },
+      { from: 'SOP-17', to: 'k-03', label: '引用' },
+      { from: 'B-17', to: 'k-04', label: '争议' },
       { from: 'C-04', to: 'B-17', label: '依赖' },
-      { from: 'D-22', to: 'B-17', label: '参考' },
-      { from: 'D-22', to: 'SOP-17', label: '遵循' }
+      { from: 'D-22', to: 'B-17', label: '参考' }
     ];
   }
 
   async _initData() {
     const cx = this.width / 2, cy = this.height / 2;
     try {
-      const res = await fetch('/api/graph');
+      // Default to a single-experiment view so the graph stays readable; full graph dumps
+      // every knowledge asset and risk and becomes a hairball.
+      const res = await fetch('/api/graph?experimentId=B-17');
       const payload = await res.json();
       const { nodes, edges } = payload.data || payload;
       if (!nodes || !nodes.length) { this._fallbackGraph(); return; }
-      this.nodes = nodes.map((n, i) => ({
-        id: n.id, label: n.label, type: n.type || 'conclusion',
-        detail: n.meta?.detail || '',
-        r: this._radiusFor(n.type),
-        x: cx + Math.cos(i / nodes.length * Math.PI * 2) * Math.min(this.width, this.height) * 0.32,
-        y: cy + Math.sin(i / nodes.length * Math.PI * 2) * Math.min(this.width, this.height) * 0.32,
-        vx: 0, vy: 0
-      }));
+      // Hub: the active experiment. Satellites: related knowledge on radial rings.
+      const hub = nodes.find(n => n.type === 'experiment') || nodes[0];
+      const r = Math.min(this.width, this.height);
+      const ring1 = r * 0.28;
+      const ring2 = r * 0.42;
+      const ring3 = r * 0.50;
+      const dirs = ['top', 'right', 'bottom', 'left', 'top-right', 'bottom-right', 'bottom-left', 'top-left', 'right', 'left'];
+      this.nodes = nodes.map((n, i) => {
+        if (n.id === hub.id) {
+          return { id: n.id, label: n.label, type: n.type || 'conclusion', detail: n.meta?.detail || '', r: 30, x: cx, y: cy, vx: 0, vy: 0, labelDir: 'bottom' };
+        }
+        const idx = nodes.findIndex(x => x.id === n.id) - nodes.findIndex(x => x.id === hub.id);
+        const satellites = nodes.length - 1;
+        const angle = (idx / Math.max(1, satellites)) * Math.PI * 2 - Math.PI / 2;
+        const ring = idx < 4 ? ring1 : idx < 8 ? ring2 : ring3;
+        return {
+          id: n.id, label: n.label, type: n.type || 'conclusion', detail: n.meta?.detail || '',
+          r: this._radiusFor(n.type), x: cx + Math.cos(angle) * ring, y: cy + Math.sin(angle) * ring, vx: 0, vy: 0,
+          labelDir: dirs[(idx - 1) % dirs.length] || 'top'
+        };
+      });
       this.edges = (edges || []).map(e => ({ from: e.source, to: e.target, label: e.relation || '' }));
       const badge = $('#graphCount');
       if (badge) badge.textContent = `${this.nodes.length} 节点 · ${this.edges.length} 边`;
@@ -912,41 +1021,37 @@ class KnowledgeGraph {
 
   _tick() {
     if (this.dragNode) return; // dragging is a deliberate inspection mode; freeze the layout.
-    const alpha = 0.3, repulsion = 2800, springLen = 120, springK = 0.008, damping = 0.85, centerPull = 0.004;
+    // Static radial layout: keep nodes on their assigned ring with a very gentle centripetal pull.
+    // Strong forces were causing node overlap on the hub; the radial positions are already optimal.
+    const damping = 0.78, centerPull = 0.0015, separation = 2.0;
     const cx = this.width / 2, cy = this.height / 2;
     for (let i = 0; i < this.nodes.length; i++) {
       const a = this.nodes[i];
       if (a === this.dragNode) continue;
-      let fx = 0, fy = 0;
+      let fx = (cx - a.x) * centerPull;
+      let fy = (cy - a.y) * centerPull;
+      // Soft separation: only push apart when nodes are far too close
       for (let j = 0; j < this.nodes.length; j++) {
         if (i === j) continue;
         const b = this.nodes[j];
         let dx = a.x - b.x, dy = a.y - b.y;
         let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        fx += (dx / dist) * (repulsion / (dist * dist));
-        fy += (dy / dist) * (repulsion / (dist * dist));
+        const minDist = (a.r + b.r) * separation + 6;
+        if (dist < minDist) {
+          const push = (minDist - dist) / dist * 0.4;
+          fx += dx * push;
+          fy += dy * push;
+        }
       }
-      fx += (cx - a.x) * centerPull;
-      fy += (cy - a.y) * centerPull;
-      a.vx = (a.vx + fx * alpha) * damping;
-      a.vy = (a.vy + fy * alpha) * damping;
-    }
-    for (const e of this.edges) {
-      const a = this._nodeById(e.from), b = this._nodeById(e.to);
-      if (!a || !b) continue;
-      let dx = b.x - a.x, dy = b.y - a.y;
-      let dist = Math.sqrt(dx * dx + dy * dy) || 1;
-      let f = (dist - springLen) * springK;
-      let fx = (dx / dist) * f, fy = (dy / dist) * f;
-      if (a !== this.dragNode) { a.vx += fx; a.vy += fy; }
-      if (b !== this.dragNode) { b.vx -= fx; b.vy -= fy; }
+      a.vx = (a.vx + fx) * damping;
+      a.vy = (a.vy + fy) * damping;
     }
     for (const n of this.nodes) {
       if (n === this.dragNode) continue;
       n.x += n.vx;
       n.y += n.vy;
-      n.x = Math.max(n.r + 4, Math.min(this.width - n.r - 4, n.x));
-      n.y = Math.max(n.r + 4, Math.min(this.height - n.r - 4, n.y));
+      n.x = Math.max(n.r + 6, Math.min(this.width - n.r - 6, n.x));
+      n.y = Math.max(n.r + 6, Math.min(this.height - n.r - 6, n.y));
     }
   }
 
@@ -1021,34 +1126,96 @@ class KnowledgeGraph {
       const dimmed = this.hoverNode && !isHover && !isConnected;
       const color = this.colors[n.type] || '#1d4ed8';
 
+      // Halo for breathing depth
+      const grad = ctx.createRadialGradient(n.x, n.y, n.r * 0.3, n.x, n.y, n.r + 6);
+      grad.addColorStop(0, isHover ? color : (dimmed ? 'rgba(26,43,61,0.45)' : '#1a2b3d'));
+      grad.addColorStop(1, isHover ? color + 'aa' : 'rgba(12,23,34,0)');
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r + 4, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = dimmed ? 0.35 : 1;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = dimmed ? 'rgba(12,23,34,0.45)' : (isHover ? color : '#1a2b3d');
-      ctx.shadowBlur = isHover ? 16 : 6;
+      ctx.fillStyle = isHover ? color : (dimmed ? 'rgba(26,43,61,0.6)' : '#1a2b3d');
+      ctx.shadowBlur = isHover ? 18 : 6;
       ctx.shadowColor = dimmed ? 'transparent' : color;
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.lineWidth = isHover ? 2 : 1.2;
-      ctx.strokeStyle = dimmed ? 'rgba(210,224,235,0.12)' : (isHover ? color : 'rgba(214,232,242,0.4)');
+      ctx.strokeStyle = dimmed ? 'rgba(210,224,235,0.12)' : (isHover ? color : color + '99');
       ctx.stroke();
 
       if (isHover) {
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r + 8, 0, Math.PI * 2);
-        ctx.strokeStyle = color + '20';
+        ctx.strokeStyle = color + '30';
         ctx.lineWidth = 4;
         ctx.stroke();
       }
 
-      ctx.fillStyle = dimmed ? 'rgba(210,224,235,0.25)' : (isHover ? '#071019' : '#e6edf3');
-      ctx.font = `600 ${n.r > 26 ? 12 : 10}px Inter, sans-serif`;
+      // ID inside the bubble (centered)
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(n.id, n.x, n.y - (n.r > 20 ? 5 : 3));
+      const isLarge = n.r > 24;
+      ctx.fillStyle = dimmed ? 'rgba(210,224,235,0.3)' : (isHover ? '#071019' : '#e6edf3');
+      ctx.font = `600 ${isLarge ? 12 : 10}px Inter, sans-serif`;
+      ctx.fillText(n.id, n.x, n.y);
 
-      ctx.font = `400 ${n.r > 26 ? 9 : 8}px Inter, sans-serif`;
-      ctx.fillStyle = dimmed ? 'rgba(210,224,235,0.22)' : (isHover ? 'rgba(7,16,25,0.82)' : '#8fa6b8');
-      ctx.fillText(n.label, n.x, n.y + (n.r > 20 ? 9 : 7));
+      // External label positioned per labelDir so labels never overlap nodes or each other.
+      if (n.label) {
+        const isLarge = n.r > 24;
+        const labelFont = isLarge ? '600 12px' : '500 11px';
+        const text = n.label;
+        ctx.font = `${labelFont} Inter, -apple-system, "PingFang SC", sans-serif`;
+        const metrics = ctx.measureText(text);
+        const padX = 6, padY = 3;
+        const w = metrics.width + padX * 2;
+        const h = 11 + padY * 2;
+        const dir = n.labelDir || 'top';
+        const off = n.r + 9;
+        let lx = n.x, ly = n.y, ta = 'center', tb = 'middle';
+        if (dir === 'top') { ly = n.y - off; ta = 'center'; }
+        else if (dir === 'bottom') { ly = n.y + off; ta = 'center'; }
+        else if (dir === 'left') { lx = n.x - off; ta = 'right'; }
+        else if (dir === 'right') { lx = n.x + off; ta = 'left'; }
+        else if (dir === 'top-left') { lx = n.x - off * 0.85; ly = n.y - off * 0.85; ta = 'right'; }
+        else if (dir === 'top-right') { lx = n.x + off * 0.85; ly = n.y - off * 0.85; ta = 'left'; }
+        else if (dir === 'bottom-left') { lx = n.x - off * 0.85; ly = n.y + off * 0.85; ta = 'right'; }
+        else if (dir === 'bottom-right') { lx = n.x + off * 0.85; ly = n.y + off * 0.85; ta = 'left'; }
+        // Compute rect origin based on text alignment
+        let rx = lx;
+        if (ta === 'center') rx = lx - w / 2;
+        else if (ta === 'right') rx = lx - w;
+        const ry = ly - h / 2;
+        // Pill background for readability against the dark canvas
+        ctx.fillStyle = dimmed ? 'rgba(12, 23, 34, 0.55)' : 'rgba(12, 23, 34, 0.78)';
+        if (isHover) ctx.fillStyle = 'rgba(31, 138, 109, 0.92)';
+        const radius = h / 2;
+        ctx.beginPath();
+        ctx.moveTo(rx + radius, ry);
+        ctx.lineTo(rx + w - radius, ry);
+        ctx.arcTo(rx + w, ry, rx + w, ry + radius, radius);
+        ctx.lineTo(rx + w, ry + h - radius);
+        ctx.arcTo(rx + w, ry + h, rx + w - radius, ry + h, radius);
+        ctx.lineTo(rx + radius, ry + h);
+        ctx.arcTo(rx, ry + h, rx, ry + h - radius, radius);
+        ctx.lineTo(rx, ry + radius);
+        ctx.arcTo(rx, ry, rx + radius, ry, radius);
+        ctx.closePath();
+        ctx.fill();
+        // 1px hairline ring
+        ctx.strokeStyle = isHover ? 'rgba(94, 234, 212, 0.6)' : 'rgba(122, 219, 211, 0.18)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        // Text
+        ctx.textAlign = ta;
+        ctx.textBaseline = tb;
+        ctx.fillStyle = isHover ? '#071019' : '#e6edf3';
+        ctx.fillText(text, lx, ly);
+      }
     }
   }
 

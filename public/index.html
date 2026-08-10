@@ -194,22 +194,22 @@
                 <time class="hero-axis-time" datetime="09:30">09:30</time>
                 <span class="hero-axis-label">转写就绪</span>
               </div>
-              <div class="hero-axis-point is-complete" data-state="done" data-x="4.5">
+              <div class="hero-axis-point is-complete" data-state="done" data-x="14">
                 <span class="hero-axis-node" aria-hidden="true"></span>
                 <time class="hero-axis-time" datetime="09:42">09:42</time>
-                <span class="hero-axis-label">Agent 解析完</span>
+                <span class="hero-axis-label">解析完成</span>
               </div>
-              <div class="hero-axis-point is-complete" data-state="done" data-x="18.75">
+              <div class="hero-axis-point is-complete" data-state="done" data-x="34">
                 <span class="hero-axis-node" aria-hidden="true"></span>
                 <time class="hero-axis-time" datetime="14:00">14:00</time>
                 <span class="hero-axis-label">人工确认 4 条</span>
               </div>
-              <div class="hero-axis-point is-complete" data-state="done" data-x="94.583">
+              <div class="hero-axis-point is-active" data-state="active" data-x="64">
                 <span class="hero-axis-node" aria-hidden="true"></span>
                 <time class="hero-axis-time" datetime="08:12">次日 08:12</time>
                 <span class="hero-axis-label">写入知识湖</span>
               </div>
-              <div class="hero-axis-pass" data-x="100">
+              <div class="hero-axis-pass">
                 <span class="hero-axis-pass-line" aria-hidden="true"></span>
                 <span class="hero-axis-pass-node" aria-hidden="true"></span>
                 <div class="hero-axis-pass-caption">
@@ -401,6 +401,13 @@
               <span class="badge badge-neutral badge-dot" id="graphCount">连线中…</span>
             </div>
             <div class="knowledge-graph-container" id="graphContainer">
+              <div class="graph-stat">知识图谱 · <span id="graphCount">11 节点 · 10 连线</span></div>
+              <div class="graph-toolbar" role="toolbar" aria-label="图谱操作">
+                <button class="graph-toolbar-btn" type="button" title="放大" data-graph-zoom="in">＋</button>
+                <button class="graph-toolbar-btn" type="button" title="缩小" data-graph-zoom="out">－</button>
+                <button class="graph-toolbar-btn" type="button" title="重置布局" data-graph-reset>↻</button>
+                <button class="graph-toolbar-btn" type="button" title="锁定 / 解锁" data-graph-lock>⚲</button>
+              </div>
               <canvas id="knowledgeCanvas"></canvas>
               <div class="graph-tooltip" id="graphTooltip"></div>
               <div class="knowledge-graph-legend">
@@ -411,6 +418,27 @@
                 <span class="legend-item"><span class="legend-dot" style="background:#34d399;"></span>会议</span>
               </div>
             </div>
+            <!-- Mobile-only list fallback (≤760px) so the graph stays readable on phones -->
+            <ol class="graph-list-mobile" id="graphListMobile" aria-label="知识图谱（紧凑列表）">
+              <li class="graph-list-mobile-hub">
+                <span class="graph-list-mobile-glyph type-experiment" aria-hidden="true">◆</span>
+                <div>
+                  <strong>B-17</strong>
+                  <span>晶型筛选</span>
+                  <small>候选化合物晶型筛选 · 参数评审 · 进度 72%</small>
+                </div>
+              </li>
+              <li><span class="graph-list-mobile-glyph type-conclusion" aria-hidden="true">●</span><div><strong>B-11</strong><span>历史方案</span><small>低温梯度晶型筛选最优参数 · 置信度 94%</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-risk" aria-hidden="true">●</span><div><strong>A-09</strong><span>失败案例</span><small>湿度波动导致结晶异常 · P1 风险</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-spec" aria-hidden="true">●</span><div><strong>SOP-17</strong><span>流程规范</span><small>自动化工作站换液顺序与污染控制 SOP</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-meeting" aria-hidden="true">●</span><div><strong>mt-2407</strong><span>会议证据</span><small>B-17 参数评审会 · 38 min · 6 人参会</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-experiment" aria-hidden="true">●</span><div><strong>C-04</strong><span>药效测试</span><small>药效测试样本队列优化 · 实验执行中</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-experiment" aria-hidden="true">●</span><div><strong>D-22</strong><span>溶剂迁移</span><small>溶剂体系迁移验证 · 知识复用阶段</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-conclusion" aria-hidden="true">●</span><div><strong>k-01</strong><span>最优参数</span><small>B-11 低温梯度方案 · 来源 mt-2388</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-conclusion" aria-hidden="true">●</span><div><strong>k-04</strong><span>方案争议</span><small>溶剂比例对晶型稳定性影响 · 置信度 84%</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-risk" aria-hidden="true">●</span><div><strong>k-02</strong><span>失败经验</span><small>A-09 湿度波动根因分析 · 来源 mt-2406</small></div></li>
+              <li><span class="graph-list-mobile-glyph type-spec" aria-hidden="true">●</span><div><strong>k-03</strong><span>换液 SOP</span><small>污染控制标准操作流程 v2.1</small></div></li>
+            </ol>
           </div>
           <!-- List -->
           <div class="card">
@@ -454,31 +482,31 @@
             <h1 class="page-title">AI 助理</h1>
             <p class="page-description">不是一个聊天框，而是一组能读懂研发流程的专用 Agent。</p>
           </div>
-          <button class="button button-primary" data-action="open-analyzer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/></svg>
-            开始一次解析
+          <button class="button button-secondary" data-action="open-docs">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            查看 Agent 文档
           </button>
         </div>
         <div class="agents-grid">
-          <!-- Meeting Parser -->
-          <div class="card agent-card-dark">
+          <!-- Meeting Parser (primary) -->
+          <div class="card is-primary">
             <div class="agent-card-header">
               <div class="agent-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/><path d="M12 14v8"/></svg>
               </div>
               <span class="agent-status online">可用</span>
             </div>
-            <h3 class="agent-title agent-title-light">会议解析器</h3>
-            <p class="agent-desc agent-desc-light">
+            <h3 class="agent-title">会议解析器</h3>
+            <p class="agent-desc">
               从飞书会议转写中提炼决策、争议、风险和行动项，并带上原文时间戳。
             </p>
-            <div class="agent-meta agent-meta-light">
+            <div class="agent-meta">
               <span>领域模型</span>
-              <span class="agent-meta-value agent-meta-value-light">Meeting → Knowledge</span>
+              <span class="agent-meta-value">Meeting → Knowledge</span>
             </div>
             <button class="button button-primary button-full-width" data-action="open-analyzer">
               解析最近一场会议
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
           <!-- Similarity Search -->
@@ -577,44 +605,188 @@
         </div>
         <div class="grid grid-2">
           <div class="card connector-card" data-connector="feishu">
-            <div class="agent-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <div class="connector-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <div class="flex-1-min">
+            <div class="connector-body">
               <h3 class="connector-title">飞书会议 AI</h3>
-              <p class="text-sm text-secondary">转写 · 纪要 · 时间戳 · 参会人</p>
+              <p class="connector-subtitle">Feishu Meeting · transcript</p>
+              <p class="connector-desc">转写 · 纪要 · 时间戳 · 参会人</p>
+              <div class="connector-meta">
+                <span>延迟 <b>p95 1.4s</b></span>
+                <span class="connector-meta-divider" aria-hidden="true"></span>
+                <span>24h 调用 <b>312</b></span>
+              </div>
             </div>
-            <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+            <div class="connector-status">
+              <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+            </div>
           </div>
           <div class="card connector-card" data-connector="feishu">
-            <div class="agent-icon connector-icon docs">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <div class="connector-icon docs">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             </div>
-            <div class="flex-1-min">
+            <div class="connector-body">
               <h3 class="connector-title">飞书文档</h3>
-              <p class="text-sm text-secondary">结论写入 · 引用回链 · 权限同步</p>
+              <p class="connector-subtitle">Feishu Docs · write-back</p>
+              <p class="connector-desc">结论写入 · 引用回链 · 权限同步</p>
+              <div class="connector-meta">
+                <span>写入 <b>86 篇</b></span>
+                <span class="connector-meta-divider" aria-hidden="true"></span>
+                <span>回链 <b>412 处</b></span>
+              </div>
             </div>
-            <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+            <div class="connector-status">
+              <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+            </div>
           </div>
           <div class="card connector-card" data-connector="feishu">
-            <div class="agent-icon connector-icon sheet">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+            <div class="connector-icon sheet">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
             </div>
-            <div class="flex-1-min">
+            <div class="connector-body">
               <h3 class="connector-title">多维表格</h3>
-              <p class="text-sm text-secondary">实验任务 · 负责人 · 状态机</p>
+              <p class="connector-subtitle">Bitable · state machine</p>
+              <p class="connector-desc">实验任务 · 负责人 · 状态机</p>
+              <div class="connector-meta">
+                <span>任务 <b>26 项</b></span>
+                <span class="connector-meta-divider" aria-hidden="true"></span>
+                <span>状态机 <b>5 状态</b></span>
+              </div>
             </div>
-            <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+            <div class="connector-status">
+              <span class="badge badge-success badge-dot" data-connector-badge="feishu">契约就绪</span>
+            </div>
           </div>
           <div class="card connector-card" data-connector="neo4j">
-            <div class="agent-icon connector-icon graph">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="6.5" y1="7.5" x2="11" y2="16.5"/><line x1="17.5" y1="7.5" x2="13" y2="16.5"/></svg>
+            <div class="connector-icon graph">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="6.5" y1="7.5" x2="11" y2="16.5"/><line x1="17.5" y1="7.5" x2="13" y2="16.5"/></svg>
             </div>
-            <div class="flex-1-min">
+            <div class="connector-body">
               <h3 class="connector-title">Neo4j 知识图谱</h3>
-              <p class="text-sm text-secondary">节点关联 · 证据链 · 相似实验</p>
+              <p class="connector-subtitle">Graph · similarity & lineage</p>
+              <p class="connector-desc">节点关联 · 证据链 · 相似实验</p>
+              <div class="connector-meta">
+                <span>回退 <b>JSON</b></span>
+                <span class="connector-meta-divider" aria-hidden="true"></span>
+                <span>节点 <b>11</b></span>
+              </div>
             </div>
-            <span class="badge badge-neutral" data-connector-badge="neo4j">未配置</span>
+            <div class="connector-status">
+              <span class="badge badge-neutral" data-connector-badge="neo4j">未配置</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-2 connector-extra">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="page-eyebrow mb-1">FLOW</div>
+                <h3 class="card-title">数据接入流程</h3>
+              </div>
+              <span class="badge badge-primary badge-dot">4 步</span>
+            </div>
+            <ol class="flow-list">
+              <li>
+                <span class="flow-num" aria-hidden="true">1</span>
+                <div>
+                  <strong>飞书 OAuth 授权</strong>
+                  管理员在企业后台一次性授权会议、文档、多维表三类数据范围。
+                  <span class="flow-tag">⏱ 一次性 · 5 分钟</span>
+                </div>
+              </li>
+              <li>
+                <span class="flow-num" aria-hidden="true">2</span>
+                <div>
+                  <strong>事件订阅</strong>
+                  平台推送会议转写、文档更新、表单变更到 LabFlow 收件箱。
+                  <span class="flow-tag">⏱ 实时 · webhook</span>
+                </div>
+              </li>
+              <li>
+                <span class="flow-num" aria-hidden="true">3</span>
+                <div>
+                  <strong>结构化解析</strong>
+                  Agent 把原始事件映射为决策 / 风险 / 行动项 / 知识资产。
+                  <span class="flow-tag">⏱ 平均 4.2s</span>
+                </div>
+              </li>
+              <li>
+                <span class="flow-num" aria-hidden="true">4</span>
+                <div>
+                  <strong>回写与回链</strong>
+                  结论回写到飞书文档，知识条目自动引用来源会议与时间戳。
+                  <span class="flow-tag">⏱ SLA 24h</span>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="page-eyebrow mb-1">CONTRACT</div>
+                <h3 class="card-title">契约与可观测性</h3>
+              </div>
+              <span class="badge badge-success badge-dot">健康</span>
+            </div>
+            <ul class="contract-list">
+              <li>
+                <div class="contract-head">
+                  <span class="contract-key">webhook_latency · p95</span>
+                  <span class="contract-val">
+                    <span class="contract-status is-ok" aria-hidden="true">✓</span>
+                    <strong class="tone-good">1.4s</strong>
+                  </span>
+                </div>
+                <div class="contract-bar-track">
+                  <div class="contract-bar"><i class="is-ok" style="width:18%;"></i></div>
+                  <span class="contract-bar-tick" data-label="目标 ≤ 2.0s" style="left: 25%;"></span>
+                </div>
+                <div class="contract-row-meta">目标 ≤ 2.0s · 距阈值 <b>+0.6s 余量</b> · <span class="meta-trend-down">↑ 0.3s 较昨日</span></div>
+              </li>
+              <li>
+                <div class="contract-head">
+                  <span class="contract-key">parse_success_24h</span>
+                  <span class="contract-val">
+                    <span class="contract-status is-ok" aria-hidden="true">✓</span>
+                    <strong class="tone-good">98.6%</strong>
+                  </span>
+                </div>
+                <div class="contract-bar-track">
+                  <div class="contract-bar"><i class="is-ok" style="width:98.6%;"></i></div>
+                  <span class="contract-bar-tick" data-label="目标 ≥ 95%" style="left: 95%;"></span>
+                </div>
+                <div class="contract-row-meta">目标 ≥ 95% · <b>312 / 317</b> 成功 · <span class="meta-trend-up">+1.2pp 较昨日</span></div>
+              </li>
+              <li>
+                <div class="contract-head">
+                  <span class="contract-key">knowledge_assets</span>
+                  <span class="contract-val">
+                    <span class="contract-status is-warn" aria-hidden="true">!</span>
+                    <strong class="tone-warn">12 项</strong>
+                  </span>
+                </div>
+                <div class="contract-bar-track">
+                  <div class="contract-bar"><i class="is-warn" style="width:64%;"></i></div>
+                  <span class="contract-bar-tick" data-label="目标 ≥ 18" style="left: 92%;"></span>
+                </div>
+                <div class="contract-row-meta">目标 ≥ 18 · 距目标 <b>−6 项缺口</b> · <span class="meta-trend-up">+2 本周新增</span></div>
+              </li>
+              <li>
+                <div class="contract-head">
+                  <span class="contract-key">open_risks</span>
+                  <span class="contract-val">
+                    <span class="contract-status is-bad" aria-hidden="true">✕</span>
+                    <strong class="tone-bad">4 项</strong>
+                  </span>
+                </div>
+                <div class="contract-bar-track">
+                  <div class="contract-bar"><i class="is-bad" style="width:80%;"></i></div>
+                  <span class="contract-bar-tick" data-label="目标 ≤ 2" style="left: 40%;"></span>
+                </div>
+                <div class="contract-row-meta">目标 ≤ 2 · 超阈值 <b class="meta-trend-bad">+2 项</b> · 1 项 P1 优先级</div>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
@@ -624,36 +796,172 @@
         <div class="page-intro">
           <div class="page-eyebrow"><span class="eyebrow-dot"></span>PREFERENCES</div>
           <h1 class="page-title">偏好设置</h1>
-          <p class="page-description">调整提醒、解析策略和默认研发视图。</p>
+          <p class="page-description">调整提醒、解析策略、外观、快捷键与默认研发视图，让 LabFlow 贴合团队节奏。</p>
         </div>
-        <div class="card settings-card">
-          <div class="settings-row">
-            <div>
-              <h3 class="settings-title">新会议自动进入解析队列</h3>
-              <p class="text-sm text-secondary">会议结束 5 分钟后自动开始提炼结构化结论。</p>
+        <div class="settings-grid">
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <div>
+                <div class="settings-card-eyebrow">自动行为</div>
+                <h3 class="settings-card-title">让 AI 替你跑流程</h3>
+              </div>
             </div>
-            <button class="toggle is-on" aria-label="切换自动解析"><i></i></button>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">新会议自动进入解析队列</h3>
+                <p class="text-sm text-secondary">会议结束 5 分钟后自动开始提炼结构化结论。</p>
+              </div>
+              <button class="toggle is-on" aria-label="切换自动解析"><i></i></button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">高风险参数主动提醒</h3>
+                <p class="text-sm text-secondary">当实验进入执行阶段仍存在 P1 风险时，通知负责人。</p>
+              </div>
+              <button class="toggle is-on" aria-label="切换风险提醒"><i></i></button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">每日早晨 09:00 推送研发简报</h3>
+                <p class="text-sm text-secondary">昨日进度、待处理风险与今日优先事项自动汇总到飞书消息。</p>
+              </div>
+              <button class="toggle is-on" aria-label="切换简报推送"><i></i></button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">知识条目自动去重合并</h3>
+                <p class="text-sm text-secondary">相似度 ≥ 0.92 的结论会提示合并，避免知识库碎片化。</p>
+              </div>
+              <button class="toggle" aria-label="切换自动去重"><i></i></button>
+            </div>
           </div>
-          <div class="settings-row">
-            <div>
-              <h3 class="settings-title">高风险参数主动提醒</h3>
-              <p class="text-sm text-secondary">当实验进入执行阶段仍存在 P1 风险时，通知负责人。</p>
+
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              <div>
+                <div class="settings-card-eyebrow">团队审核</div>
+                <h3 class="settings-card-title">把控 AI 写入边界</h3>
+              </div>
             </div>
-            <button class="toggle is-on" aria-label="切换风险提醒"><i></i></button>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">知识结论写入前需要确认</h3>
+                <p class="text-sm text-secondary">AI 生成的结论在写入团队知识湖前由负责人审核。</p>
+              </div>
+              <button class="toggle" aria-label="切换确认策略"><i></i></button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">风险升级需要双签</h3>
+                <p class="text-sm text-secondary">P1 风险关闭或转 P2 时，需要实验负责人与 QA 共同确认。</p>
+              </div>
+              <button class="toggle is-on" aria-label="切换风险双签"><i></i></button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">跨角色行动项分配通知</h3>
+                <p class="text-sm text-secondary">由 AI 抽取的行动项落到对应负责人的飞书待办，并保留原文回链。</p>
+              </div>
+              <button class="toggle is-on" aria-label="切换行动项通知"><i></i></button>
+            </div>
           </div>
-          <div class="settings-row">
-            <div>
-              <h3 class="settings-title">深色模式</h3>
-              <p class="text-sm text-secondary">切换界面主题为深色模式，减少眼睛疲劳。</p>
+
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18"/><path d="M12 3v18"/></svg>
+              <div>
+                <div class="settings-card-eyebrow">外观</div>
+                <h3 class="settings-card-title">深色 / 紧凑 / 字号</h3>
+              </div>
             </div>
-            <button class="toggle" id="themeToggle" aria-label="切换深色模式"><i></i></button>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">深色模式</h3>
+                <p class="text-sm text-secondary">切换界面主题为深色模式，减少眼睛疲劳。</p>
+              </div>
+              <button class="toggle" id="themeToggle" aria-label="切换深色模式"><i></i></button>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">界面密度</h3>
+                <p class="text-sm text-secondary">紧凑模式把卡片行距收紧 25%，适合宽屏实验室大屏。</p>
+              </div>
+              <div class="segmented" role="tablist" aria-label="界面密度">
+                <button class="segmented-item is-active" data-density="comfortable">舒适</button>
+                <button class="segmented-item" data-density="compact">紧凑</button>
+              </div>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">主字号</h3>
+                <p class="text-sm text-secondary">全局放大字号，便于 1.5 米外查看实验流转大屏。</p>
+              </div>
+              <div class="segmented" role="tablist" aria-label="主字号">
+                <button class="segmented-item" data-size="sm">S</button>
+                <button class="segmented-item is-active" data-size="md">M</button>
+                <button class="segmented-item" data-size="lg">L</button>
+                <button class="segmented-item" data-size="xl">XL</button>
+              </div>
+            </div>
           </div>
-          <div class="settings-row">
-            <div>
-              <h3 class="settings-title">知识结论写入前需要确认</h3>
-              <p class="text-sm text-secondary">AI 生成的结论在写入团队知识湖前由负责人审核。</p>
+
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v3H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="15" r="1.5"/></svg>
+              <div>
+                <div class="settings-card-eyebrow">AI 模型</div>
+                <h3 class="settings-card-title">默认解析策略</h3>
+              </div>
             </div>
-            <button class="toggle" aria-label="切换确认策略"><i></i></button>
+            <div class="settings-row settings-row-stack">
+              <div>
+                <h3 class="settings-title">会议解析模型</h3>
+                <p class="text-sm text-secondary">决定转写片段如何被提炼为决策 / 风险 / 行动项。</p>
+              </div>
+              <select class="select">
+                <option>领域模型 · Meeting → Knowledge</option>
+                <option>通用 LLM · 双语会议适配</option>
+                <option>领域模型 + 规则约束 · 严苛模式</option>
+              </select>
+            </div>
+            <div class="settings-row settings-row-stack">
+              <div>
+                <h3 class="settings-title">实验相似度召回</h3>
+                <p class="text-sm text-secondary">向量检索 + 重排序，候选上限 12 条以保证命中率。</p>
+              </div>
+              <div class="slider-row">
+                <input type="range" min="0" max="100" value="78" class="range" />
+                <span class="range-value">0.78</span>
+              </div>
+            </div>
+            <div class="settings-row">
+              <div>
+                <h3 class="settings-title">本地 Ollama 优先</h3>
+                <p class="text-sm text-secondary">在 GPU 空闲时优先使用本地模型，失败后回退云端。</p>
+              </div>
+              <button class="toggle is-on" aria-label="切换本地优先"><i></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keyboard shortcuts panel -->
+        <div class="card settings-shortcuts">
+          <div class="settings-card-header">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>
+            <div>
+              <div class="settings-card-eyebrow">快捷键</div>
+              <h3 class="settings-card-title">让高频操作一键可达</h3>
+            </div>
+          </div>
+          <div class="shortcut-grid">
+            <div class="shortcut-item"><kbd>⌘</kbd><kbd>K</kbd><span>打开全局命令面板</span></div>
+            <div class="shortcut-item"><kbd>G</kbd><span>然后</span><kbd>O</kbd><span>跳到研发总览</span></div>
+            <div class="shortcut-item"><kbd>G</kbd><span>然后</span><kbd>E</kbd><span>跳到实验流转</span></div>
+            <div class="shortcut-item"><kbd>G</kbd><span>然后</span><kbd>K</kbd><span>跳到知识湖</span></div>
+            <div class="shortcut-item"><kbd>G</kbd><span>然后</span><kbd>A</kbd><span>跳到 AI 助理</span></div>
+            <div class="shortcut-item"><kbd>Shift</kbd><kbd>?</kbd><span>查看所有快捷键</span></div>
           </div>
         </div>
       </section>
