@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>晶流 LabFlow 完整参赛方案 · 知识催化剂 · 晶泰科技命题</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --ink:#1a2332; --muted:#5b6b80;
+    --brand:#0b6bff; --brand2:#00b3a4; --line:#e6ebf2;
+    --chip:#eef4ff; --chip-ink:#0b6bff;
+    --shadow:0 6px 24px rgba(20,40,80,.08);
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.7}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px 80px}
+
+  /* Hero */
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b2447 0%,#0b6bff 55%,#00b3a4 120%);color:#fff;padding:88px 0 72px;margin-bottom:40px}
+  .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 85% 10%,rgba(255,255,255,.18),transparent 60%),radial-gradient(500px 260px at 10% 90%,rgba(0,179,164,.35),transparent 60%)}
+  .hero .wrap{position:relative;padding-top:0;padding-bottom:0}
+  .hero .tag{display:inline-block;font-size:13px;letter-spacing:1px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+  .hero h1{font-size:42px;line-height:1.25;font-weight:800;letter-spacing:.5px;margin-bottom:14px}
+  .hero h1 .grad{background:linear-gradient(90deg,#7fd6ff,#a7ff9e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:17px;color:rgba(255,255,255,.88);max-width:760px}
+  .hero .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
+  .hero .meta span{font-size:14px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.2);padding:8px 16px;border-radius:10px}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-bottom:32px}
+  .nav .wrap{padding:0 24px;display:flex;gap:6px;overflow-x:auto;padding-top:0;padding-bottom:0}
+  .nav a{white-space:nowrap;font-size:14px;color:var(--muted);text-decoration:none;padding:16px 14px;border-bottom:2px solid transparent;transition:.2s}
+  .nav a:hover,.nav a.on{color:var(--brand);border-color:var(--brand)}
+
+  section{margin-bottom:44px}
+  .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .sec-num{flex:none;width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center}
+  .sec-head h2{font-size:24px;font-weight:800}
+  .sec-head .sub{font-size:13px;color:var(--muted);font-weight:400;margin-top:2px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 30px}
+  .card + .card{margin-top:16px}
+  h3{font-size:18px;font-weight:700;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+  h3:first-child{margin-top:0}
+  h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);flex:none}
+  p{margin-bottom:12px;color:#24303f}
+  .muted{color:var(--muted)}
+
+  /* 信息卡 */
+  .info-card h3{margin-top:0}
+  .kv{display:grid;grid-template-columns:150px 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:14px}
+  .kv .k{background:#f2f6ff;font-weight:600;padding:14px 18px;color:var(--ink);border-bottom:1px solid var(--line)}
+  .kv .v{padding:14px 18px;border-bottom:1px solid var(--line);color:#24303f}
+  .kv div:last-child{border-bottom:none}
+
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  th{background:#f2f6ff;text-align:left;padding:12px 14px;font-weight:700;color:var(--ink);border:1px solid var(--line)}
+  td{padding:12px 14px;border:1px solid var(--line);color:#24303f;vertical-align:top}
+  tr:nth-child(even) td{background:#fafcff}
+
+  /* 流水线 */
+  .pipeline{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+  .pipeline .step{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;color:var(--ink);box-shadow:0 2px 8px rgba(20,40,80,.06)}
+  .pipeline .arrow{color:var(--brand);font-weight:800}
+  .pipeline .step.hl{border-color:var(--brand);background:var(--chip);color:var(--chip-ink)}
+
+  /* 特性网格 */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:14px 0}
+  .tile{background:#fafcff;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .tile b{display:block;font-size:15px;margin-bottom:6px;color:var(--ink)}
+  .tile span{font-size:13px;color:var(--muted)}
+
+  .tag-r{display:inline-block;font-size:12px;background:#e6f7ee;color:#0a8a5a;border-radius:6px;padding:2px 8px;margin-right:6px;margin-bottom:4px}
+  .tag-b{display:inline-block;font-size:12px;background:var(--chip);color:var(--chip-ink);border-radius:6px;padding:2px 8px;margin-right:6px;margin-bottom:4px}
+
+  /* 截图 */
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0}
+  .shot{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .shot img{width:100%;display:block;border-bottom:1px solid var(--line)}
+  .shot figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}
+
+  /* 价值 */
+  .metric{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0}
+  .m-box{flex:1;min-width:150px;background:linear-gradient(135deg,#f2f6ff,#eefbf7);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+  .m-box .n{font-size:26px;font-weight:800;color:var(--brand)}
+  .m-box .l{font-size:13px;color:var(--muted);margin-top:4px}
+
+  .cta{text-align:center;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:var(--radius);padding:34px;margin-top:20px}
+  .cta a{display:inline-block;background:#fff;color:var(--brand);font-weight:700;padding:12px 26px;border-radius:10px;text-decoration:none;margin-top:12px}
+  .cta p{color:rgba(255,255,255,.9)}
+  .footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
+
+  @media(max-width:640px){
+    .hero h1{font-size:30px}.hero{padding:60px 0 48px}
+    .kv{grid-template-columns:1fr}.kv .k{border-bottom:none}
+    .nav a{padding:14px 10px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="tag">AI 先锋未来人才大赛 · 40强赛 · 晶泰科技命题</span>
+    <h1>晶流 <span class="grad">LabFlow</span></h1>
+    <p>以实验编号为核心的 AI 研发知识流转系统 —— 通过多 Agent 协同，将研发会议讨论自动沉淀为可检索、可追溯、可主动预警的知识资产。</p>
+    <div class="meta">
+      <span>战队：知识催化剂</span>
+      <span>队员：王浩毅 · 崔永辉</span>
+      <span>企业命题：晶泰科技 · AI实验研发加速器</span>
+      <span>提交日期：2026年8月</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="#info">信息卡</a>
+    <a href="#s1">1. 命题场景</a>
+    <a href="#s2">2. 方案优势</a>
+    <a href="#s3">3. 方案说明</a>
+    <a href="#s4">4. 方案价值</a>
+    <a href="#s5">5. 体验入口</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- 信息卡 -->
+  <section id="info">
+    <div class="sec-head"><div class="sec-num">i</div><div><h2>参赛方案信息卡</h2><div class="sub">必填信息汇总</div></div></div>
+    <div class="card info-card">
+      <div class="kv">
+        <div class="k">队名</div><div class="v">知识催化剂</div>
+        <div class="k">命题</div><div class="v">晶泰科技｜AI实验研发加速器</div>
+        <div class="k">一句话摘要</div><div class="v">以实验编号为核心的 AI 研发知识流转系统，通过多 Agent 协同将会议讨论自动沉淀为可检索、可追溯、可主动预警的知识资产。</div>
+        <div class="k">成员介绍&amp;分工</div><div class="v">王浩毅（队长）：地理信息系统硕士，主攻企业知识图谱自动化构建与隐私保护，负责架构设计、后端 API、前端开发与答辩技术部分；崔永辉（队员）：负责用户研究、演示脚本、视觉素材与答辩业务部分。</div>
+        <div class="k">使用的飞书 AI 能力</div><div class="v">企业豆包（Agent 调度与解析）、多维表格（结构化知识沉淀）、会议智能纪要/妙记（会中实时解析）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 命题场景 -->
+  <section id="s1">
+    <div class="sec-head"><div class="sec-num">1</div><div><h2>命题场景描述、问题描述及痛点说明</h2><div class="sub">What &amp; Why</div></div></div>
+    <div class="card">
+      <h3><span class="dot"></span>真实业务场景</h3>
+      <p>晶泰科技智能自主实验室每天产生大量<strong>实验数据、会议讨论和研发决策</strong>，但这些信息分散在不同的系统、文档和个人笔记中。研发人员既要处理实验，又要从海量历史资料中查找经验，导致知识难以流动、经验难以复用、错误容易重复。</p>
+      <p>我们把研发知识流转的完整链条概括为：<strong>会前上下文准备 → 会中实时解析 → 会后知识沉淀</strong>。在实际研发中，这一链条往往断裂，正是痛点所在。</p>
+      <h3><span class="dot"></span>五大核心痛点</h3>
+      <table>
+        <tr><th>痛点</th><th>现状</th><th>对业务的实际影响</th></tr>
+        <tr><td><b>知识孤岛</b></td><td>会议结论散落在转写、文档、个人笔记中</td><td>知识检索效率低，想找历史结论要翻多个系统</td></tr>
+        <tr><td><b>经验断层</b></td><td>新人无法快速了解历史失败案例</td><td>重复踩坑，失败成本重复发生</td></tr>
+        <tr><td><b>任务脱节</b></td><td>会议 Action Items 靠人工跟进</td><td>任务闭环率低，决策落地慢</td></tr>
+        <tr><td><b>风险滞后</b></td><td>问题暴露时往往已造成损失</td><td>风险发现滞后，无法提前干预</td></tr>
+        <tr><td><b>决策不可追溯</b></td><td>不知道某个结论是怎么来的</td><td>争议频发，难以复盘与归因</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2 方案优势 -->
+  <section id="s2">
+    <div class="sec-head"><div class="sec-num">2</div><div><h2>方案优势 / 创新点</h2><div class="sub">差异化亮点</div></div></div>
+    <div class="card">
+      <div class="grid">
+        <div class="tile"><b>24 小时知识 SLA</b><span>量化研发知识沉淀效率，确保会议结论 24 小时内成为可检索资产。</span></div>
+        <div class="tile"><b>实验对象中心</b><span>区别于传统"会议中心"工具，以实验为主线串联所有决策与知识。</span></div>
+        <div class="tile"><b>多 Agent 协同</b><span>MeetingParser + QualityCheck + GraphLinker 三级 Agent 流水线。</span></div>
+        <div class="tile"><b>双资产模型</b><span>成功经验与失败案例同等建模，构建可主动触发的"失败模式库"。</span></div>
+        <div class="tile"><b>证据链追溯</b><span>每条结论附带原文时间戳、置信度、版本与人审状态。</span></div>
+        <div class="tile"><b>流式 AI 体验</b><span>用户实时看到 Agent 执行过程，而非黑盒等待，增强信任。</span></div>
+      </div>
+      <h3><span class="dot"></span>技术架构创新：多 Agent 协同流水线</h3>
+      <div class="pipeline">
+        <span class="step">会议转写文本</span><span class="arrow">→</span>
+        <span class="step hl">MeetingParser Agent</span><span class="arrow">→</span>
+        <span class="step hl">QualityCheck Agent</span><span class="arrow">→</span>
+        <span class="step hl">GraphLinker Agent</span><span class="arrow">→</span>
+        <span class="step">Human-in-the-Loop 审核</span><span class="arrow">→</span>
+        <span class="step">飞书多维表 + Neo4j 持久化</span>
+      </div>
+      <p class="muted">职责分离避免单一大模型的"全能陷阱"；基于 Checkpoint 可中断续跑；主模型超时自动降级至备选模型，保证系统可用性。</p>
+    </div>
+  </section>
+
+  <!-- 3 方案说明 -->
+  <section id="s3">
+    <div class="sec-head"><div class="sec-num">3</div><div><h2>具体方案说明（突出 AI 能力）</h2><div class="sub">How</div></div></div>
+    <div class="card">
+      <h3><span class="dot"></span>双资产知识模型：让"踩过的坑"成为可触发资产</h3>
+      <p>传统知识管理只沉淀成功经验，晶流 LabFlow 将失败案例建模为同等重要的资产，并构建<strong>失败模式库</strong>：触发参数、症状描述、根因分析、规避策略、关联实验。当新实验进入"参数评审"阶段，系统自动检测相似失败模式并<strong>主动推送风险预警</strong>，而非等待人工搜索。</p>
+      <div class="pipeline">
+        <span class="step hl">失败模式库</span><span class="arrow">→</span>
+        <span class="step">触发参数（温度≥28°C / 湿度波动&gt;15%）</span><span class="arrow">→</span>
+        <span class="step">症状（结晶异常，产率下降23%）</span><span class="arrow">→</span>
+        <span class="step">根因（环境数据缺失）</span><span class="arrow">→</span>
+        <span class="step">规避策略 + 关联实验</span>
+      </div>
+      <h3><span class="dot"></span>Canvas 动态知识图谱</h3>
+      <p>区别于静态树状图，采用 <strong>Canvas 力导向图</strong>展示实验与知识的关联：物理模拟自动布局、悬停高亮关联边、拖拽调整、点击查看详情；节点类型用颜色区分（实验=绿、结论=紫、风险=红），60fps 流畅渲染数百节点。</p>
+      <h3><span class="dot"></span>SSE 流式解析体验</h3>
+      <p>用户点击"开始解析"后，不再等待 5 秒空白，而是看到 Agent 逐步执行：连接飞书会议 AI 转写 → 识别参会者 → MeetingParser 提取参数/争议/决策 → QualityCheck 校验 Schema 与置信度 → GraphLinker 关联图谱与历史实验 → 生成结构化结论与行动项。</p>
+      <h3><span class="dot"></span>后端 API 与数据模型</h3>
+      <table>
+        <tr><th>端点</th><th>方法</th><th>功能</th></tr>
+        <tr><td>/api/overview</td><td>GET</td><td>全局指标与数据概览</td></tr>
+        <tr><td>/api/experiments/:id</td><td>GET</td><td>实验详情（时间线/关联会议/知识/风险）</td></tr>
+        <tr><td>/api/meetings/:id/analyze-stream</td><td>POST</td><td>SSE 流式会议解析，7 步推送 Agent 状态</td></tr>
+        <tr><td>/api/risks</td><td>GET</td><td>风险列表，P0-P3 分级与状态过滤</td></tr>
+        <tr><td>/api/risks/:id/resolve</td><td>POST</td><td>标记风险已处理</td></tr>
+        <tr><td>/api/search</td><td>POST</td><td>跨知识/实验/会议搜索 + 相关度评分</td></tr>
+      </table>
+      <p class="muted">Demo 采用零依赖架构（原生 ES Modules + Node.js + JSON 文件），演示友好、即开即用；生产环境可平滑迁移至 Spring Boot + PostgreSQL/pgvector + React/Vue + 飞书 OAuth。</p>
+    </div>
+  </section>
+
+  <!-- 4 方案价值 -->
+  <section id="s4">
+    <div class="sec-head"><div class="sec-num">4</div><div><h2>方案价值</h2><div class="sub">Value</div></div></div>
+    <div class="card">
+      <h3><span class="dot"></span>量化收益预期</h3>
+      <div class="metric">
+        <div class="m-box"><div class="n">-70%</div><div class="l">知识检索时间</div></div>
+        <div class="m-box"><div class="n">-50%</div><div class="l">重复试错</div></div>
+        <div class="m-box"><div class="n">+40%</div><div class="l">任务闭环率</div></div>
+        <div class="m-box"><div class="n">提前3天</div><div class="l">风险发现</div></div>
+        <div class="m-box"><div class="n">-60%</div><div class="l">决策争议</div></div>
+      </div>
+      <h3><span class="dot"></span>商业价值量化（10 人团队 · 每月 20 场实验会议）</h3>
+      <table>
+        <tr><th>来源</th><th>计算</th><th>月节省</th></tr>
+        <tr><td>会议纪要整理</td><td>2 小时/场 × 20 场</td><td>40 小时</td></tr>
+        <tr><td>历史实验查找</td><td>1 小时/人/天 × 10 人 × 22 天</td><td>220 小时</td></tr>
+        <tr><td>失败成本</td><td>每月 5 次失败中 2 次可被历史经验避免，单次约 5 万元</td><td>10 万元</td></tr>
+        <tr><td><b>合计</b></td><td>人力成本 + 失败成本</td><td><b>约 15 万元/月</b></td></tr>
+      </table>
+      <h3><span class="dot"></span>可推广性</h3>
+      <p>核心能力（会议解析 → 知识沉淀 → 风险预警）可迁移至其他研发密集型行业：<span class="tag-b">生物医药</span><span class="tag-b">半导体</span><span class="tag-b">新能源</span><span class="tag-b">软件工程</span>，只需定制领域 Schema 即可落地。</p>
+    </div>
+  </section>
+
+  <!-- 5 体验入口 -->
+  <section id="s5">
+    <div class="sec-head"><div class="sec-num">5</div><div><h2>方案体验入口 &amp; demo 展示</h2><div class="sub">可在线体验</div></div></div>
+    <div class="card">
+      <h3><span class="dot"></span>功能亮点截图</h3>
+      <div class="shots">
+        <figure class="shot"><img src="assets/01-overview.png" alt="研发总览看板" loading="lazy"><figcaption>研发总览看板 · 24h SLA / 实验统计 / 知识复用雷达</figcaption></figure>
+        <figure class="shot"><img src="assets/02-experiments.png" alt="实验流转管理" loading="lazy"><figcaption>实验流转管理 · 阶段切换与风险标记</figcaption></figure>
+        <figure class="shot"><img src="assets/03-risks-list.png" alt="风险守门员" loading="lazy"><figcaption>风险守门员 · P0-P3 分级与主动预警</figcaption></figure>
+        <figure class="shot"><img src="assets/06-knowledge.png" alt="Canvas 知识图谱" loading="lazy"><figcaption>知识湖 · Canvas 力导向知识图谱</figcaption></figure>
+        <figure class="shot"><img src="assets/09-integrations.png" alt="飞书连接器" loading="lazy"><figcaption>连接器页 · 飞书 / Neo4j 状态与 API 调用统计</figcaption></figure>
+      </div>
+      <div class="cta">
+        <p>在线体验完整 Demo（研发总览 / 实验 / 会议解析 / 知识图谱 / 风险守门员 / 搜索）</p>
+        <a href="https://handlermapping-labflow-demo.ms.show/" target="_blank" rel="noopener">立即体验晶流 LabFlow →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    晶流 LabFlow · 知识催化剂战队 · 2026 AI 先锋未来人才大赛 40强赛正式版
+  </div>
+
+</div>
+</body>
+</html>
