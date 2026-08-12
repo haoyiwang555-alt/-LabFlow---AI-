@@ -11,8 +11,8 @@
 
 [![Build Status](https://img.shields.io/badge/Build-Passing-2ee6d6?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D%2020.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Architecture](https://img.shields.io/badge/Architecture-Event--Driven-8a2be2?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](#-系统架构设计)
-[![RAG Pipeline](https://img.shields.io/badge/RAG-pgvector%20%2B%20Neo4j-0078D4?style=for-the-badge&logo=postgresql&logoColor=white)](#-核心技术栈)
+[![Architecture](https://img.shields.io/badge/Architecture-Node--Native-2a9e76?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](#-系统架构设计)
+[![Hybrid RAG](https://img.shields.io/badge/Hybrid--RAG-Design-0078D4?style=for-the-badge&logo=postgresql&logoColor=white)](#-核心技术栈)
 [![Playwright Verified](https://img.shields.io/badge/Playwright-v1.61-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
@@ -45,7 +45,7 @@
     <td width="50%" align="center">
       <b>💬 AI 会议结构化解析器 (SSE 流式)</b><br />
       <small>多 Agent 流水线实时可视，提炼决策并带秒级证据时间戳</small><br /><br />
-      <img src="output/screenshots/live/r12/agents-light-desktop.png" width="100%" alt="AI 会议解析器" />
+      <img src="output/screenshots/live/r12/analyzer-result-light-desktop.png" width="100%" alt="AI 会议结构化解析器（SSE 流式）" />
     </td>
     <td width="50%" align="center">
       <b>🕸️ 动态研发知识图谱 (Canvas)</b><br />
@@ -67,9 +67,24 @@
     <td width="50%" align="center">
       <b>🤖 AI 助理工作台 (Agents)</b><br />
       <small>三大专用 Agent 协同：解析、检索、守门</small><br /><br />
-      <img src="output/screenshots/live/r12/integrations-light-desktop.png" width="100%" alt="AI 助理" />
+      <img src="output/screenshots/live/r12/agents-light-desktop.png" width="100%" alt="AI 助理工作台" />
+    </td>
+    <td width="50%" align="center">
+      <b>🔌 连接器真实状态 (Integrations)</b><br />
+      <small>基础设施 / 飞书契约状态实时探测，诚实降级</small><br /><br />
+      <img src="output/screenshots/live/r12/integrations-light-desktop.png" width="100%" alt="连接器真实状态" />
     </td>
   </tr>
+</table>
+
+<br />
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>🌙 深色主题 (Dark Theme)</b><br />
+      <small>科研暗色 · 全站令牌统一</small><br /><br />
+      <img src="output/screenshots/live/r12/overview-dark-desktop.png" width="100%" alt="深色主题" />
 </table>
 
 <br />
@@ -97,7 +112,7 @@
 ### 🆕 v0.2 新增功能（40 强赛版）
 
 - 🌊 **SSE 流式解析体验**：AI 会议解析器升级为 Server-Sent Events 流式输出，实时可视多 Agent 流水线执行过程（MeetingParser → QualityCheck → GraphLinker → Orchestrator），增强用户对 AI 决策的信任感。
-- 🕸️ **Canvas 动态知识图谱**：基于原生 Canvas 实现的力导向布局图，支持节点拖拽、悬停高亮关联边、点击查看详情弹窗，11 个节点 12 条关系边，深色科技风格渲染。
+- 🕸️ **Canvas 动态知识图谱**：基于原生 Canvas 实现的力导向布局图，支持节点拖拽、悬停高亮关联边、点击查看详情弹窗，27 个节点 23 条关系边（由数据自动推导），深色科技风格渲染。
 - 🛡️ **风险守门员独立面板**：P0-P3 风险分级看板，5 条风险数据覆盖数据缺口、参数漂移、权限冲突、物料延迟、模型降级场景，支持风险详情弹窗与一键标记已处理。
 - 📋 **实验详情弹窗**：点击实验卡片弹出详情，展示 5 阶段时间线、关联会议、关联知识资产、关联风险，形成完整的实验上下文视图。
 - ✨ **微交互动画**：卡片悬停浮起、按钮点击缩放、页面切换淡入、进度条填充动画等细节打磨。
@@ -106,55 +121,25 @@
 
 ## 🏗️ 系统架构设计
 
-```mermaid
-flowchart TD
-    subgraph FS["协同与接入层 (Lark/Feishu Platform)"]
-        A1["飞书会议转写 / 妙记 AI"]
-        A2["飞书云文档 / 团队知识库"]
-        A3["飞书多维表格 / 任务中心"]
-    end
+## 🏗️ 系统架构设计
 
-    subgraph GW["接入与网关编排层 (Gateway & Orchestration)"]
-        B1["Spring Cloud Gateway / Webhook"]
-        B2["Workflow Orchestrator (状态机/Checkpoint)"]
-        B3["Event Bus (RabbitMQ / 幂等去重)"]
-    end
+<img src="output/晶流LabFlow-知识闭环与架构图.png" width="100%" alt="晶流 LabFlow 系统架构与知识闭环" />
 
-    subgraph AG["Agent 多智能体层 (Multi-Agent Swarm)"]
-        C1["MeetingParser Agent (结构化提取)"]
-        C2["QualityCheck Agent (领域 Schema 质检)"]
-        C3["GraphLinker Agent (图谱与向量关联)"]
-        C4["RiskGuard Agent (风险守门员)"]
-        C5["Human-in-the-Loop (专家二审确认)"]
-    end
-
-    subgraph DB["存储与可信数据层 (Data & Storage)"]
-        D1["PostgreSQL + pgvector (语义向量库)"]
-        D2["Neo4j Graph DB (研发知识图谱/证据链)"]
-        D3["Redis (状态机 Checkpoint / 分布式锁)"]
-        D4["Audit Engine (不可变安全审计日志)"]
-    end
-
-    A1 --> B1 --> B2 --> B3
-    B3 --> C1 --> C2 --> C3 --> C4 --> C5
-    C5 --> A2 & A3
-    C1 --> D1
-    C3 <--> D1 & D2
-    B2 <--> D3
-    B2 --> D4
-```
+> **当前复赛版（实测）：** Node.js 原生 HTTP 零依赖后端（统一 envelope + SSE 流式 + 审计 + SLA）→ 多 Agent 流水线（MeetingParser → QualityCheck → GraphLinker → RiskGuard）→ Human-in-the-Loop 审批 → JSON seed+runtime 持久化（Redis / Neo4j / LLM / 飞书均为**契约就绪或诚实降级**，不伪造真实接入）。
+>
+> 可编辑源文件：`output/architecture.html`；完整 API 契约见 `API_DOCUMENTATION.md`。
 
 ---
 
 ## 🛠️ 核心技术栈
 
-| 层级 | 技术选型 | 场景说明 |
+| 层级 | 当前复赛版（实测） | 生产迁移方向 |
 | :--- | :--- | :--- |
-| **前端展现** | Vanilla HTML5 / CSS3 / ES Modules JS | 零第三方包依赖，纯原生高性能，暗黑微拟态科技视觉 |
-| **后端 API** | Node.js Server / Spring Boot 模块化 | 原生 HTTP / RESTful API / SSE 流式推送响应 |
-| **Agent 编排** | DeepSeek-V3 / Doubao-Pro / Spring AI | 执行 Structured Output 结构化提炼与领域 Schema 校验 |
-| **数据存储** | PostgreSQL + pgvector / Neo4j / Redis | 提供高维矢量语义检索、图关系推演与分布式幂等锁 |
-| **测试与媒体** | Playwright (v1.61) / FFmpeg / SAPI TTS | 无头浏览器自动演示脚本录制、语音合成与 MP4 音视频压制 |
+| **前端展现** | 原生 HTML5 / CSS3 / ES Modules（无框架无构建 · 设计令牌 · 深浅主题 · 移动端 390px） | React / Vue + TypeScript |
+| **后端 API** | Node.js 原生 http（零第三方运行时依赖）· 统一 envelope · SSE · 审计 · SLA | Spring Boot 模块化 |
+| **Agent 编排** | 确定性适配器 + OpenAI-compatible 接口（未配置时诚实降级 demo-adapter） | DeepSeek-V3 / Doubao-Pro / Spring AI |
+| **数据存储** | JSON seed + runtime（事实数据源）· Redis / Neo4j 可选且诚实降级 | PostgreSQL + pgvector / Neo4j / Redis |
+| **测试与媒体** | Playwright (v1.61) / FFmpeg / SAPI TTS | 同左（可挂 CI） |
 
 ---
 
