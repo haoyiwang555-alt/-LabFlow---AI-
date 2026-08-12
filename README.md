@@ -35,7 +35,7 @@
 ### 🖥️ 研发总览看板 (R&D Dashboard)
 > 实时监控 24h 知识 SLA 达标率、累计节省研发人时及多阶段实验闭环图谱。
 <div align="center">
-  <img src="output/screenshots/01-dashboard-desktop.png" width="96%" alt="研发总览看板" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
+  <img src="output/screenshots/live/r12/overview-light-desktop.png" width="96%" alt="研发总览看板" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 </div>
 
 <br />
@@ -45,12 +45,12 @@
     <td width="50%" align="center">
       <b>💬 AI 会议结构化解析器 (SSE 流式)</b><br />
       <small>多 Agent 流水线实时可视，提炼决策并带秒级证据时间戳</small><br /><br />
-      <img src="output/screenshots/02-analyzer-result.png" width="100%" alt="AI 会议解析器" />
+      <img src="output/screenshots/live/r12/agents-light-desktop.png" width="100%" alt="AI 会议解析器" />
     </td>
     <td width="50%" align="center">
       <b>🕸️ 动态研发知识图谱 (Canvas)</b><br />
       <small>力导向布局 + 拖拽交互 + 悬停高亮关联</small><br /><br />
-      <img src="output/screenshots/04-knowledge-lake.png" width="100%" alt="研发知识湖" />
+      <img src="output/screenshots/live/r12/knowledge-light-desktop.png" width="100%" alt="研发知识湖" />
     </td>
   </tr>
 </table>
@@ -62,12 +62,12 @@
     <td width="50%" align="center">
       <b>🛡️ 风险守门员面板 (Risk Guard)</b><br />
       <small>P0-P3 分级、AI 建议、触发参数与一键关闭</small><br /><br />
-      <img src="output/screenshots/05-risk-guard.png" width="100%" alt="风险守门员" />
+      <img src="output/screenshots/live/r12/risks-light-desktop.png" width="100%" alt="风险守门员" />
     </td>
     <td width="50%" align="center">
       <b>🤖 AI 助理工作台 (Agents)</b><br />
       <small>三大专用 Agent 协同：解析、检索、守门</small><br /><br />
-      <img src="output/screenshots/06-ai-agents.png" width="100%" alt="AI 助理" />
+      <img src="output/screenshots/live/r12/integrations-light-desktop.png" width="100%" alt="AI 助理" />
     </td>
   </tr>
 </table>
@@ -77,8 +77,12 @@
 <div align="center">
   <b>📱 移动端响应式工作台 (Mobile Workbench)</b><br />
   <small>适配移动端体验，方便实验室现场随时查阅风控预警与实验流转</small><br /><br />
-  <img src="output/screenshots/03-dashboard-mobile.png" width="36%" alt="移动端适配界面" />
+  <img src="output/screenshots/live/r12/overview-light-mobile.png" width="36%" alt="移动端适配界面" />
 </div>
+
+---
+
+🎬 **系统演示视频**：`output/晶流LabFlow-系统演示视频.mp4`（注：8/16 前将重制为当前 UI 的 3 分钟 1080p 版本）
 
 ---
 
@@ -153,6 +157,12 @@ flowchart TD
 | **测试与媒体** | Playwright (v1.61) / FFmpeg / SAPI TTS | 无头浏览器自动演示脚本录制、语音合成与 MP4 音视频压制 |
 
 ---
+
+## 🚀 在线 Demo 与部署
+
+- **在线 Demo**：`<!-- DEMO_URL -->`（待部署，见 `DEPLOYMENT.md` 约 15 分钟上线 Render 免费版）
+- **一键部署配置**：`render.yaml` + `Dockerfile`（Node 22 Alpine，零第三方运行时依赖）
+- 详细步骤：见 `DEPLOYMENT.md`
 
 ## 🚀 快速开始与本地运行
 

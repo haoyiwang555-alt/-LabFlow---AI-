@@ -7,9 +7,9 @@
   "metrics": {
     "knowledgeSla": 87,
     "avgReuseHours": 6.4,
-    "activeExperiments": 12,
+    "activeExperiments": 6,
     "savedHours": 42,
-    "pendingRisks": 3
+    "pendingRisks": 4
   },
   "pipeline": [
     {
@@ -140,6 +140,113 @@
         "协同",
         "物料风险"
       ]
+    },
+    {
+      "id": "mt-2408",
+      "title": "E-15 酶催化动力学参数评审",
+      "type": "参数评审",
+      "date": "今天 08:10",
+      "duration": "45 min",
+      "participants": 5,
+      "status": "ready",
+      "summary": "围绕酶浓度、底物进料速率与温度区间讨论动力学拟合方案，明确跨团队数据权限为前置条件。",
+      "tags": [
+        "E-15",
+        "酶催化",
+        "参数决策"
+      ],
+      "segments": [
+        {
+          "id": "ev-mt-2408-1",
+          "start": "00:12:40",
+          "end": "00:15:22",
+          "transcriptRef": "E-15 参数评审 / 转写片段 #1",
+          "content": "谢宁提出以 0.02 U/mL 酶浓度与 35°C 恒温区间作为基线，先完成一级动力学拟合。",
+          "confidence": 0.95
+        },
+        {
+          "id": "ev-mt-2408-2",
+          "start": "00:24:05",
+          "end": "00:27:31",
+          "transcriptRef": "E-15 参数评审 / 转写片段 #2",
+          "content": "林岚提示算法组历史数据权限仍为待审批状态，建议将权限确认列为本周高优行动项。",
+          "confidence": 0.92
+        },
+        {
+          "id": "ev-mt-2408-3",
+          "start": "00:33:18",
+          "end": "00:36:02",
+          "transcriptRef": "E-15 参数评审 / 转写片段 #3",
+          "content": "AI 关联到 B-17 参数评审的权限冲突案例，建议复用其审批催办流程。",
+          "confidence": 0.89
+        }
+      ]
+    },
+    {
+      "id": "mt-2388",
+      "title": "B-11 低温梯度方案历史评审",
+      "type": "参数评审",
+      "date": "07 月 11 日",
+      "duration": "41 min",
+      "participants": 7,
+      "status": "analyzed",
+      "summary": "确认低温梯度 0.5 °C/min 在 B-11 体系下的可行性，沉淀为可复用最优参数。",
+      "tags": [
+        "B-11",
+        "低温梯度",
+        "最优参数"
+      ],
+      "segments": [
+        {
+          "id": "ev-mt-2388-1",
+          "start": "00:09:15",
+          "end": "00:12:48",
+          "transcriptRef": "B-11 历史评审 / 转写片段 #1",
+          "content": "周启明确认 B-11 低温梯度方案在 0.5 °C/min 下降速率下结晶稳定，产物收率提升 12%。",
+          "confidence": 0.94
+        },
+        {
+          "id": "ev-mt-2388-2",
+          "start": "00:20:33",
+          "end": "00:23:10",
+          "transcriptRef": "B-11 历史评审 / 转写片段 #2",
+          "content": "结论写入知识库 k-01，作为 B-17 后续复用的最优参数基线。",
+          "confidence": 0.93
+        }
+      ]
+    },
+    {
+      "id": "mt-2404",
+      "title": "F-08 连续流工艺方案研讨",
+      "type": "方案研讨",
+      "date": "07 月 15 日",
+      "duration": "36 min",
+      "participants": 6,
+      "status": "analyzed",
+      "summary": "识别温度梯度敏感问题，确定在方案研讨阶段绑定环境传感器变量。",
+      "tags": [
+        "F-08",
+        "连续流",
+        "环境变量"
+      ],
+      "segments": [
+        {
+          "id": "ev-mt-2404-1",
+          "start": "00:07:22",
+          "end": "00:10:05",
+          "transcriptRef": "F-08 方案研讨 / 转写片段 #1",
+          "content": "陈默指出 F 系列批次对温度梯度敏感，建议本方案强制绑定环境传感器数据。",
+          "confidence": 0.9
+        },
+        {
+          "id": "ev-mt-2404-2",
+          "start": "00:28:44",
+          "end": "00:31:20",
+          "transcriptRef": "F-08 方案研讨 / 转写片段 #2",
+          "content": "团队决定将温度波动阈值写入方案评审检查清单，作为阶段守门规则。",
+          "confidence": 0.88
+        }
+      ]
     }
   ],
   "experiments": [
@@ -198,6 +305,34 @@
       "image": "/assets/chemical.jpg",
       "next": "同步结论至团队知识库",
       "insight": "已命中 4 条历史实验结论，证据链完整度 92%。"
+    },
+    {
+      "id": "exp-e15",
+      "code": "E-15",
+      "name": "酶催化反应动力学实验",
+      "stage": "参数评审",
+      "owner": "谢宁",
+      "team": "研发管理",
+      "progress": 38,
+      "risk": "high",
+      "updated": "今天 07:50",
+      "image": "/assets/lab-atmosphere.jpg",
+      "next": "确认跨团队数据访问权限",
+      "insight": "需访问算法组历史数据完成动力学参数拟合，权限审批为当前关键路径。"
+    },
+    {
+      "id": "exp-f08",
+      "code": "F-08",
+      "name": "连续流工艺稳定性验证",
+      "stage": "方案研讨",
+      "owner": "陈默",
+      "team": "自动化工作站",
+      "progress": 22,
+      "risk": "watch",
+      "updated": "2 天前",
+      "image": "/assets/robotics.jpg",
+      "next": "完成工艺参数边界评审",
+      "insight": "历史 F 系列批次暴露温度梯度敏感问题，本次需在方案阶段绑定环境变量。"
     }
   ],
   "knowledge": [
@@ -260,6 +395,46 @@
       "freshness": "2 周前",
       "image": "/assets/office.jpg",
       "status": "pending"
+    },
+    {
+      "id": "k-07",
+      "title": "E-15 酶催化动力学基线参数（0.02 U/mL · 35°C）",
+      "kind": "最优参数",
+      "score": 0.92,
+      "source": "会议 mt-2408 / 结论 #1",
+      "freshness": "今天 08:10",
+      "image": "/assets/lab-vials.jpg",
+      "status": "approved"
+    },
+    {
+      "id": "k-08",
+      "title": "F-08 连续流温度梯度敏感失败经验",
+      "kind": "失败经验",
+      "score": 0.88,
+      "source": "复盘会 mt-2404 / 风险 #1",
+      "freshness": "3 天前",
+      "image": "/assets/cleanroom.jpg",
+      "status": "approved"
+    },
+    {
+      "id": "k-09",
+      "title": "跨团队数据访问权限审批 SOP",
+      "kind": "流程规范",
+      "score": 0.86,
+      "source": "文档 SOP-19 / 权限治理",
+      "freshness": "1 周前",
+      "image": "/assets/office.jpg",
+      "status": "approved"
+    },
+    {
+      "id": "k-10",
+      "title": "实验环境传感器数据质量规范 v1.2",
+      "kind": "数据资产",
+      "score": 0.83,
+      "source": "知识库 / 数据治理",
+      "freshness": "2 周前",
+      "image": "/assets/analytics.jpg",
+      "status": "approved"
     }
   ],
   "tasks": [
@@ -298,6 +473,42 @@
       "priority": "normal",
       "status": "doing",
       "source": "exp-c04"
+    },
+    {
+      "id": "task-05",
+      "title": "确认 E-15 跨团队数据访问权限",
+      "owner": "林岚",
+      "due": "今天 17:00",
+      "priority": "high",
+      "status": "todo",
+      "source": "mt-2408"
+    },
+    {
+      "id": "task-06",
+      "title": "提交 F-08 环境变量检查清单",
+      "owner": "陈默",
+      "due": "明天 12:00",
+      "priority": "normal",
+      "status": "todo",
+      "source": "mt-2404"
+    },
+    {
+      "id": "task-07",
+      "title": "同步 E-15 基线参数至知识库",
+      "owner": "谢宁",
+      "due": "明天 18:00",
+      "priority": "normal",
+      "status": "doing",
+      "source": "exp-e15"
+    },
+    {
+      "id": "task-08",
+      "title": "复核 B-11 低温梯度复用边界",
+      "owner": "周启明",
+      "due": "07 月 25 日",
+      "priority": "normal",
+      "status": "todo",
+      "source": "k-01"
     }
   ],
   "activity": [
@@ -342,6 +553,12 @@
       "title": "实验启动",
       "detail": "E-15 酶催化反应动力学实验进入参数评审阶段",
       "tone": "blue"
+    },
+    {
+      "time": "07:20",
+      "title": "AI 解析完成",
+      "detail": "Q3 周例会已提炼 5 条决策与 3 个行动项",
+      "tone": "mint"
     }
   ],
   "risks": [
@@ -471,6 +688,149 @@
       "source": "seed",
       "createdAt": "2026-07-18T16:35:00+08:00",
       "traceId": "trace-seed-2"
+    },
+    {
+      "id": "audit-sla-01",
+      "entityType": "meeting",
+      "entityId": "mt-2401",
+      "action": "meeting-analyzed",
+      "detail": "B-11 体系参数复核会 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-17T09:30:00+08:00",
+      "traceId": "trace-audit-sla-01",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-02",
+      "entityType": "knowledge",
+      "entityId": "k-03",
+      "action": "knowledge-written",
+      "detail": "写入知识「自动化工作站换液顺序与污染控制 SOP」",
+      "source": "seed",
+      "createdAt": "2026-07-17T10:05:00+08:00",
+      "traceId": "trace-audit-sla-02",
+      "slaMet": false
+    },
+    {
+      "id": "audit-sla-03",
+      "entityType": "meeting",
+      "entityId": "mt-2402",
+      "action": "meeting-analyzed",
+      "detail": "C-04 药效队列优化会 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-18T11:20:00+08:00",
+      "traceId": "trace-audit-sla-03",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-04",
+      "entityType": "knowledge",
+      "entityId": "k-01",
+      "action": "knowledge-written",
+      "detail": "写入知识「B-11 低温梯度晶型筛选最优参数」",
+      "source": "seed",
+      "createdAt": "2026-07-18T11:40:00+08:00",
+      "traceId": "trace-audit-sla-04",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-05",
+      "entityType": "meeting",
+      "entityId": "mt-2403",
+      "action": "meeting-analyzed",
+      "detail": "D-22 溶剂迁移评审会 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-19T14:10:00+08:00",
+      "traceId": "trace-audit-sla-05",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-06",
+      "entityType": "knowledge",
+      "entityId": "k-08",
+      "action": "knowledge-written",
+      "detail": "写入知识「F-08 连续流温度梯度敏感失败经验」",
+      "source": "seed",
+      "createdAt": "2026-07-19T14:35:00+08:00",
+      "traceId": "trace-audit-sla-06",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-07",
+      "entityType": "meeting",
+      "entityId": "mt-2404",
+      "action": "meeting-analyzed",
+      "detail": "F-08 连续流工艺方案研讨 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-20T09:00:00+08:00",
+      "traceId": "trace-audit-sla-07",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-08",
+      "entityType": "knowledge",
+      "entityId": "k-10",
+      "action": "knowledge-written",
+      "detail": "写入知识「实验环境传感器数据质量规范 v1.2」",
+      "source": "seed",
+      "createdAt": "2026-07-20T09:25:00+08:00",
+      "traceId": "trace-audit-sla-08",
+      "slaMet": false
+    },
+    {
+      "id": "audit-sla-09",
+      "entityType": "meeting",
+      "entityId": "mt-2405",
+      "action": "meeting-analyzed",
+      "detail": "Q3 自动化实验室周例会 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-21T16:00:00+08:00",
+      "traceId": "trace-audit-sla-09",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-10",
+      "entityType": "knowledge",
+      "entityId": "k-09",
+      "action": "knowledge-written",
+      "detail": "写入知识「跨团队数据访问权限审批 SOP」",
+      "source": "seed",
+      "createdAt": "2026-07-21T16:30:00+08:00",
+      "traceId": "trace-audit-sla-10",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-11",
+      "entityType": "meeting",
+      "entityId": "mt-2408",
+      "action": "meeting-analyzed",
+      "detail": "E-15 酶催化动力学参数评审 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-22T10:00:00+08:00",
+      "traceId": "trace-audit-sla-11",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-12",
+      "entityType": "knowledge",
+      "entityId": "k-07",
+      "action": "knowledge-written",
+      "detail": "写入知识「E-15 酶催化动力学基线参数」",
+      "source": "seed",
+      "createdAt": "2026-07-22T10:20:00+08:00",
+      "traceId": "trace-audit-sla-12",
+      "slaMet": true
+    },
+    {
+      "id": "audit-sla-13",
+      "entityType": "meeting",
+      "entityId": "mt-2407",
+      "action": "meeting-analyzed",
+      "detail": "B-17 晶型筛选参数评审 解析完成，mode=seed",
+      "source": "seed",
+      "createdAt": "2026-07-23T15:30:00+08:00",
+      "traceId": "trace-audit-sla-13",
+      "slaMet": true
     }
   ]
 }

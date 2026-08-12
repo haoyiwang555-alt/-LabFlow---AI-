@@ -370,7 +370,7 @@
         </div>
         <div class="filter-bar">
           <div class="filter-group">
-            <button class="button button-secondary button-sm" style="background:var(--color-primary);color:white;border-color:var(--color-primary);">全部实验 <span id="experimentCount" class="filter-count">12</span></button>
+            <button class="button button-secondary button-sm filter-chip-active">全部实验 <span id="experimentCount" class="filter-count">12</span></button>
             <button class="button button-secondary button-sm">高优先级 <span class="filter-count">3</span></button>
             <button class="button button-secondary button-sm">我负责 <span class="filter-count">4</span></button>
           </div>
@@ -433,11 +433,11 @@
               <canvas id="knowledgeCanvas"></canvas>
               <div class="graph-tooltip" id="graphTooltip"></div>
               <div class="knowledge-graph-legend">
-                <span class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span>实验</span>
-                <span class="legend-item"><span class="legend-dot" style="background:#a78bfa;"></span>结论</span>
-                <span class="legend-item"><span class="legend-dot" style="background:#f87171;"></span>风险</span>
-                <span class="legend-item"><span class="legend-dot" style="background:#22d3ee;"></span>规范</span>
-                <span class="legend-item"><span class="legend-dot" style="background:#34d399;"></span>会议</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--color-primary);"></span>实验</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--aqua);"></span>结论</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--color-error);"></span>风险</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--color-warning);"></span>规范</span>
+                <span class="legend-item"><span class="legend-dot" style="background:var(--color-success);"></span>会议</span>
               </div>
             </div>
             <!-- Mobile-only list fallback (≤760px) so the graph stays readable on phones -->
@@ -720,7 +720,7 @@
                 <div>
                   <strong>飞书 OAuth 授权</strong>
                   管理员在企业后台一次性授权会议、文档、多维表三类数据范围。
-                  <span class="flow-tag">⏱ 一次性 · 5 分钟</span>
+                  <span class="flow-tag">一次性 · 5 分钟</span>
                 </div>
               </li>
               <li>
@@ -728,7 +728,7 @@
                 <div>
                   <strong>事件订阅</strong>
                   平台推送会议转写、文档更新、表单变更到 LabFlow 收件箱。
-                  <span class="flow-tag">⏱ 实时 · webhook</span>
+                  <span class="flow-tag">实时 · webhook</span>
                 </div>
               </li>
               <li>
@@ -736,7 +736,7 @@
                 <div>
                   <strong>结构化解析</strong>
                   Agent 把原始事件映射为决策 / 风险 / 行动项 / 知识资产。
-                  <span class="flow-tag">⏱ 平均 4.2s</span>
+                  <span class="flow-tag">平均 4.2s</span>
                 </div>
               </li>
               <li>
@@ -744,7 +744,7 @@
                 <div>
                   <strong>回写与回链</strong>
                   结论回写到飞书文档，知识条目自动引用来源会议与时间戳。
-                  <span class="flow-tag">⏱ SLA 24h</span>
+                  <span class="flow-tag">SLA 24h</span>
                 </div>
               </li>
             </ol>

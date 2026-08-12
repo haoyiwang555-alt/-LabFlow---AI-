@@ -24,6 +24,7 @@ yarn-error.log*
 !public/assets/*.jpg
 !public/favicon.svg
 !output/screenshots/*.png
+!output/screenshots/live/r12/*.png
 !output/晶流LabFlow-知识闭环与架构图.png
 
 # Competition Internal Planning & Draft Docs (NEVER COMMIT)

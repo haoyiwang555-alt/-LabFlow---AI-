@@ -963,7 +963,7 @@ class KnowledgeGraph {
     this.width = 0;
     this.height = 0;
     // Semantic graph palette: muted, desaturated tones — color carries meaning, not decoration.
-    this.colors = { experiment: '#7aa7d9', conclusion: '#9d8ec7', risk: '#d98a8a', spec: '#6fb8c9', meeting: '#6fbf9f' };
+    this.colors = { experiment: '#177a60', conclusion: '#7adbd3', risk: '#c0392f', spec: '#8a5a06', meeting: '#157347' };
     this.dashOffset = 0;
     this._resize();
     this._bindEvents();

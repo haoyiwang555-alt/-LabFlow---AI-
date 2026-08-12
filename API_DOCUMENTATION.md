@@ -62,6 +62,8 @@ POST /api/knowledge/:id/reject        # 驳回，body 可带 { "reason": "…" }
 
 知识项 `status` 取值 `approved | pending | rejected`（缺省视为 `approved`）。审批动作写入活动流、审计记录并持久化到 `runtime.json`，返回更新后的知识项 `data.item`。
 
+SLA 计算说明：`/api/metrics/sla` 由审计记录实时计算（`source=computed`）；审计记录可带 `slaMet: false` 表示未达标项（缺省视为达标），未达标项计入 `total` 但不计入 `met`。
+
 ## 图谱 API
 
 ```text

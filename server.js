@@ -426,7 +426,7 @@ function slaMetrics() {
     const key = dayKey(rec.createdAt) || 'today';
     const bucket = daily.get(key) || { date: key, met: 0, total: 0 };
     bucket.total += 1;
-    bucket.met += 1; // successful write/analysis counts as met
+    bucket.met += rec.slaMet === false ? 0 : 1; // slaMet:false 计为未达标，不计入 met
     daily.set(key, bucket);
   }
   const rows = [...daily.values()].map(b => ({ date: b.date.slice(5), met: b.met, total: b.total })).sort((a, b) => a.date.localeCompare(b.date));

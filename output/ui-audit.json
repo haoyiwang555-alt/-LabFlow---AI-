@@ -10,12 +10,6 @@
   },
   "results": [
     {
-      "level": "FAIL",
-      "view": "light/desktop/overview",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
-    },
-    {
       "level": "WARN",
       "view": "light/desktop/overview",
       "rule": "孤字断行",
@@ -24,32 +18,8 @@
     {
       "level": "WARN",
       "view": "light/desktop/overview",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 14px | 10px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/experiments",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"B-17\" 2.52:1 <需4.5 (11px) | \"运行正常\" 3.32:1 <需4.5 (11px) | \"BATCH B-17\" 2.52:1 <需4.5 (11px) | \"A-09\" 2.52:1 <需4.5 (11px) | \"高风险\" 3.95:1 <需4.5 (11px) | \"BATCH A-09\" 2.52:1 <需4.5 (11px)"
-    },
-    {
-      "level": "WARN",
-      "view": "light/desktop/experiments",
-      "rule": "网格残缺",
-      "detail": "#experimentGrid.grid grid-responsive 3列/4项，末行只填1"
-    },
-    {
-      "level": "WARN",
-      "view": "light/desktop/experiments",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/risks",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"P0 紧急\" 2.52:1 <需4.5 (11px) | \"P1 高\" 2.52:1 <需4.5 (11px) | \"P2 中\" 2.52:1 <需4.5 (11px) | \"未关闭\" 2.52:1 <需4.5 (11px) | \"P1\" 3.01:1 <需4.5 (11px) | \"待处理\" 3.95:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "14 > 4"
     },
     {
       "level": "WARN",
@@ -60,98 +30,44 @@
     {
       "level": "WARN",
       "view": "light/desktop/risks",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/risks",
-      "rule": "彩虹编码",
-      "detail": "5 种强调色相 > 4：210°×23, 0°×15, 30°×6, 150°×3, 60°×2"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/knowledge",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"2 天前\" 2.52:1 <需4.5 (11px) | \"RISK\" 3.95:1 <需4.5 (8px) | \"昨天\" 2.52:1 <需4.5 (11px) | \"SOP\" 3.54:1 <需4.5 (8px) | \"5 天前\" 2.52:1 <需4.5 (11px) | \"12 分钟前\" 2.52:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "9 > 4"
     },
     {
       "level": "WARN",
       "view": "light/desktop/knowledge",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
+      "rule": "网格残缺",
+      "detail": "#knowledgeList.knowledge-balance 2列/3项，末行只填1"
     },
     {
-      "level": "FAIL",
+      "level": "WARN",
       "view": "light/desktop/knowledge",
-      "rule": "彩虹编码",
-      "detail": "5 种强调色相 > 4：210°×89, 180°×7, 0°×5, 150°×4, 270°×3"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/agents",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"领域模型\" 3.81:1 <需4.5 (11px) | \"可用\" 3.77:1 <需4.5 (11px) | \"向量检索\" 2.52:1 <需4.5 (11px) | \"pgvector + Rerank\" 2.52:1 <需4.5 (11px) | \"可用\" 3.77:1 <需4.5 (11px) | \"规则 + LLM\" 2.52:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "9 > 4"
     },
     {
       "level": "WARN",
       "view": "light/desktop/agents",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/integrations",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"已连接\" 3.32:1 <需4.5 (11px) | \"已连接\" 3.32:1 <需4.5 (11px) | \"已连接\" 3.32:1 <需4.5 (11px) | \"未配置\" 2.52:1 <需4.5 (11px) | \"导航执行关闭\" 2.52:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "7 > 4"
     },
     {
       "level": "WARN",
       "view": "light/desktop/integrations",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/desktop/settings",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"导航执行关闭\" 2.52:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "12 > 4"
     },
     {
       "level": "WARN",
       "view": "light/desktop/settings",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/tablet/overview",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step 溢出67px (w=150) | div.pipeline-step.completed 溢出225px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/tablet/overview",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "5 > 4"
     },
     {
       "level": "WARN",
       "view": "light/tablet/overview",
       "rule": "孤字断行",
       "detail": "\"让每一次讨论，成为下一次发现。AI 将会议里的参数、争议与结论，编织成全团队可检\" 末行仅39px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/tablet/experiments",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"B-17\" 2.52:1 <需4.5 (11px) | \"运行正常\" 3.32:1 <需4.5 (11px) | \"BATCH B-17\" 2.52:1 <需4.5 (11px) | \"A-09\" 2.52:1 <需4.5 (11px) | \"高风险\" 3.95:1 <需4.5 (11px) | \"BATCH A-09\" 2.52:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/tablet/risks",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"P0 紧急\" 2.52:1 <需4.5 (11px) | \"P1 高\" 2.52:1 <需4.5 (11px) | \"P2 中\" 2.52:1 <需4.5 (11px) | \"未关闭\" 2.52:1 <需4.5 (11px) | \"P1\" 3.01:1 <需4.5 (11px) | \"待处理\" 3.95:1 <需4.5 (11px)"
     },
     {
       "level": "WARN",
@@ -166,16 +82,10 @@
       "detail": "\"A-09 实验批次缺少环境传感器数据，无法确认湿度波动与结晶异常的因果关系\" 末行仅13px"
     },
     {
-      "level": "FAIL",
+      "level": "WARN",
       "view": "light/tablet/knowledge",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"2 天前\" 2.52:1 <需4.5 (11px) | \"RISK\" 3.95:1 <需4.5 (8px) | \"昨天\" 2.52:1 <需4.5 (11px) | \"SOP\" 3.54:1 <需4.5 (8px) | \"5 天前\" 2.52:1 <需4.5 (11px) | \"12 分钟前\" 2.52:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/tablet/agents",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"领域模型\" 3.81:1 <需4.5 (11px) | \"可用\" 3.77:1 <需4.5 (11px) | \"向量检索\" 2.52:1 <需4.5 (11px) | \"pgvector + Rerank\" 2.52:1 <需4.5 (11px) | \"可用\" 3.77:1 <需4.5 (11px) | \"规则 + LLM\" 2.52:1 <需4.5 (11px)"
+      "rule": "网格残缺",
+      "detail": "#knowledgeList.knowledge-balance 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
@@ -184,190 +94,88 @@
       "detail": ".agents-grid 2列/3项，末行只填1"
     },
     {
-      "level": "FAIL",
-      "view": "light/tablet/integrations",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"已连接\" 3.32:1 <需4.5 (11px) | \"已连接\" 3.32:1 <需4.5 (11px) | \"已连接\" 3.32:1 <需4.5 (11px) | \"未配置\" 2.52:1 <需4.5 (11px) | \"导航执行关闭\" 2.52:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/tablet/settings",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"导航执行关闭\" 2.52:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/overview",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/overview",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
-    },
-    {
       "level": "WARN",
       "view": "light/mobile/overview",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/overview",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/experiments",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/experiments",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "light/mobile/experiments",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/experiments",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/risks",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/risks",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "light/mobile/risks",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/risks",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/knowledge",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/knowledge",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "light/mobile/knowledge",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/knowledge",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/agents",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/agents",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "light/mobile/agents",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/agents",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/integrations",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/integrations",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "light/mobile/integrations",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/integrations",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/settings",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "light/mobile/settings",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.34:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.8:1 <需4.5 (11px) | \"WORKSPACE\" 3.47:1 <需4.5 (10px) | \"SYSTEM\" 3.47:1 <需4.5 (10px) | \"研发效能负责人\" 3.95:1 <需4.5 (11px) | \"R&D OS\" 2.41:1 <需4.5 (13px) | \"LIVE\" 3.32:1 <需4.5 (11px) | \"数据每 15 分钟同步\" 3.95:1 <需4.5 (11px) | \"09:30\" 1:1 <需4.5 (11px) | \"会议\" 1:1 <需4.5 (11px) | \"09:42\" 1:1 <需4.5 (11px) | \"解析\" 1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "light/mobile/settings",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "light/mobile/settings",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/overview",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
@@ -378,32 +186,8 @@
     {
       "level": "WARN",
       "view": "dark/desktop/overview",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 14px | 10px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/experiments",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"新建行动项\" 2.54:1 <需4.5 (13px) | \"全部实验\" 2.54:1 <需4.5 (11px) | \"12\" 2.54:1 <需4.5 (11px) | \"B-17\" 4.1:1 <需4.5 (11px)"
-    },
-    {
-      "level": "WARN",
-      "view": "dark/desktop/experiments",
-      "rule": "网格残缺",
-      "detail": "#experimentGrid.grid grid-responsive 3列/4项，末行只填1"
-    },
-    {
-      "level": "WARN",
-      "view": "dark/desktop/experiments",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/risks",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"P0 紧急\" 4.1:1 <需4.5 (11px) | \"P1 高\" 4.1:1 <需4.5 (11px) | \"P2 中\" 4.1:1 <需4.5 (11px) | \"未关闭\" 4.1:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "14 > 4"
     },
     {
       "level": "WARN",
@@ -414,92 +198,44 @@
     {
       "level": "WARN",
       "view": "dark/desktop/risks",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/knowledge",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"搜索知识\" 2.54:1 <需4.5 (13px) | \"2 天前\" 4.1:1 <需4.5 (11px) | \"昨天\" 4.1:1 <需4.5 (11px) | \"5 天前\" 4.1:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "9 > 4"
     },
     {
       "level": "WARN",
       "view": "dark/desktop/knowledge",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
+      "rule": "网格残缺",
+      "detail": "#knowledgeList.knowledge-balance 2列/3项，末行只填1"
     },
     {
-      "level": "FAIL",
+      "level": "WARN",
       "view": "dark/desktop/knowledge",
-      "rule": "彩虹编码",
-      "detail": "6 种强调色相 > 4：210°×91, 180°×8, 0°×5, 150°×4, 270°×2, 240°×2"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/agents",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"开始一次解析\" 2.54:1 <需4.5 (13px) | \"领域模型\" 3.82:1 <需4.5 (11px) | \"Meeting → Knowledge\" 1.27:1 <需4.5 (11px) | \"解析最近一场会议\" 2.54:1 <需4.5 (13px)"
+      "rule": "阴影种数超标",
+      "detail": "9 > 4"
     },
     {
       "level": "WARN",
       "view": "dark/desktop/agents",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/integrations",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"未配置\" 4.1:1 <需4.5 (11px) | \"导航执行关闭\" 4.1:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "7 > 4"
     },
     {
       "level": "WARN",
       "view": "dark/desktop/integrations",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/desktop/settings",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"导航执行关闭\" 4.1:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "12 > 4"
     },
     {
       "level": "WARN",
       "view": "dark/desktop/settings",
-      "rule": "圆角种数超标",
-      "detail": "7 > 6：8px | 6px | 9999px | 4px | 50% | 10px | 14px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/tablet/overview",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step 溢出67px (w=150) | div.pipeline-step.completed 溢出225px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/tablet/overview",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "rule": "阴影种数超标",
+      "detail": "5 > 4"
     },
     {
       "level": "WARN",
       "view": "dark/tablet/overview",
       "rule": "孤字断行",
       "detail": "\"让每一次讨论，成为下一次发现。AI 将会议里的参数、争议与结论，编织成全团队可检\" 末行仅39px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/tablet/experiments",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"新建行动项\" 2.54:1 <需4.5 (13px) | \"全部实验\" 2.54:1 <需4.5 (11px) | \"12\" 2.54:1 <需4.5 (11px) | \"B-17\" 4.1:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/tablet/risks",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"P0 紧急\" 4.1:1 <需4.5 (11px) | \"P1 高\" 4.1:1 <需4.5 (11px) | \"P2 中\" 4.1:1 <需4.5 (11px) | \"未关闭\" 4.1:1 <需4.5 (11px)"
     },
     {
       "level": "WARN",
@@ -514,16 +250,10 @@
       "detail": "\"A-09 实验批次缺少环境传感器数据，无法确认湿度波动与结晶异常的因果关系\" 末行仅13px"
     },
     {
-      "level": "FAIL",
+      "level": "WARN",
       "view": "dark/tablet/knowledge",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"搜索知识\" 2.54:1 <需4.5 (13px) | \"2 天前\" 4.1:1 <需4.5 (11px) | \"昨天\" 4.1:1 <需4.5 (11px) | \"5 天前\" 4.1:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/tablet/agents",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"开始一次解析\" 2.54:1 <需4.5 (13px) | \"领域模型\" 3.82:1 <需4.5 (11px) | \"Meeting → Knowledge\" 1.27:1 <需4.5 (11px) | \"解析最近一场会议\" 2.54:1 <需4.5 (13px)"
+      "rule": "网格残缺",
+      "detail": "#knowledgeList.knowledge-balance 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
@@ -532,184 +262,88 @@
       "detail": ".agents-grid 2列/3项，末行只填1"
     },
     {
-      "level": "FAIL",
-      "view": "dark/tablet/integrations",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"未配置\" 4.1:1 <需4.5 (11px) | \"导航执行关闭\" 4.1:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/tablet/settings",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"导航执行关闭\" 4.1:1 <需4.5 (11px)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/overview",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/overview",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
-    },
-    {
       "level": "WARN",
       "view": "dark/mobile/overview",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/overview",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/experiments",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/experiments",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/experiments",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/experiments",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/risks",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/risks",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/risks",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/risks",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/knowledge",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/knowledge",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/knowledge",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/knowledge",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/agents",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/agents",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/agents",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/agents",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/integrations",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/integrations",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/integrations",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/integrations",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/settings",
-      "rule": "横向溢出",
-      "detail": "div.pipeline-step.active 溢出117px (w=150) | div.pipeline-step 溢出275px (w=150) | div.pipeline-step.completed 溢出433px (w=150)"
-    },
-    {
-      "level": "FAIL",
-      "view": "dark/mobile/settings",
-      "rule": "对比度不足",
-      "detail": "\"R&D OS\" 4.39:1 <需4.5 (11px) | \"晶泰科技 · Sandbox\" 3.93:1 <需4.5 (11px) | \"WORKSPACE\" 3.45:1 <需4.5 (10px) | \"SYSTEM\" 3.45:1 <需4.5 (10px) | \"AI 额度\" 4.28:1 <需4.5 (11px) | \"本月已节省 42.0 人时\" 4.28:1 <需4.5 (11px) | \"研发效能负责人\" 3.97:1 <需4.5 (11px) | \"R&D OS\" 4.34:1 <需4.5 (13px) | \"解析一场会议\" 2.54:1 <需4.5 (13px) | \"数据每 15 分钟同步\" 3.97:1 <需4.5 (11px) | \"从会议结束到全员可复用\" 4.1:1 <需4.5 (11px) | \"24H 知识 SLA\" 4.1:1 <需4.5 (11px)"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/settings",
-      "rule": "点击目标过小",
-      "detail": "button.nav-item active 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.nav-item 247x39 | button.icon-button 36x36 | button.icon-button 36x36 | button.icon-button 36x36"
+      "rule": "网格残缺",
+      "detail": ".hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-complete 2列/3项，末行只填1 | .hero-axis-point is-active 2列/3项，末行只填1"
     },
     {
       "level": "WARN",
       "view": "dark/mobile/settings",
       "rule": "孤字断行",
-      "detail": "\"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px | \"B-17 晶型筛选参数评审 已提炼 3 条决策与 2 个行动项\" 末行仅11px"
+      "detail": "\"目标 ≤24h · 达标 13/15 · 实时计算\" 末行仅13px | \"E-15 酶催化反应动力学实验进入参数评审阶段\" 末行仅11px"
     }
   ]
 }
