@@ -34,23 +34,27 @@ $synth.SelectVoice("Microsoft Huihui Desktop")
 $segments = @(
     @{
         name = "intro"
-        text = "大家好，我们是知识催化剂团队。为您演示晶流 LabFlow——面向智能自主实验室的 AI 实验研发加速器。我们的核心目标是 24小时知识 SLA：确保实验会议结束 24小时内，关键决策与风险被沉淀为可复用的研发知识资产。"
+        text = "大家好，我们是知识催化剂团队，为您带来『晶流 LabFlow——AI实验研发加速器』的演示。在实验室中，失败经验和研发决策常常散落遗失。晶流提出了『24小时知识 SLA』，目前达标率 87%，让每一次讨论在 24小时内沉淀为可复用的资产。"
     },
     @{
         name = "meeting"
-        text = "现在，我们进入 AI 会议解析器。选择 B-17 晶型筛选参数评审会，点击开始解析。系统在数秒内基于飞书会议 AI 转写，智能提炼出结构化的方案决策和行动项，并且每一条结论都带有精确到秒的原文证据时间戳，保证结论百分之百可追溯。"
+        text = "进入 AI 会议解析器，我们选择 B-17 评审会，开启流式解析。多 Agent 协同在几秒内提炼出结构化决策，不仅有行动项，而且每一条结论都带有精确到秒的原文证据时间戳，确保百分之百可追溯。"
     },
     @{
         name = "lake"
-        text = "接着，我们切入研发知识湖。晶流以实验对象为中心，自动将本次实验关联到历史成功方案 B-11 与失败案例 A-09，为本次实验预防了湿度波动带来的结晶风险。"
+        text = "在研发知识湖中，动态图谱将 B-17 自动关联到历史实验，并命中了失败案例 A-09 湿度波动风险。系统支持统一语义搜索，将无形的失败经验标准化建模为触发参数与规避策略。"
     },
     @{
-        name = "search"
-        text = "在知识湖中，我们检索关键字『湿度』。系统对失败经验进行了标准化建模，包含触发参数、可能根因与规避策略，让历史经验在下一次实验前主动召回。"
+        name = "approval"
+        text = "为了保障企业核心数据安全，晶流采用了 Human-in-the-Loop 知识审批闭环。所有 AI 提取的结论必须经过人工通过或驳回，才能正式落入知识湖，防范幻觉污染。"
+    },
+    @{
+        name = "integrations"
+        text = "在连接器页面，您可以看到各基础设施的真实探测状态。当前演示环境飞书连接器处于契约就绪与演示适配器状态，展示了诚实的服务状态，随时准备通过合规方式接入真实企业环境。"
     },
     @{
         name = "outro"
-        text = "晶流 LabFlow 目前已完成本地可运行的完整产品验证版。让每一次判断留下证据，让每一次失败成为发现的捷径。谢谢大家！"
+        text = "晶流 LabFlow 已完成本地验证，当前展示了 6个实验与 4个待处理风险。我们不替代科研人员判断，而是让判断留下证据，让失败成为下一次发现的捷径。谢谢大家！"
     }
 )
 
@@ -76,7 +80,7 @@ Write-Host "语音合成脚本执行结束。"
 
     // 从 Node.js 读取 WAV 文件大小，计算精确的音频时长
     console.log('正在计算精确的语音时长...');
-    const segmentNames = ['intro', 'meeting', 'lake', 'search', 'outro'];
+    const segmentNames = ['intro', 'meeting', 'lake', 'approval', 'integrations', 'outro'];
     const durations = {};
     for (const name of segmentNames) {
       const wavPath = path.join(TEMP_DIR, `${name}.wav`);
@@ -128,7 +132,8 @@ Write-Host "语音合成脚本执行结束。"
       `file 'intro.wav'`,
       `file 'meeting.wav'`,
       `file 'lake.wav'`,
-      `file 'search.wav'`,
+      `file 'approval.wav'`,
+      `file 'integrations.wav'`,
       `file 'outro.wav'`
     ].join('\n');
     

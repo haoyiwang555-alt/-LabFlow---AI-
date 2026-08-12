@@ -97,7 +97,7 @@
 
 ---
 
-🎬 **系统演示视频**：`output/晶流LabFlow-系统演示视频.mp4`（注：8/16 前将重制为当前 UI 的 3 分钟 1080p 版本）
+🎬 **系统演示视频**：`output/晶流LabFlow-系统演示视频.mp4`（1920×1080 · 约 2 分钟 · 2026-08-12 更新，覆盖当前 UI 全部主链路）
 
 ---
 
@@ -145,7 +145,8 @@
 
 ## 🚀 在线 Demo 与部署
 
-- **在线 Demo**：`<!-- DEMO_URL -->`（待部署，见 `DEPLOYMENT.md` 约 15 分钟上线 Render 免费版）
+- **在线 Demo**：https://handlermapping-labflow-demo.ms.show/ （公网 HTTPS，可手机/桌面直接访问）
+- **一键部署配置**：`render.yaml` + `Dockerfile`（Node 22 Alpine，零第三方运行时依赖）；如当前实例需启用后端接口，见 `DEPLOYMENT.md` 重新部署
 - **一键部署配置**：`render.yaml` + `Dockerfile`（Node 22 Alpine，零第三方运行时依赖）
 - 详细步骤：见 `DEPLOYMENT.md`
 

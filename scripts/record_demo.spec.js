@@ -8,7 +8,7 @@ const durationsFile = path.join(__dirname, '..', 'output', 'video_temp', 'durati
 const rawVideoDir = path.join(__dirname, '..', 'output', 'video_temp', 'raw_video');
 
 test('自动录制晶流演示视频', async ({ browser }) => {
-  test.setTimeout(120000);
+  test.setTimeout(240000);
   // 1. 读取语音时长数据
   if (!fs.existsSync(durationsFile)) {
     throw new Error('未找到 durations.json 语音时长配置文件，请先执行语音合成！');
@@ -23,10 +23,10 @@ test('自动录制晶流演示视频', async ({ browser }) => {
 
   // 2. 创建带录屏功能的独立上下文
   const context = await browser.newContext({
-    viewport: { width: 1280, height: 800 },
+    viewport: { width: 1920, height: 1080 },
     recordVideo: {
       dir: rawVideoDir,
-      size: { width: 1280, height: 800 }
+      size: { width: 1920, height: 1080 }
     }
   });
 
@@ -69,36 +69,45 @@ test('自动录制晶流演示视频', async ({ browser }) => {
   await page.click('button[data-view="knowledge"]');
   await page.waitForTimeout(2000);
   
-  // 停留等待第三段旁白 (Lake)
+  // 停留等待第三段旁白上半部分 (Lake)
   await page.mouse.move(700, 500);
-  await page.waitForTimeout(Math.max(1000, durations.lake - 2000));
+  await page.waitForTimeout(Math.max(1000, (durations.lake / 2) - 1000));
 
-  // 6. 在知识湖进行统一检索
+  // 在知识湖进行统一检索 (合并在 lake 时间内)
   console.log('正在演示：知识检索功能...');
   await page.fill('input#globalSearch', '湿度');
   await page.waitForTimeout(500);
   await page.keyboard.press('Enter');
-  await page.waitForTimeout(1500);
   
-  // 停留等待第四段旁白 (Search)
+  // 停留等待第三段旁白下半部分 (Lake)
   await page.mouse.move(500, 450);
-  await page.waitForTimeout(Math.max(1000, durations.search - 2000));
+  await page.waitForTimeout(Math.max(1000, (durations.lake / 2) - 1500));
   
   // 关闭搜索弹窗
   await page.click('button[data-action="close-modal"]');
   await page.waitForTimeout(1000);
 
-  // 7. 切换其他板块快速浏览
-  console.log('正在演示：其他工作台与收尾...');
-  await page.click('button[data-view="experiments"]');
-  await page.waitForTimeout(1500);
-  await page.click('button[data-view="agents"]');
-  await page.waitForTimeout(1500);
+  // 6. 演示知识审批 (Approval)
+  console.log('正在演示：知识审批...');
+  const approveBtn = await page.waitForSelector('button[data-action="approve-knowledge"]', { timeout: 2000 }).catch(() => null);
+  if (approveBtn) {
+      await page.waitForTimeout(500);
+      await approveBtn.click();
+  }
+  await page.waitForTimeout(Math.max(1000, durations.approval - 1500));
+  
+  // 7. 切换到连接器页 (Integrations)
+  console.log('正在演示：连接器页...');
+  await page.click('button[data-view="integrations"]');
+  await page.waitForTimeout(Math.max(1000, durations.integrations - 1000));
+
+  // 8. 回到总览收尾 (Outro)
+  console.log('正在演示：收尾...');
   await page.click('button[data-view="overview"]');
   await page.waitForTimeout(1000);
   
   // 停留等待第五段旁白 (Outro)
-  await page.waitForTimeout(Math.max(1000, durations.outro - 5000));
+  await page.waitForTimeout(Math.max(1000, durations.outro - 1000));
   
   // 8. 必须关闭上下文以保存视频文件！
   console.log('正在关闭上下文以保存录屏文件...');

@@ -57,6 +57,7 @@ output/screenshots/live/qck-*
 output/screenshots/live/vision-*.md
 output/screenshots/live/*.mjs.bak
 *.wav
+output/*_bak.mp4
 *.webm
 *.bak
 *.bak.*
