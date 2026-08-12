@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --canvas:#f5f7f2; --surface:#ffffff; --ink:#17191c; --ink2:#4d5458; --ink3:#5c666b;
+    --line:#e3e8e4; --line-strong:#cdd6d0;
+    --action:#145e4a; --action-soft:rgba(20,94,74,.08);
+    --aqua:#7adbd3; --lime:#cbf65d; --mint:#c9f4d9; --mint-deep:#11603f;
+    --danger:#c0392f; --warning:#8a5a06; --rail:#101519; --rail-2:#141a1e;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif; background:var(--canvas); color:var(--ink); }
+  .page { width:2200px; padding:48px 56px 40px; background:var(--canvas); }
+  /* Header */
+  header { display:flex; align-items:center; justify-content:space-between; gap:32px; background:linear-gradient(135deg, var(--rail) 0%, #0d1b18 100%); border-radius:16px; padding:36px 44px; margin-bottom:36px; }
+  .brand { display:flex; align-items:center; gap:20px; }
+  .logo { width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg, var(--lime), #b7e94f); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; color:var(--rail); }
+  .title h1 { color:#f5f7f2; font-size:40px; font-weight:800; letter-spacing:-.01em; }
+  .title p { color:rgba(245,247,242,.72); font-size:17px; margin-top:6px; }
+  .badges { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .badge { display:inline-flex; align-items:center; gap:8px; font-size:15px; font-weight:600; padding:8px 16px; border-radius:999px; background:rgba(122,219,211,.14); color:var(--aqua); border:1px solid rgba(122,219,211,.28); }
+  .badge.neutral { background:rgba(245,247,242,.08); color:rgba(245,247,242,.82); border-color:rgba(255,255,255,.12); }
+  /* Layer */
+  .layer { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px 26px 24px; margin-bottom:18px; }
+  .layer-label { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:16px; }
+  .layer-label .tag { font-size:13px; font-weight:600; color:var(--action); background:var(--action-soft); padding:4px 12px; border-radius:999px; }
+  .layer-label .en { font-size:13px; color:var(--ink3); font-weight:600; letter-spacing:.04em; }
+  .cards { display:flex; flex-wrap:wrap; gap:14px; }
+  .card { flex:1 1 0; min-width:200px; background:var(--surface); border:1px solid var(--line-strong); border-radius:10px; padding:16px 18px; }
+  .card .k { font-size:14px; font-weight:700; color:var(--ink); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+  .card .k .dot { width:8px; height:8px; border-radius:50%; background:var(--action); flex-shrink:0; }
+  .card .k .dot.aqua { background:var(--aqua); }
+  .card .k .dot.lime { background:var(--lime); }
+  .card .k .dot.danger { background:var(--danger); }
+  .card .k .dot.warn { background:var(--warning); }
+  .card .k .dot.mint { background:var(--mint-deep); }
+  .card ul { list-style:none; }
+  .card li { font-size:13px; color:var(--ink2); line-height:1.65; padding-left:12px; position:relative; }
+  .card li::before { content:''; position:absolute; left:0; top:9px; width:4px; height:4px; border-radius:50%; background:var(--line-strong); }
+  .card .note { font-size:12px; color:var(--ink3); margin-top:8px; line-height:1.5; }
+  /* Arrow between layers */
+  .arrow { display:flex; justify-content:center; align-items:center; height:26px; color:var(--action); font-size:18px; font-weight:700; }
+  .arrow svg { width:22px; height:22px; }
+  /* Agent pipeline */
+  .pipeline { display:flex; align-items:center; flex-wrap:wrap; gap:0; margin-top:4px; }
+  .agent { display:flex; align-items:center; gap:8px; background:var(--action-soft); border:1px solid rgba(20,94,74,.22); border-radius:10px; padding:12px 18px; font-size:14px; font-weight:700; color:var(--action); }
+  .agent .en { font-size:11px; color:var(--ink3); font-weight:600; display:block; letter-spacing:.03em; }
+  .psep { color:var(--ink3); font-size:16px; font-weight:700; margin:0 12px; }
+  .review { display:flex; align-items:center; gap:8px; background:rgba(201,244,217,.5); border:1px solid rgba(17,96,63,.25); border-radius:10px; padding:12px 18px; font-size:14px; font-weight:700; color:var(--mint-deep); }
+  .review .en { font-size:11px; color:var(--ink3); font-weight:600; display:block; }
+  /* SLA loop */
+  .sla-loop { display:flex; align-items:center; justify-content:center; gap:0; background:linear-gradient(135deg, var(--rail) 0%, #0d1b18 100%); border-radius:14px; padding:20px 28px; margin-top:22px; }
+  .loop-node { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:150px; }
+  .loop-node .n { font-size:15px; font-weight:700; color:#f5f7f2; }
+  .loop-node .d { font-size:12px; color:rgba(245,247,242,.62); }
+  .loop-sep { color:var(--aqua); font-size:20px; font-weight:700; margin:0 14px; }
+  .loop-kpi { margin-left:26px; padding:10px 20px; border:1px dashed rgba(122,219,211,.5); border-radius:10px; color:var(--aqua); font-size:14px; font-weight:700; text-align:center; }
+  .loop-kpi small { display:block; font-size:12px; color:rgba(245,247,242,.62); font-weight:500; margin-top:2px; }
+  footer { text-align:center; font-size:13px; color:var(--ink3); margin-top:22px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">
+      <div class="logo">LF</div>
+      <div class="title">
+        <h1>晶流 LabFlow · 系统架构与知识闭环</h1>
+        <p>AI 实验研发加速器 · 2026 AI 先锋未来人才大赛 · 晶泰科技命题 · 复赛版</p>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge">Node ≥ 20 · 原生 HTTP · 零第三方运行时依赖</span>
+      <span class="badge neutral">前端原生 HTML/CSS/JS · 无框架无构建</span>
+      <span class="badge neutral">飞书连接器：契约就绪 · 演示适配器（contract-ready / demo-adapter）</span>
+    </div>
+  </header>
+
+  <!-- 飞书协同层 -->
+  <section class="layer">
+    <div class="layer-label"><span>① 飞书协同层</span><span class="tag">契约就绪 · 不伪造真实接入</span><span class="en">FEISHU COLLABORATION LAYER</span></div>
+    <div class="cards">
+      <div class="card"><div class="k"><span class="dot"></span>会议 AI / 妙记转写</div><ul><li>秒级时间戳 · 说话人</li><li>SSE 第 1-2 步连接文案</li></ul><div class="note">contract-ready / demo-adapter</div></div>
+      <div class="card"><div class="k"><span class="dot aqua"></span>云文档 / 知识库</div><ul><li>结构化结论写入回链</li><li>知识资产沉淀</li></ul><div class="note">契约接口已定义</div></div>
+      <div class="card"><div class="k"><span class="dot lime"></span>多维表格 / 任务</div><ul><li>行动项状态机</li><li>看板 / 字段关联</li></ul><div class="note">契约接口已定义</div></div>
+      <div class="card"><div class="k"><span class="dot warn"></span>开放平台 API</div><ul><li>OAuth / 事件订阅</li><li>权限继承设计</li></ul><div class="note">入围后接入真实环境</div></div>
+    </div>
+  </section>
+
+  <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="6 14 12 20 18 14"/></svg></div>
+
+  <!-- 接入与编排层 -->
+  <section class="layer">
+    <div class="layer-label"><span>② 接入与编排层 · 后端</span><span class="tag">Node.js 原生 HTTP · 零依赖</span><span class="en">GATEWAY &amp; ORCHESTRATION</span></div>
+    <div class="cards">
+      <div class="card"><div class="k"><span class="dot"></span>统一 API 契约</div><ul><li>{data, meta, error} envelope</li><li>requestId / mode / generatedAt</li><li>错误语义 400/404/409/422/500</li></ul><div class="note">CORS / OPTIONS / ETag 静态缓存</div></div>
+      <div class="card"><div class="k"><span class="dot aqua"></span>SSE 流式解析</div><ul><li>6 步 Agent 时间线实时可视</li><li>事件 id + 幂等重放</li><li>Last-Event-ID 断线恢复</li><li>15s keep-alive · 断开清理</li></ul></div>
+      <div class="card"><div class="k"><span class="dot lime"></span>REST API</div><ul><li>实验 / 会议 / 证据</li><li>知识审批 / 图谱 / 审计</li><li>SLA 指标 / 任务 / 搜索 / 风险</li></ul><div class="note">写操作全部写审计 + 活动流</div></div>
+    </div>
+  </section>
+
+  <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="6 14 12 20 18 14"/></svg></div>
+
+  <!-- Agent 流水线 -->
+  <section class="layer">
+    <div class="layer-label"><span>③ Agent 流水线 + 人审闭环</span><span class="tag">Human-in-the-Loop</span><span class="en">MULTI-AGENT PIPELINE</span></div>
+    <div class="pipeline">
+      <div class="agent"><span>MeetingParser<span class="en">会议结构化解析</span></span></div><span class="psep">→</span>
+      <div class="agent"><span>QualityCheck<span class="en">领域 Schema 质检</span></span></div><span class="psep">→</span>
+      <div class="agent"><span>GraphLinker<span class="en">图谱 / 相似召回</span></span></div><span class="psep">→</span>
+      <div class="agent"><span>RiskGuard<span class="en">风险守门 / 预警</span></span></div><span class="psep">→</span>
+      <div class="review"><span>Human Review<span class="en">通过 / 驳回（含原因）</span></span></div>
+    </div>
+    <div class="card" style="margin-top:16px; min-width:0;"><div class="k"><span class="dot mint"></span>证据链追溯</div><ul><li>每条结论带秒级原文时间戳 · 置信度 · 说话人 · 来源</li><li>低置信度（&lt;0.85）默认进入「待人工确认」</li><li>审批动作持久化到 runtime 并写审计</li></ul></div>
+  </section>
+
+  <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="6 14 12 20 18 14"/></svg></div>
+
+  <!-- 存储与可信层 -->
+  <section class="layer">
+    <div class="layer-label"><span>④ 存储与可信层</span><span class="tag">真实探测 · 诚实降级</span><span class="en">DATA &amp; TRUST</span></div>
+    <div class="cards">
+      <div class="card"><div class="k"><span class="dot"></span>JSON seed + runtime</div><ul><li>事实数据源（演示环境）</li><li>seed 只读 + runtime 合并持久化</li><li>重启不丢新字段</li></ul><div class="note">status: connected</div></div>
+      <div class="card"><div class="k"><span class="dot mint"></span>审计日志</div><ul><li>任务 / 风险 / 审批 / 解析 / 阶段推进</li><li>traceId 贯穿全链路</li></ul><div class="note">GET /api/audit</div></div>
+      <div class="card"><div class="k"><span class="dot aqua"></span>Redis（可选）</div><ul><li>幂等缓存 / SSE checkpoint</li><li>未配置 → disabled（内存降级）</li></ul></div>
+      <div class="card"><div class="k"><span class="dot lime"></span>Neo4j（可选）</div><ul><li>研发知识图谱 / 证据关系</li><li>未配置 → disabled（JSON 关系降级）</li></ul></div>
+      <div class="card"><div class="k"><span class="dot warn"></span>LLM（可选）</div><ul><li>OpenAI-compatible</li><li>未配置 → fallback（确定性适配器）</li><li>失败自动降级 demo-adapter-fallback</li></ul></div>
+    </div>
+  </section>
+
+  <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="4" x2="12" y2="20"/><polyline points="6 14 12 20 18 14"/></svg></div>
+
+  <!-- 前端展示层 -->
+  <section class="layer">
+    <div class="layer-label"><span>⑤ 前端展示层</span><span class="tag">原生 SPA · 7 视图</span><span class="en">FRONTEND</span></div>
+    <div class="cards">
+      <div class="card"><div class="k"><span class="dot"></span>研发总览</div><ul><li>24h SLA 环 / KPI / 活动流</li><li>Hero 24h 时间轴</li></ul></div>
+      <div class="card"><div class="k"><span class="dot aqua"></span>实验流转</div><ul><li>五阶段状态机</li><li>阶段推进 + 详情抽屉</li></ul></div>
+      <div class="card"><div class="k"><span class="dot danger"></span>风险守门</div><ul><li>P0-P3 分级</li><li>风险处理闭环</li></ul></div>
+      <div class="card"><div class="k"><span class="dot mint"></span>知识湖</div><ul><li>Canvas 力导向图谱</li><li>待人工确认审批</li></ul></div>
+      <div class="card"><div class="k"><span class="dot lime"></span>AI 助理</div><ul><li>SSE 解析可视化</li><li>证据详情入口</li></ul></div>
+      <div class="card"><div class="k"><span class="dot warn"></span>连接器</div><ul><li>真实 infra 状态</li><li>刷新 / 错误态</li></ul></div>
+      <div class="card"><div class="k"><span class="dot"></span>偏好设置</div><ul><li>自动解析 / 风险提醒</li><li>知识确认开关</li></ul></div>
+    </div>
+    <div class="card" style="margin-top:16px; min-width:0;"><div class="k"><span class="dot aqua"></span>体验底座</div><ul><li>证据脊柱（spine）· 命令菜单 Ctrl+K · 统一搜索 · 深浅主题 · 移动端 390px 适配 · 设计令牌（bio-digital）</li></ul></div>
+  </section>
+
+  <!-- 24h SLA 闭环 -->
+  <section class="sla-loop">
+    <div class="loop-node"><span class="n">会议结束</span><span class="d">T0 · 转写就绪</span></div><span class="loop-sep">→</span>
+    <div class="loop-node"><span class="n">结构化解析</span><span class="d">Agent 流水线 + 证据时间戳</span></div><span class="loop-sep">→</span>
+    <div class="loop-node"><span class="n">人工确认</span><span class="d">通过 / 驳回</span></div><span class="loop-sep">→</span>
+    <div class="loop-node"><span class="n">知识入库</span><span class="d">知识湖 / 图谱 / 审计</span></div><span class="loop-sep">→</span>
+    <div class="loop-node"><span class="n">主动复用</span><span class="d">相似实验前风险预警</span></div>
+    <div class="loop-kpi">24h 知识 SLA<small>目标 ≥90% · 当前演示口径 87%</small></div>
+  </section>
+
+  <footer>演示边界：所有数据为构造演示数据；飞书 / Redis / Neo4j / LLM 均为真实探测或诚实降级，不伪造企业接入。 · 2026-08-12</footer>
+</div>
+</body>
+</html>
