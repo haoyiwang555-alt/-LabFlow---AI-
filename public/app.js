@@ -8,13 +8,29 @@ const esc = value => String(value ?? '').replace(/[&<>'"]/g, c => ({ '&': '&amp;
 
 /* ── API ── */
 // All JSON APIs return a unified envelope { data, meta, error }. Unwrap to `data`.
+// 静态演示模式：后端不可用时自动降级到 demo-data.js 的内嵌数据层（魔搭 Static 托管无后端）。
 async function api(path, options = {}) {
-  const response = await fetch(path, { headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options });
-  let payload;
-  try { payload = await response.json(); } catch { throw new Error('服务返回了无法解析的响应'); }
-  const { data, error } = payload;
-  if (!response.ok || error) throw new Error(error?.message || payload.error || '请求失败');
-  return data;
+  const demo = window.LabFlowDemo;
+  // 已启用演示模式：直接走内嵌数据层，避免每次重复请求
+  if (demo && demo.enabled) {
+    return demo.request(path, options).data;
+  }
+  try {
+    const response = await fetch(path, { headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }, ...options });
+    let payload;
+    try { payload = await response.json(); } catch { throw new Error('服务返回了无法解析的响应'); }
+    const { data, error } = payload;
+    if (!response.ok || error) throw new Error(error?.message || payload.error || '请求失败');
+    return data;
+  } catch (err) {
+    // 首次请求失败：自动切换到演示模式并重放本次请求
+    if (demo) {
+      window.LabFlowDemo.enabled = true;
+      showDemoBanner();
+      return demo.request(path, options).data;
+    }
+    throw err;
+  }
 }
 
 /* ── Toast ── */
@@ -713,6 +729,18 @@ async function runAnalysis() {
   const target = $('#analysisResult');
   target.innerHTML = '<div id="streamSteps" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);background:var(--color-bg-inverse);border-radius:var(--radius-lg);max-height:200px;overflow-y:auto;"></div>';
 
+  const demo = window.LabFlowDemo;
+  // 演示模式：用确定性的流式适配器替代真实 SSE
+  if (demo && demo.enabled) {
+    const stepsContainer = $('#streamSteps');
+    demo.analyzeStream(
+      input.value,
+      step => { if (stepsContainer) appendAnalysisStep(stepsContainer, step); },
+      analysis => applyAnalysisDone(target, input.value, analysis)
+    );
+    return;
+  }
+
   try {
     const response = await fetch(`/api/meetings/${encodeURIComponent(input.value)}/analyze-stream`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
     const reader = response.body.getReader();
@@ -730,60 +758,71 @@ async function runAnalysis() {
         if (!line.startsWith('data: ')) continue;
         const data = JSON.parse(line.slice(6));
         if (data.done && data.analysis) {
-          const a = data.analysis;
-          target.innerHTML = `
-            <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
-              <span class="badge badge-success">置信度 ${Math.round(a.confidence * 100)}%</span>
-              <span class="badge badge-neutral">${esc(a.mode === 'llm-api' ? 'LLM API' : a.mode === 'demo-adapter-fallback' ? '降级适配器' : '演示适配器')}</span>
-              <span class="badge badge-neutral">${esc(a.elapsed)}</span>
-            </div>
-            ${(a.decisions || []).length ? `
-              <ol class="spine">
-                ${a.decisions.map(item => `
-                  <li class="spine-item" data-state="${decisionDone(item) ? 'done' : 'pending'}">
-                    <time class="spine-time">${esc(decisionTime(item))}</time>
-                    <div class="spine-body">
-                      <div class="list-item-title">${esc(item.label)}</div>
-                      <div class="list-item-description">${esc(item.value)}</div>
-                      ${item.evidence ? `<button class="evidence-entry" data-action="meeting-evidence" data-id="${esc(input.value)}">证据时间戳 · ${esc(item.evidence)} · 查看详情</button>` : ''}
-                    </div>
-                  </li>
-                `).join('')}
-              </ol>
-            ` : ''}
-            <div style="margin-top:var(--space-4);">
-              <span style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);display:block;margin-bottom:var(--space-2);">自动拆解的行动项</span>
-              ${a.actions.map(item => `
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-2) 0;border-top:1px solid var(--color-border);">
-                  <div>
-                    <div style="font-size:var(--text-sm);font-weight:600;">${esc(item.title)}</div>
-                    <div style="font-size:var(--text-xs);color:var(--color-text-tertiary);">${esc(item.owner)} · ${esc(item.due)}</div>
-                  </div>
-                  <span class="badge ${item.priority === 'high' ? 'badge-error' : 'badge-neutral'}">${item.priority === 'high' ? '高优先级' : '自动'}</span>
-                </div>
-              `).join('')}
-            </div>
-            <button class="button button-success button-full-width" data-action="close-modal" style="margin-top:var(--space-4);">写入知识湖并同步多维表</button>
-          `;
-          const fresh = await api('/api/overview'); state.overview = fresh; renderOverview(fresh);
-          toast('解析完成：结论已进入 24h 知识闭环');
+          await applyAnalysisDone(target, input.value, data.analysis);
         } else if (stepsContainer) {
-          const stepEl = document.createElement('div');
-          stepEl.className = 'slide-up';
-          stepEl.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 0;';
-          stepEl.innerHTML = `
-            <span style="font-size:10px;font-weight:800;color:#86efac;letter-spacing:0.08em;min-width:100px;">${esc(data.agent)}</span>
-            <span style="font-size:11px;color:rgba(255,255,255,0.7);">${esc(data.message)}</span>
-            <span style="color:#86efac;margin-left:auto;">✓</span>
-          `;
-          stepsContainer.appendChild(stepEl);
-          stepEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          appendAnalysisStep(stepsContainer, data);
         }
       }
     }
   } catch (error) {
     target.innerHTML = `<div style="padding:var(--space-3);background:var(--color-error-light);border-radius:var(--radius-md);color:var(--color-error);font-size:var(--text-sm);">${esc(error.message)}</div>`;
   }
+}
+
+/* 流式解析：单步提示渲染 */
+function appendAnalysisStep(container, step) {
+  const stepEl = document.createElement('div');
+  stepEl.className = 'slide-up';
+  stepEl.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 0;';
+  const agent = esc(step.agent || '');
+  const message = esc(step.message || '');
+  stepEl.innerHTML = `
+    <span style="font-size:10px;font-weight:800;color:#86efac;letter-spacing:0.08em;min-width:100px;">${agent}</span>
+    <span style="font-size:11px;color:rgba(255,255,255,0.7);">${message}</span>
+    <span style="color:#86efac;margin-left:auto;">✓</span>
+  `;
+  container.appendChild(stepEl);
+  stepEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* 流式解析：最终结果渲染（SSE 与演示适配器共用） */
+async function applyAnalysisDone(target, meetingId, a) {
+  target.innerHTML = `
+    <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+      <span class="badge badge-success">置信度 ${Math.round(a.confidence * 100)}%</span>
+      <span class="badge badge-neutral">${esc(a.mode === 'llm-api' ? 'LLM API' : a.mode === 'demo-adapter-fallback' ? '降级适配器' : '演示适配器')}</span>
+      <span class="badge badge-neutral">${esc(a.elapsed)}</span>
+    </div>
+    ${(a.decisions || []).length ? `
+      <ol class="spine">
+        ${a.decisions.map(item => `
+          <li class="spine-item" data-state="${decisionDone(item) ? 'done' : 'pending'}">
+            <time class="spine-time">${esc(decisionTime(item))}</time>
+            <div class="spine-body">
+              <div class="list-item-title">${esc(item.label)}</div>
+              <div class="list-item-description">${esc(item.value)}</div>
+              ${item.evidence ? `<button class="evidence-entry" data-action="meeting-evidence" data-id="${esc(meetingId)}">证据时间戳 · ${esc(item.evidence)} · 查看详情</button>` : ''}
+            </div>
+          </li>
+        `).join('')}
+      </ol>
+    ` : ''}
+    <div style="margin-top:var(--space-4);">
+      <span style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);display:block;margin-bottom:var(--space-2);">自动拆解的行动项</span>
+      ${a.actions.map(item => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-2) 0;border-top:1px solid var(--color-border);">
+          <div>
+            <div style="font-size:var(--text-sm);font-weight:600;">${esc(item.title)}</div>
+            <div style="font-size:var(--text-xs);color:var(--color-text-tertiary);">${esc(item.owner)} · ${esc(item.due)}</div>
+          </div>
+          <span class="badge ${item.priority === 'high' ? 'badge-error' : 'badge-neutral'}">${item.priority === 'high' ? '高优先级' : '自动'}</span>
+        </div>
+      `).join('')}
+    </div>
+    <button class="button button-success button-full-width" data-action="close-modal" style="margin-top:var(--space-4);">写入知识湖并同步多维表</button>
+  `;
+  const fresh = await api('/api/overview'); state.overview = fresh; renderOverview(fresh);
+  toast('解析完成：结论已进入 24h 知识闭环');
 }
 
 /* ── Modal: Search ── */
@@ -1031,8 +1070,14 @@ class KnowledgeGraph {
     try {
       // Default to a single-experiment view so the graph stays readable; full graph dumps
       // every knowledge asset and risk and becomes a hairball.
-      const res = await fetch('/api/graph?experimentId=B-17');
-      const payload = await res.json();
+      const demo = window.LabFlowDemo;
+      let payload;
+      if (demo && demo.enabled) {
+        payload = demo.request('/api/graph?experimentId=B-17');
+      } else {
+        const res = await fetch('/api/graph?experimentId=B-17');
+        payload = await res.json();
+      }
       const { nodes, edges } = payload.data || payload;
       if (!nodes || !nodes.length) { this._fallbackGraph(); return; }
       // Hub: the active experiment. Satellites: related knowledge on radial rings.
@@ -1586,6 +1631,17 @@ function initCommandMenu() {
   }
 }
 
+/* 静态演示模式：后端不可用时注入一条提示横幅 */
+function showDemoBanner() {
+  if ($('#demoModeBanner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'demoModeBanner';
+  banner.setAttribute('role', 'status');
+  banner.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;font-size:12px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.25);';
+  banner.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#5eead4;"></span>静态演示模式 · 后端未连接 · 使用内嵌演示数据';
+  document.body.appendChild(banner);
+}
+
 /* ── Boot ── */
 (async function boot() {
   try {
@@ -1597,7 +1653,18 @@ function initCommandMenu() {
     
     // Load data
     renderLoadingState();
-    state.overview = await api('/api/overview');
+    try {
+      state.overview = await api('/api/overview');
+    } catch (err) {
+      // 后端不可用：切换到静态演示数据层（魔搭 Static 托管无后端）
+      if (window.LabFlowDemo) {
+        window.LabFlowDemo.enabled = true;
+        state.overview = await api('/api/overview');
+        showDemoBanner();
+      } else {
+        throw err;
+      }
+    }
     renderOverview(state.overview);
     renderSla();
     renderInfra();
