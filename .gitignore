@@ -25,6 +25,7 @@ yarn-error.log*
 !public/favicon.svg
 !output/screenshots/*.png
 !output/screenshots/live/r12/*.png
+!output/screenshots/live/r14/*.png
 !output/晶流LabFlow-知识闭环与架构图.png
 !delivery/screenshots/*.png
 

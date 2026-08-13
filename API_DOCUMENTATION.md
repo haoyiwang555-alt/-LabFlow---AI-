@@ -42,7 +42,25 @@ GET /api/infra/status   # 真实探测各组件连接状态
 - `redis`：未配置 `REDIS_URL` → `disabled`；配置但不可达 → `degraded`
 - `neo4j`：未配置 `NEO4J_URI` → `disabled`
 - `llm`：未配置 `LLM_API_KEY` → `fallback`（确定性适配器）
-- `feishu`：恒为 `contract-ready` + `demo-adapter`（演示适配器，非真实企业接入）
+- `feishu`：真实探测（v2，2026-08-13）：
+  - 未配置 `FEISHU_APP_ID` / `FEISHU_APP_SECRET` → `not-configured`（诚实未接入）
+  - 配置且 tenant_access_token 换取成功 → `connected`（真实飞书连通）
+  - 配置但换取失败/网络错误 → `error`（附 detail）
+  - 不再写死 `contract-ready`；静态演示模式（无后端）下同样显示 `not-configured`
+
+## 飞书真实集成（可选，配置后自动启用）
+
+- 集成层：`feishu.js`（Node >= 20 原生 fetch，零第三方依赖；token 自动缓存 ~2h，401 自动刷新）
+- 能力：妙记转写（`minutes.v1.minute.get`）、多维表格读写（`bitable.v1.record`）、消息推送（`im.v1.message.create`）
+- 环境变量（`.env.example` 已有）：
+  - `FEISHU_APP_ID` / `FEISHU_APP_SECRET` —— 企业自建应用凭证（必须）
+  - `FEISHU_BASE_URL` —— 默认 https://open.feishu.cn，测试可覆盖
+  - `FEISHU_GROUP_CHAT_ID` —— 配置后：知识审批/风险闭环自动推送到该群
+  - `BITABLE_APP_TOKEN` / `BITABLE_TABLE_ID` —— 配置后：审批通过的知识自动写入多维表格台账
+- 行为：
+  - 会议解析：会议带 `minuteToken` 且已配置凭证时，优先拉取真实妙记转写；成功 → `mode=feishu-minutes`；失败 → 回退 `demo-adapter` 并告警（不崩溃）
+  - 知识审批 / 风险闭环：触发 best-effort 写回（bitable + 消息），结果写入审计（`feishu-synced` / `feishu-sync-failed`）
+  - 未配置任何凭证时：全部静默跳过，产品保持演示模式
 
 ## 会议与证据
 

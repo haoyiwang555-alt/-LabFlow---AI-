@@ -4,6 +4,7 @@ import path from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
+import * as feishu from './feishu.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -19,6 +20,12 @@ const LLM_MODEL = process.env.LLM_MODEL || 'gpt-3.5-turbo';
 // Optional infrastructure (honest probing only — never fake a connection)
 const REDIS_URL = process.env.REDIS_URL || '';
 const NEO4J_URI = process.env.NEO4J_URI || '';
+
+// Feishu integration (optional — real API only when credentials are configured)
+const FEISHU_GROUP_CHAT_ID = process.env.FEISHU_GROUP_CHAT_ID || ''; // 群/会话 receive_id
+const BITABLE_APP_TOKEN = process.env.BITABLE_APP_TOKEN || '';       // 多维表格 app_token（知识/实验台账落点）
+const BITABLE_TABLE_ID = process.env.BITABLE_TABLE_ID || '';         // 多维表格 table_id
+const feishuConnectorLabel = () => feishu.isConfigured() ? 'Feishu Meeting AI / connected' : 'Feishu Meeting AI / contract-ready(demo-adapter)';
 
 const readJson = (file, fallback) => {
   try { return JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '')); }
@@ -137,6 +144,27 @@ function addActivity(title, detail, tone = 'blue') {
 }
 
 /* ── Audit trail (all write ops) ── */
+/* ── Feishu best-effort sync（配置了才动作，未配置静默跳过，绝不伪造） ── */
+async function feishuSync(kind, entity, action, text) {
+  if (!feishu.isConfigured()) return;
+  const jobs = [];
+  if (BITABLE_APP_TOKEN && BITABLE_TABLE_ID) {
+    jobs.push(feishu.createBitableRecord(BITABLE_APP_TOKEN, BITABLE_TABLE_ID, {
+      记录类型: kind, 标题: String(entity.title || entity.id || '').slice(0, 200), 详情: text, 状态: entity.status || '', 更新时间: new Date().toISOString()
+    }).then(r => ({ name: 'bitable', ok: r.ok, detail: r.ok ? 'record_id=' + (r.payload?.data?.record?.record_id || '') : r.detail })));
+  }
+  if (FEISHU_GROUP_CHAT_ID) {
+    jobs.push(feishu.sendTextMessage(FEISHU_GROUP_CHAT_ID, `[LabFlow] ${text}`).then(r => ({ name: 'message', ok: r.ok, detail: r.ok ? 'message_id=' + (r.payload?.data?.message_id || '') : r.detail })));
+  }
+  if (!jobs.length) return;
+  const results = await Promise.allSettled(jobs);
+  for (const r of results) {
+    const v = r.status === 'fulfilled' ? r.value : { ok: false, name: 'unknown', detail: r.reason?.message || 'unknown' };
+    addAudit('feishu', String(entity.id || entity.title || ''), v.ok ? 'feishu-synced' : 'feishu-sync-failed', `飞书同步(${v.name})：${v.ok ? v.detail : ('失败 ' + v.detail)}`, 'feishu');
+  }
+  persist();
+}
+
 function addAudit(entityType, entityId, action, detail, source = 'api') {
   state.audit = state.audit || [];
   state.audit.unshift({
@@ -178,9 +206,28 @@ function deterministicAnalysis(meeting) {
 
 /* ── AI Analysis with LLM API (fallback to deterministic) ── */
 async function aiAnalysis(meeting) {
-  if (!LLM_API_KEY) return deterministicAnalysis(meeting);
+  // 真实飞书妙记转写（可选）：配置了 FEISHU 凭证且会议带 minuteToken 时优先拉取真实转写
+  let feishuTranscript = '';
+  if (meeting.minuteToken && feishu.isConfigured()) {
+    const fetched = await feishu.getMinuteTranscriptText(meeting.minuteToken);
+    if (fetched.ok) {
+      feishuTranscript = fetched.text;
+      console.log(`[Feishu] 已拉取妙记转写 ${meeting.id}（${fetched.text.length} 字符）`);
+    } else {
+      console.warn('[Feishu] 妙记拉取失败，回退演示数据:', fetched.detail);
+    }
+  }
+  const sourceMode = feishuTranscript ? 'feishu-minutes' : null;
+  if (!LLM_API_KEY) {
+    const analysis = deterministicAnalysis(meeting);
+    return { ...analysis, mode: sourceMode || 'demo-adapter', source: sourceMode || 'seed', transcriptChars: feishuTranscript ? feishuTranscript.length : undefined, connector: feishuConnectorLabel() };
+  }
   const isFailure = meeting.type === '结果复盘';
   const prompt = `你是晶流LabFlow的AI会议分析引擎。请分析以下会议记录，提取结构化决策和行动项。
+${feishuTranscript ? `
+【飞书妙记转写（真实）】
+${feishuTranscript.slice(0, 6000)}
+` : ''}
 
 会议标题：${meeting.title}
 会议类型：${meeting.type}
@@ -225,7 +272,8 @@ ${isFailure ? '这是失败复盘会议，请重点关注根因分析、调整�
       meetingId: meeting.id,
       title: meeting.title,
       mode: 'llm-api',
-      connector: 'Feishu Meeting AI / contract-ready',
+      source: sourceMode || 'seed',
+      connector: feishuConnectorLabel(),
       confidence: parsed.confidence || 0.85,
       elapsed: `${(Math.random() * 2 + 1).toFixed(1)}s`,
       decisions: parsed.decisions || [],
@@ -234,7 +282,7 @@ ${isFailure ? '这是失败复盘会议，请重点关注根因分析、调整�
     };
   } catch (error) {
     console.warn('[AI] LLM unavailable; using deterministic adapter:', error.message);
-    return { ...deterministicAnalysis(meeting), mode: 'demo-adapter-fallback' };
+    return { ...deterministicAnalysis(meeting), mode: 'demo-adapter-fallback', source: sourceMode || 'seed', connector: feishuConnectorLabel() };
   } finally {
     if (timeout) clearTimeout(timeout);
   }
@@ -326,7 +374,7 @@ async function infraStatus() {
     redis,
     neo4j,
     llm,
-    feishu: { status: 'contract-ready', detail: '契约就绪 · 演示适配器（demo-adapter）', latencyMs: 0 }
+    feishu: await feishu.probeStatus()
   };
   infraCache = result;
   infraCacheAt = now;
@@ -540,9 +588,10 @@ async function api(req, res, url) {
     if (!meeting) return notFound(res);
     const runId = `run-${randomUUID().slice(0, 8)}`;
     const cacheKey = `${meeting.id}:${transcriptHash(meeting)}`;
+    const feishuLive = feishu.isConfigured();
     const steps = [
-      { step: 1, message: '正在连接飞书会议 AI 转写服务…', agent: 'Connector' },
-      { step: 2, message: `识别到 ${meeting.participants} 位参会者，${meeting.duration} 转写文本…`, agent: 'Connector' },
+      { step: 1, message: feishuLive ? '正在从飞书妙记拉取真实会议转写…' : '正在连接飞书会议 AI 转写服务（演示适配器）…', agent: 'Connector' },
+      { step: 2, message: feishuLive ? `已获取 ${meeting.participants} 位参会者、${meeting.duration} 的真实转写…` : `识别到 ${meeting.participants} 位参会者，${meeting.duration} 转写文本…`, agent: 'Connector' },
       { step: 3, message: 'MeetingParser Agent 运行中 — 提取参数、争议与决策…', agent: 'MeetingParser' },
       { step: 4, message: 'QualityCheck Agent 校验领域 Schema 与置信度…', agent: 'QualityCheck' },
       { step: 5, message: 'GraphLinker Agent 关联知识图谱与历史实验…', agent: 'GraphLinker' },
@@ -633,6 +682,7 @@ async function api(req, res, url) {
     addActivity(action === 'approve' ? '知识通过' : '知识驳回', `${k.title}${reason ? ' · ' + reason : ''}`, action === 'approve' ? 'mint' : 'coral');
     addAudit('knowledge', k.id, `knowledge-${action}`, `${action === 'approve' ? '通过' : '驳回'}「${k.title}」${reason ? '，原因：' + reason : ''}`, 'api');
     persist();
+    void feishuSync('knowledge', k, action, `${action === 'approve' ? '知识已通过' : '知识已驳回'}：${k.title}${reason ? '（' + reason + '）' : ''}`).catch(e => console.warn('[Feishu] 同步失败:', e.message));
     return json(res, { item: k });
   }
 
@@ -669,6 +719,7 @@ async function api(req, res, url) {
     addActivity('风险关闭', risk.title, 'mint');
     addAudit('risk', risk.id, 'risk-resolved', `关闭风险「${risk.title}」(${risk.level})`, 'api');
     persist();
+    void feishuSync('risk', risk, 'resolve', `风险已闭环：${risk.title}（${risk.level}）`).catch(e => console.warn('[Feishu] 同步失败:', e.message));
     return json(res, { item: risk });
   }
 

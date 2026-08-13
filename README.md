@@ -225,6 +225,16 @@ Neo4j Browser 地址为 `http://localhost:7475`，演示账号为 `neo4j`，密�
 
 ---
 
+## 🪢 飞书真实集成（可选 · 配置后自动启用）
+
+- 集成层 `feishu.js`（原生 fetch，零第三方依赖）：token 自动缓存/刷新、妙记转写、多维表格读写、消息推送
+- 配置 `FEISHU_APP_ID` / `FEISHU_APP_SECRET` 后：
+  - 会议解析优先拉取**真实妙记转写**（`mode=feishu-minutes`）
+  - 知识审批 / 风险闭环自动写回多维表格 + 推送飞书群（best-effort，结果落审计）
+  - 连接器页 `feishu` 状态显示真实 `connected`（不再写死契约占位）
+- 未配置时：状态为 `not-configured`，产品保持演示模式，**绝不伪造连接**
+- 环境变量见 `.env.example`，凭证一律不进仓库
+
 ## 🛡️ 可信 AI 与安全设计
 
 1. **证据强关联 (Evidence Timestamping)**：每条结论强制映射原文时间戳，杜绝生成式 AI 的无根据“幻觉”。

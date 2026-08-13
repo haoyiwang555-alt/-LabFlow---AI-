@@ -19,19 +19,13 @@
       "level": "WARN",
       "view": "light/desktop/overview",
       "rule": "阴影种数超标",
-      "detail": "14 > 4"
+      "detail": "6 > 4"
     },
     {
       "level": "WARN",
-      "view": "light/desktop/risks",
+      "view": "light/desktop/experiments",
       "rule": "网格残缺",
-      "detail": "#riskGrid.risk-grid 2列/5项，末行只填1"
-    },
-    {
-      "level": "WARN",
-      "view": "light/desktop/risks",
-      "rule": "阴影种数超标",
-      "detail": "9 > 4"
+      "detail": "#experimentGrid.grid grid-responsive 3列/7项，末行只填1"
     },
     {
       "level": "WARN",
@@ -43,25 +37,13 @@
       "level": "WARN",
       "view": "light/desktop/knowledge",
       "rule": "阴影种数超标",
-      "detail": "9 > 4"
-    },
-    {
-      "level": "WARN",
-      "view": "light/desktop/agents",
-      "rule": "阴影种数超标",
-      "detail": "7 > 4"
+      "detail": "6 > 4"
     },
     {
       "level": "WARN",
       "view": "light/desktop/integrations",
       "rule": "阴影种数超标",
-      "detail": "12 > 4"
-    },
-    {
-      "level": "WARN",
-      "view": "light/desktop/settings",
-      "rule": "阴影种数超标",
-      "detail": "5 > 4"
+      "detail": "6 > 4"
     },
     {
       "level": "WARN",
@@ -71,15 +53,9 @@
     },
     {
       "level": "WARN",
-      "view": "light/tablet/risks",
+      "view": "light/tablet/experiments",
       "rule": "网格残缺",
-      "detail": "#riskGrid.risk-grid 2列/5项，末行只填1"
-    },
-    {
-      "level": "WARN",
-      "view": "light/tablet/risks",
-      "rule": "孤字断行",
-      "detail": "\"A-09 实验批次缺少环境传感器数据，无法确认湿度波动与结晶异常的因果关系\" 末行仅13px"
+      "detail": "#experimentGrid.grid grid-responsive 2列/7项，末行只填1"
     },
     {
       "level": "WARN",
@@ -187,19 +163,13 @@
       "level": "WARN",
       "view": "dark/desktop/overview",
       "rule": "阴影种数超标",
-      "detail": "14 > 4"
+      "detail": "6 > 4"
     },
     {
       "level": "WARN",
-      "view": "dark/desktop/risks",
+      "view": "dark/desktop/experiments",
       "rule": "网格残缺",
-      "detail": "#riskGrid.risk-grid 2列/5项，末行只填1"
-    },
-    {
-      "level": "WARN",
-      "view": "dark/desktop/risks",
-      "rule": "阴影种数超标",
-      "detail": "9 > 4"
+      "detail": "#experimentGrid.grid grid-responsive 3列/7项，末行只填1"
     },
     {
       "level": "WARN",
@@ -211,25 +181,13 @@
       "level": "WARN",
       "view": "dark/desktop/knowledge",
       "rule": "阴影种数超标",
-      "detail": "9 > 4"
-    },
-    {
-      "level": "WARN",
-      "view": "dark/desktop/agents",
-      "rule": "阴影种数超标",
-      "detail": "7 > 4"
+      "detail": "6 > 4"
     },
     {
       "level": "WARN",
       "view": "dark/desktop/integrations",
       "rule": "阴影种数超标",
-      "detail": "12 > 4"
-    },
-    {
-      "level": "WARN",
-      "view": "dark/desktop/settings",
-      "rule": "阴影种数超标",
-      "detail": "5 > 4"
+      "detail": "6 > 4"
     },
     {
       "level": "WARN",
@@ -239,15 +197,9 @@
     },
     {
       "level": "WARN",
-      "view": "dark/tablet/risks",
+      "view": "dark/tablet/experiments",
       "rule": "网格残缺",
-      "detail": "#riskGrid.risk-grid 2列/5项，末行只填1"
-    },
-    {
-      "level": "WARN",
-      "view": "dark/tablet/risks",
-      "rule": "孤字断行",
-      "detail": "\"A-09 实验批次缺少环境传感器数据，无法确认湿度波动与结晶异常的因果关系\" 末行仅13px"
+      "detail": "#experimentGrid.grid grid-responsive 2列/7项，末行只填1"
     },
     {
       "level": "WARN",

@@ -90,9 +90,13 @@ function sparkline(data, isCurrent = false, w = 180, h = 32) {
     const y = h - 3 - r * (h - 8);
     return `<line x1="0" y1="${y.toFixed(1)}" x2="${w}" y2="${y.toFixed(1)}" stroke="currentColor" stroke-opacity="0.06" stroke-width="1" stroke-dasharray="2 3"/>`;
   }).join('');
+  // 目标参考线（仪表盘刻度感）：位于可读区 62% 高度
+  const targetY = h - 3 - 0.62 * (h - 8);
+  const targetLine = `<line x1="0" y1="${targetY.toFixed(1)}" x2="${w}" y2="${targetY.toFixed(1)}" stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="3 3" stroke-opacity=".7"/>`;
   return `<svg class="metric-sparkline${isCurrent ? ' is-current' : ''}" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="趋势图" preserveAspectRatio="none">
     <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="currentColor" stop-opacity="0.22"/><stop offset="100%" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>
     ${gridLines}
+    ${targetLine}
     <polygon class="spark-area" points="${area}" fill="url(#${gid})"/>
     <polyline points="${line}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="${last[0]}" cy="${last[1]}" r="3" fill="currentColor" stroke="var(--surface)" stroke-width="1.5"/>
@@ -290,7 +294,12 @@ function renderExperiments(items) {
         <span class="exp-progress-meta">完成度</span>
       </div>
     </div>
-  `;}).join('');
+  `;}).join('') + `
+    <button type="button" class="card risk-card risk-card--new" data-action="risk-new">
+      <span class="risk-card--new-plus" aria-hidden="true">＋</span>
+      <span class="risk-card--new-text">登记新风险</span>
+      <span class="risk-card--new-sub">接入真实数据后自动同步飞书</span>
+    </button>`;
 }
 
 /* ── Render: Loading state (injected before first fetch) ── */
@@ -436,7 +445,12 @@ function renderRisks(items) {
         <span class="risk-foot-chip"><span class="risk-foot-chip-key">负责人</span><span class="risk-foot-chip-val">${esc(item.owner)}</span></span>
       </div>
     </div>
-  `;}).join('');
+  `;}).join('') + `
+    <button type="button" class="card risk-card risk-card--new" data-action="risk-new">
+      <span class="risk-card--new-plus" aria-hidden="true">＋</span>
+      <span class="risk-card--new-text">登记新风险</span>
+      <span class="risk-card--new-sub">接入真实数据后自动同步飞书</span>
+    </button>`;
 }
 
 /* ── Modal: Risk Detail ── */
@@ -910,7 +924,8 @@ document.addEventListener('click', event => {
   if (action === 'resolve-risk') resolveRisk(event.target.closest('[data-id]').dataset.id);
   if (action === 'experiment-detail') experimentDetail(event.target.closest('[data-id]').dataset.id);
   if (action === 'close-modal') closeModal();
-  if (action === 'refresh-infra') renderInfra();
+  if (action === 'risk-new') toast('新风险登记：接入飞书/真实数据后可用');
+    if (action === 'refresh-infra') renderInfra();
   if (action === 'approve-knowledge') approveKnowledge(event.target.closest('[data-id]').dataset.id);
   if (action === 'reject-knowledge') rejectKnowledgeModal(event.target.closest('[data-id]').dataset.id);
   if (action === 'confirm-reject') confirmReject(event.target.closest('[data-id]').dataset.id);

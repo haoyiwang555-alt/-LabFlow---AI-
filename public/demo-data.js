@@ -140,7 +140,7 @@
       redis: { status: 'fallback', detail: '演示模式：确定性缓存', latencyMs: 12 },
       neo4j: { status: 'fallback', detail: '演示模式：确定性图谱派生', latencyMs: 12 },
       llm: { status: 'fallback', detail: '演示模式：确定性适配器', latencyMs: 6 },
-      feishu: { status: 'contract-ready', detail: '契约就绪 · 演示适配器', latencyMs: 9 }
+      feishu: { status: 'not-configured', detail: '静态演示模式 · 未配置飞书凭证（FEISHU_APP_ID / FEISHU_APP_SECRET）', latencyMs: 0 }
     };
     return { items };
   }
@@ -245,7 +245,7 @@
       meetingId: meeting.id,
       title: meeting.title,
       mode: 'demo-adapter',
-      connector: 'Feishu Meeting AI / contract-ready',
+      connector: 'Feishu Meeting AI / static-demo',
       confidence: isFailure ? 0.93 : 0.96,
       elapsed: '1.8s',
       decisions: isFailure ? [
