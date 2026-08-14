@@ -1949,3 +1949,45 @@ p, .page-description, .statement-text, .risk-desc, .exp-insight, .balance-card-d
 
 /* -- 深色主题下表单/流式一致性 -- */
 [data-theme="dark"] .exp-form .input, [data-theme="dark"] .exp-form .select { background: var(--surface); border-color: var(--line); color: var(--ink-1); }
+
+/* ═══════════════════════════════════════════════════════════
+   r14 · 弹窗/动态模板类化（替代 app.js 内联样式，仅令牌）
+   ═══════════════════════════════════════════════════════════ */
+.modal-para { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-4); }
+.modal-para-lg { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-6); }
+.modal-para--relaxed { line-height: var(--leading-relaxed); }
+.modal-stack { display: flex; flex-direction: column; gap: var(--space-4); }
+.modal-stack--sm { display: flex; flex-direction: column; gap: var(--space-2); }
+.eyebrow-label { font-size: var(--text-xs); font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: var(--tracking-wide); display: block; margin-bottom: var(--space-3); }
+.eyebrow-label--tight { margin-bottom: var(--space-2); }
+.meeting-list { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-6); }
+.analyzer-radio-label { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-fast); }
+.analyzer-radio-label:has(input:checked) { border-color: var(--action); background: var(--action-softer); }
+.radio-accent { accent-color: var(--color-primary); }
+.title-sm { font-size: var(--text-sm); font-weight: 600; }
+.meta-xs { font-size: var(--text-xs); color: var(--color-text-tertiary); }
+#analysisResult { margin-top: var(--space-4); }
+#taskForm { display: flex; flex-direction: column; gap: var(--space-4); }
+.result-head { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); }
+.section-block { margin-top: var(--space-4); }
+.action-row { display: flex; justify-content: space-between; align-items: center; padding: var(--space-2) 0; border-top: 1px solid var(--color-border); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-2 { margin-top: var(--space-2); }
+.search-input-row { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
+.search-input-flex { flex: 1; min-width: 0; }
+.search-hint { font-size: var(--text-sm); color: var(--color-text-tertiary); }
+.search-loading { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3); color: var(--color-text-secondary); font-size: var(--text-sm); }
+.search-loading .spin { width: 16px; height: 16px; border: 2px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; display: inline-block; }
+.search-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: var(--radius-md); }
+.search-thumb-fallback { width: 44px; height: 44px; }
+.relevance-score { font-weight: 700; color: var(--color-primary); font-variant-numeric: tabular-nums; }
+.search-error { font-size: var(--text-sm); color: var(--color-error); }
+.graph-tooltip small { color: var(--ink-3); margin-left: 4px; }
+.graph-tooltip p { margin: 4px 0 0; color: var(--ink-2); }
+.relation-row { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); }
+.relation-dir { font-weight: 600; color: var(--color-primary); }
+.demo-banner { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1000; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: var(--r-full); background: linear-gradient(135deg, var(--action), var(--mint-deep)); color: var(--color-text-inverse); font-size: var(--text-sm); font-weight: 600; box-shadow: var(--sh-lg); }
+.demo-banner-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); flex-shrink: 0; }
+@media (max-width: 760px) {
+  .search-input-row { flex-direction: column; }
+}

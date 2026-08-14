@@ -598,8 +598,8 @@ async function approveKnowledge(id) {
 }
 function rejectKnowledgeModal(id) {
   openModal(`<h2 id="modalTitle">驳回知识结论</h2>
-    <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-4);">驳回后该结论将标记为「已驳回」，并写入审计记录。请填写驳回原因。</p>
-    <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+    <p class="modal-para">驳回后该结论将标记为「已驳回」，并写入审计记录。请填写驳回原因。</p>
+    <div class="modal-stack">
       <input id="rejectReason" class="form-input" placeholder="例如：置信度不足，需补充实验证据" />
       <button class="button button-danger button-full-width" data-action="confirm-reject" data-id="${esc(id)}">确认驳回</button>
     </div>
@@ -638,7 +638,7 @@ async function meetingEvidenceModal(meetingId) {
     const { items } = await api(`/api/meetings/${encodeURIComponent(meetingId)}/evidence`);
     if (!items || !items.length) { toast('该会议暂无证据片段'); return; }
     openModal(`<h2 id="modalTitle">会议证据 · ${esc(meetingId.toUpperCase())}</h2>
-      <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-4);">每条结论都带精确到秒的原文证据时间戳。</p>
+      <p class="modal-para">每条结论都带精确到秒的原文证据时间戳。</p>
       <ol class="spine">
         ${items.map(ev => `
           <li class="spine-item" data-state="done">
@@ -724,17 +724,17 @@ function analyzerModal(meetingId) {
   const meetings = state.overview.meetings;
   const selected = meetingId || meetings[0].id;
   openModal(`<h2 id="modalTitle">AI 会议解析器</h2>
-    <p style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-6);">
+    <p class="modal-para-lg modal-para--relaxed">
       将会议转写转化为带证据时间戳的实验参数、决策、风险与行动项。未配置 LLM_API_KEY 时使用确定性适配器，生产环境可通过契约接入飞书会议 AI。
     </p>
-    <span style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);display:block;margin-bottom:var(--space-3);">选择待解析会议</span>
-    <div style="display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-6);">
+    <span class="eyebrow-label">选择待解析会议</span>
+    <div class="meeting-list">
       ${meetings.map(item => `
-        <label style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);cursor:pointer;transition:all var(--transition-fast);" class="analyzer-radio-label">
-          <input type="radio" name="meeting" value="${esc(item.id)}" ${item.id === selected ? 'checked' : ''} style="accent-color:var(--color-primary);" />
+        <label class="analyzer-radio-label">
+          <input type="radio" name="meeting" value="${esc(item.id)}" ${item.id === selected ? 'checked' : ''} class="radio-accent" />
           <div>
-            <div style="font-size:var(--text-sm);font-weight:600;">${esc(item.title)}</div>
-            <div style="font-size:var(--text-xs);color:var(--color-text-tertiary);">${esc(item.type)} · ${esc(item.duration)}</div>
+            <div class="title-sm">${esc(item.title)}</div>
+            <div class="meta-xs">${esc(item.type)} · ${esc(item.duration)}</div>
           </div>
         </label>
       `).join('')}
@@ -743,7 +743,7 @@ function analyzerModal(meetingId) {
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l1.5 4.5L18 8l-4.5 1.5L12 14l-1.5-4.5L6 8l4.5-1.5L12 2z"/></svg>
       开始结构化解析
     </button>
-    <div id="analysisResult" style="margin-top:var(--space-4);"></div>
+    <div id="analysisResult"></div>
   `);
 }
 
@@ -812,7 +812,7 @@ function appendAnalysisStep(container, step) {
 /* 流式解析：最终结果渲染（SSE 与演示适配器共用） */
 async function applyAnalysisDone(target, meetingId, a) {
   target.innerHTML = `
-    <div style="display:flex;align-items:center;gap:var(--space-2);margin-bottom:var(--space-4);">
+    <div class="result-head">
       <span class="badge badge-success">置信度 ${Math.round(a.confidence * 100)}%</span>
       <span class="badge badge-neutral">${esc(a.mode === 'llm-api' ? 'LLM API' : a.mode === 'demo-adapter-fallback' ? '降级适配器' : '演示适配器')}</span>
       <span class="badge badge-neutral">${esc(a.elapsed)}</span>
@@ -831,19 +831,19 @@ async function applyAnalysisDone(target, meetingId, a) {
         `).join('')}
       </ol>
     ` : ''}
-    <div style="margin-top:var(--space-4);">
-      <span style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);display:block;margin-bottom:var(--space-2);">自动拆解的行动项</span>
+    <div class="section-block">
+      <span class="eyebrow-label eyebrow-label--tight">自动拆解的行动项</span>
       ${a.actions.map(item => `
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-2) 0;border-top:1px solid var(--color-border);">
+        <div class="action-row">
           <div>
-            <div style="font-size:var(--text-sm);font-weight:600;">${esc(item.title)}</div>
-            <div style="font-size:var(--text-xs);color:var(--color-text-tertiary);">${esc(item.owner)} · ${esc(item.due)}</div>
+            <div class="title-sm">${esc(item.title)}</div>
+            <div class="meta-xs">${esc(item.owner)} · ${esc(item.due)}</div>
           </div>
           <span class="badge ${item.priority === 'high' ? 'badge-error' : 'badge-neutral'}">${item.priority === 'high' ? '高优先级' : '自动'}</span>
         </div>
       `).join('')}
     </div>
-    <button class="button button-success button-full-width" data-action="close-modal" style="margin-top:var(--space-4);">写入知识湖并同步多维表</button>
+    <button class="button button-success button-full-width mt-4" data-action="close-modal">写入知识湖并同步多维表</button>
   `;
   const fresh = await api('/api/overview'); state.overview = fresh; renderOverview(fresh);
   toast('解析完成：结论已进入 24h 知识闭环');
@@ -852,12 +852,12 @@ async function applyAnalysisDone(target, meetingId, a) {
 /* ── Modal: Search ── */
 function searchModal(initial = '') {
   openModal(`<h2 id="modalTitle">搜索研发知识湖</h2>
-    <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-4);">在会议结论、实验项目、失败经验与 SOP 中进行统一检索。</p>
-    <div style="display:flex;gap:var(--space-2);margin-bottom:var(--space-4);">
-      <input id="modalSearchInput" class="form-input" style="flex:1;" value="${esc(initial)}" placeholder="例如：B-17、湿度、晶型" />
+    <p class="modal-para">在会议结论、实验项目、失败经验与 SOP 中进行统一检索。</p>
+    <div class="search-input-row">
+      <input id="modalSearchInput" class="form-input search-input-flex" value="${esc(initial)}" placeholder="例如：B-17、湿度、晶型" />
       <button class="button button-primary" data-action="run-search">搜索</button>
     </div>
-    <div id="searchResults"><p style="font-size:var(--text-sm);color:var(--color-text-tertiary);">推荐搜索：B-17 / 湿度 / 参数 / SOP</p></div>
+    <div id="searchResults"><p class="search-hint">推荐搜索：B-17 / 湿度 / 参数 / SOP</p></div>
   `);
   setTimeout(() => $('#modalSearchInput')?.focus(), 60);
   if (initial) runSearch(initial);
@@ -867,29 +867,29 @@ async function runSearch(forced) {
   const query = forced || $('#modalSearchInput')?.value.trim();
   if (!query) return;
   const target = $('#searchResults');
-  target.innerHTML = '<div style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-3);color:var(--color-text-secondary);font-size:var(--text-sm);"><span class="spin" style="width:16px;height:16px;border:2px solid var(--color-border);border-top-color:var(--color-primary);border-radius:50%;display:inline-block;"></span>正在检索知识图谱与向量索引…</div>';
+  target.innerHTML = '<div class="search-loading"><span class="spin"></span>正在检索知识图谱与向量索引…</div>';
   try {
     const { items } = await api('/api/search', { method: 'POST', body: JSON.stringify({ query }) });
     target.innerHTML = items.length ? items.map(item => `
       <div class="list-item">
-        ${item.image ? `<img src="${esc(item.image)}" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:var(--radius-md);" />` : '<div class="list-item-icon primary" style="width:44px;height:44px;">⌕</div>'}
+        ${item.image ? `<img src="${esc(item.image)}" alt="" class="search-thumb" />` : '<div class="list-item-icon primary search-thumb-fallback">⌕</div>'}
         <div class="list-item-content">
           <div class="list-item-title">${esc(item.title)}</div>
           <div class="list-item-description">${esc(item.kind)} · ${esc(item.source)}</div>
         </div>
-        <span style="font-weight:700;color:var(--color-primary);font-variant-numeric:tabular-nums;">${Math.round((item.relevanceScore ?? item.score ?? .68) * 100)}%</span>
+        <span class="relevance-score">${Math.round((item.relevanceScore ?? item.score ?? .68) * 100)}%</span>
       </div>
-    `).join('') : '<p style="font-size:var(--text-sm);color:var(--color-text-tertiary);">没有找到直接结果，请尝试 "B-17" 或 "湿度"。</p>';
+    `).join('') : '<p class="search-hint">没有找到直接结果，请尝试 "B-17" 或 "湿度"。</p>';
   } catch (error) {
-    target.innerHTML = `<p style="font-size:var(--text-sm);color:var(--color-error);">检索失败：${esc(error.message)}</p>`;
+    target.innerHTML = `<p class="search-error">检索失败：${esc(error.message)}</p>`;
   }
 }
 
 /* ── Modal: New Task ── */
 function taskModal() {
   openModal(`<h2 id="modalTitle">新建研发行动项</h2>
-    <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-6);">行动项将进入实验闭环，并与来源会议或实验保持关联。</p>
-    <form id="taskForm" style="display:flex;flex-direction:column;gap:var(--space-4);">
+    <p class="modal-para-lg">行动项将进入实验闭环，并与来源会议或实验保持关联。</p>
+    <form id="taskForm">
       <div class="form-group">
         <label class="form-label">任务标题</label>
         <input name="title" class="form-input" required placeholder="例如：补录批次湿度曲线" />
@@ -902,7 +902,7 @@ function taskModal() {
         <label class="form-label">截止时间</label>
         <input name="due" class="form-input" value="明天 18:00" />
       </div>
-      <button class="button button-primary button-full-width button-lg" type="submit" style="margin-top:var(--space-2);">创建行动项</button>
+      <button class="button button-primary button-full-width button-lg mt-2" type="submit">创建行动项</button>
     </form>
   `);
   $('#taskForm').addEventListener('submit', async event => {
@@ -1519,7 +1519,7 @@ class KnowledgeGraph {
 
   _showTooltip(node, pos) {
     if (!node) { this.tooltip.style.display = 'none'; return; }
-    this.tooltip.innerHTML = `<strong style="color:#1d4ed8;">${esc(node.id)}</strong> <small style="color:#78716c;margin-left:4px;">${esc(node.label)}</small><p style="margin:4px 0 0;color:#57534e;">${esc(node.detail)}</p>`;
+    this.tooltip.innerHTML = `<strong>${esc(node.id)}</strong> <small>${esc(node.label)}</small><p>${esc(node.detail)}</p>`;
     this.tooltip.style.display = 'block';
     let tx = pos.x + 16, ty = pos.y - 10;
     if (tx + 220 > this.width) tx = pos.x - 230;
@@ -1580,19 +1580,19 @@ class KnowledgeGraph {
       if (node) {
         const rels = this.edges.filter(ed => ed.from === node.id || ed.to === node.id);
         openModal(`<h2 id="modalTitle">${esc(node.id)} · ${esc(node.label)}</h2>
-          <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-bottom:var(--space-4);">${esc(node.detail)}</p>
-          <span style="font-size:var(--text-xs);font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:var(--tracking-wide);display:block;margin-bottom:var(--space-3);">关联关系</span>
-          <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+          <p class="modal-para">${esc(node.detail)}</p>
+          <span class="eyebrow-label">关联关系</span>
+          <div class="modal-stack--sm">
             ${rels.map(ed => {
               const other = ed.from === node.id ? ed.to : ed.from;
               const dir = ed.from === node.id ? '→' : '←';
-              return `<div style="display:flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border:1px solid var(--color-border);border-radius:var(--radius-md);font-size:var(--text-sm);">
-                <span style="font-weight:600;color:var(--color-primary);">${dir} ${esc(other)}</span>
+              return `<div class="relation-row">
+                <span class="relation-dir">${dir} ${esc(other)}</span>
                 <span class="badge badge-neutral">${esc(ed.label)}</span>
               </div>`;
             }).join('')}
           </div>
-          <button class="button button-secondary button-full-width" data-action="close-modal" style="margin-top:var(--space-4);">关闭</button>
+          <button class="button button-secondary button-full-width mt-4" data-action="close-modal">关闭</button>
         `);
       }
     });
@@ -1796,8 +1796,8 @@ function showDemoBanner() {
   const banner = document.createElement('div');
   banner.id = 'demoModeBanner';
   banner.setAttribute('role', 'status');
-  banner.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:linear-gradient(135deg,#0f766e,#134e4a);color:#fff;font-size:12px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.25);';
-  banner.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#5eead4;"></span>静态演示模式 · 后端未连接 · 使用内嵌演示数据';
+  banner.className = 'demo-banner';
+  banner.innerHTML = '<span class="demo-banner-dot"></span>静态演示模式 · 后端未连接 · 使用内嵌演示数据';
   document.body.appendChild(banner);
 }
 
