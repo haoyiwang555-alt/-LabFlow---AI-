@@ -191,6 +191,35 @@
     if (method === 'GET' && p === '/api/knowledge') return ok({ items: state.knowledge });
     if (method === 'GET' && p === '/api/graph') return ok(graph(url.searchParams.get('experimentId')));
     if (method === 'POST' && p === '/api/search') return ok(search(body.query));
+    if (method === 'POST' && p === '/api/experiments') {
+      const code = String(body.code || '').trim().toUpperCase();
+      const name = String(body.name || '').trim();
+      const stage = String(body.stage || '方案研讨');
+      if (!code) throw new Error('实验编号不能为空');
+      if (!/^[A-Z]-\d{2}$/.test(code)) throw new Error('实验编号格式应为 字母-两位数字（如 B-18）');
+      if (state.experiments.some(e => String(e.code).toUpperCase() === code)) throw new Error('实验编号 ' + code + ' 已存在');
+      if (!name) throw new Error('实验名称不能为空');
+      const ranges = { temperature: { min: 15, max: 40, label: '温度', unit: '°C' }, humidity: { min: 30, max: 80, label: '湿度', unit: '%RH' }, concentration: { min: 0, max: 5, label: '浓度', unit: 'mol/L' } };
+      const params = {};
+      const warnings = [];
+      for (const key of Object.keys(ranges)) {
+        const raw = body.params && body.params[key];
+        if (raw === undefined || raw === null || raw === '') continue;
+        const num = Number(raw);
+        if (Number.isNaN(num)) { warnings.push(ranges[key].label + '必须是数字'); continue; }
+        params[key] = num;
+        if (num < ranges[key].min || num > ranges[key].max) throw new Error(ranges[key].label + ' ' + num + ranges[key].unit + ' 超出安全范围（' + ranges[key].min + '–' + ranges[key].max + ranges[key].unit + '）');
+      }
+      const prefix = code.split('-')[0];
+      const similar = state.experiments.filter(e => String(e.code).startsWith(prefix) && String(e.code) !== code);
+      if (similar.length) warnings.push('存在 ' + similar.length + ' 个同前缀实验（' + similar.map(e => e.code).join('、') + '），已自动挂接相似经验检索');
+      const failureKnowledge = state.knowledge.filter(k => (k.kind === '失败经验' || k.kind === '方案争议') && k.status !== 'rejected');
+      if (failureKnowledge.length) warnings.push('知识湖含 ' + failureKnowledge.length + ' 条失败经验/方案争议，参数评审阶段将自动风险拦截');
+      const id = 'exp-' + code.toLowerCase().replace('-', '');
+      const item = { id, code, name, owner: body.owner || '林岚', team: body.team || '晶型筛选组', stage, progress: 0, risk: 'low', insight: '新登记实验，等待参数评审与相似经验召回', updated: '刚刚', image: null, params };
+      state.experiments = [item, ...(state.experiments || [])];
+      return ok({ item, warnings });
+    }
     if (method === 'POST' && p === '/api/tasks') {
       const item = { id: `task-demo-${Date.now()}`, status: 'todo', source: 'demo', ...body };
       state.tasks = [item, ...(state.tasks || [])];

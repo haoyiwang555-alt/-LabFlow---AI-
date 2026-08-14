@@ -519,6 +519,52 @@ async function api(req, res, url) {
   // ── infra status ──
   if (req.method === 'GET' && url.pathname === '/api/infra/status') return json(res, { items: await infraStatus() });
 
+  // ── experiments: create with risk pre-check (local rules, honest demo) ──
+  if (req.method === 'POST' && url.pathname === '/api/experiments') {
+    const payload = await body(req);
+    const code = String(payload.code || '').trim().toUpperCase();
+    const name = String(payload.name || '').trim();
+    const owner = String(payload.owner || '林岚').trim();
+    const team = String(payload.team || '晶型筛选组').trim();
+    const stage = String(payload.stage || '方案研讨');
+    const allowedStages = ['方案研讨', '参数评审', '实验执行', '结果复盘', '知识复用'];
+    const warnings = [];
+    if (!code) return jsonError(res, 'VALIDATION', '实验编号不能为空', 422);
+    if (!/^[A-Z]-\d{2}$/.test(code)) return jsonError(res, 'VALIDATION', '实验编号格式应为 字母-两位数字（如 B-18）', 422);
+    if ((state.experiments || []).some(e => String(e.code).toUpperCase() === code)) return jsonError(res, 'DUPLICATE_EXPERIMENT', `实验编号 ${code} 已存在`, 409);
+    if (!name) return jsonError(res, 'VALIDATION', '实验名称不能为空', 422);
+    if (!allowedStages.includes(stage)) return jsonError(res, 'UNSUPPORTED_STAGE', 'Unsupported stage', 422);
+    const ranges = {
+      temperature: { min: 15, max: 40, label: '温度', unit: '°C' },
+      humidity: { min: 30, max: 80, label: '湿度', unit: '%RH' },
+      concentration: { min: 0, max: 5, label: '浓度', unit: 'mol/L' }
+    };
+    const params = {};
+    for (const [key, range] of Object.entries(ranges)) {
+      const raw = payload.params && payload.params[key];
+      if (raw === undefined || raw === null || raw === '') continue;
+      const num = Number(raw);
+      if (Number.isNaN(num)) { warnings.push(`${range.label}必须是数字`); continue; }
+      params[key] = num;
+      if (num < range.min || num > range.max) {
+        return jsonError(res, 'PARAM_OUT_OF_RANGE', `${range.label} ${num}${range.unit} 超出安全范围（${range.min}–${range.max}${range.unit}）`, 422, { field: key, value: num, range });
+      }
+    }
+    const prefix = code.split('-')[0];
+    const similar = (state.experiments || []).filter(e => String(e.code).startsWith(prefix) && String(e.code) !== code);
+    if (similar.length) warnings.push(`存在 ${similar.length} 个同前缀实验（${similar.map(e => e.code).join('、')}），已自动挂接相似经验检索`);
+    const failureKnowledge = (state.knowledge || []).filter(k => (k.kind === '失败经验' || k.kind === '方案争议') && k.status !== 'rejected');
+    if (failureKnowledge.length) warnings.push(`知识湖含 ${failureKnowledge.length} 条失败经验/方案争议，参数评审阶段将自动风险拦截`);
+    const id = `exp-${code.toLowerCase().replace('-', '')}`;
+    const experiment = { id, code, name, owner, team, stage, progress: 0, risk: 'low', insight: '新登记实验，等待参数评审与相似经验召回', updated: '刚刚', image: null, params };
+    state.experiments = state.experiments || [];
+    state.experiments.unshift(experiment);
+    addActivity('实验创建', `${code} ${name} 已进入「${stage}」`, 'mint');
+    addAudit('experiment', id, 'experiment-created', `创建实验 ${code}「${name}」`, 'api');
+    persist();
+    return json(res, { item: experiment, warnings }, 201);
+  }
+
   // ── overview ──
   if (req.method === 'GET' && url.pathname === '/api/overview') return json(res, buildOverview());
   if (req.method === 'GET' && url.pathname === '/api/experiments') return json(res, { items: state.experiments });
@@ -846,6 +892,10 @@ function serveStatic(req, res, url) {
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  const startedAt = Date.now();
+  res.on('finish', () => {
+    console.log(`[HTTP] ${new Date().toISOString()} ${req.method} ${url.pathname} ${res.statusCode} ${Date.now() - startedAt}ms`);
+  });
   try {
     if (url.pathname.startsWith('/api/')) await api(req, res, url);
     else serveStatic(req, res, url);

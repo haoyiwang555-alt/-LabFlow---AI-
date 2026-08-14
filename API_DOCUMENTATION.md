@@ -2,6 +2,16 @@
 
 默认地址：`http://localhost:4173`。所有 `/api/*` 响应均为 JSON（SSE 接口与健康检查可保留简版），启用 `Access-Control-Allow-Origin: *`，并支持 `OPTIONS` 预检。
 
+## 服务端日志
+
+关键路径（含静态资源）输出一行结构化日志：
+
+```text
+[HTTP] 2026-08-14T05:33:06.714Z POST /api/experiments 201 12ms
+```
+
+格式：时间 / 方法 / 路径 / 状态码 / 耗时（ms）。不打印任何密钥或请求体。
+
 ## 统一响应格式
 
 除 SSE 与 `GET /api/health` 外，所有 JSON API 统一返回 envelope：
@@ -23,10 +33,25 @@
 | GET | `/api/health` | 服务健康检查（保留简版） |
 | GET | `/api/overview` | 看板、实验、会议、知识、任务、活动与风险 |
 | GET | `/api/experiments` | 实验列表 |
+| POST | `/api/experiments` | 新建实验（编号/名称/阶段/负责人/关键参数；参数越界 422 拦截，相似实验与失败经验随响应返回 warnings） |
 | GET | `/api/experiments/:id` | 实验详情、五阶段时间线、关联会议/知识/风险 |
 | GET | `/api/knowledge` | 知识资产列表，支持 `?status=approved|pending|rejected` 过滤 |
 | GET | `/api/risks` | 风险列表 |
 | GET | `/api/tasks` | 任务列表 |
+
+## 新建实验与风险前置校验
+
+```text
+POST /api/experiments
+Content-Type: application/json
+
+{"code":"B-18","name":"候选化合物晶型筛选","owner":"林岚","stage":"方案研讨","team":"晶型筛选组","params":{"temperature":28,"humidity":55,"concentration":1.2}}
+```
+
+- 校验：`code` 必填且匹配 `字母-两位数字`（如 B-18）；同编号返回 409；`name` 必填；`stage` 必须在五阶段内。
+- 风险前置（本地规则，演示边界）：`temperature` 15–40°C、`humidity` 30–80%RH、`concentration` 0–5 mol/L，越界返回 422（`PARAM_OUT_OF_RANGE`，`error.details.field` 标明字段）。
+- 相似实验 / 失败经验提示：同前缀实验（如 B-17 与 B-18）与知识湖失败经验条数随成功响应返回 `data.warnings`，前端页内高亮。
+- 写操作：写入 `runtime.json`、活动流（`实验创建`）与审计记录（`experiment-created`）。
 
 ## 基础设施状态
 

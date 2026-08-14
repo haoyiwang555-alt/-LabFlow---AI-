@@ -20,7 +20,12 @@ async function api(path, options = {}) {
     let payload;
     try { payload = await response.json(); } catch { throw new Error('服务返回了无法解析的响应'); }
     const { data, error } = payload;
-    if (!response.ok || error) throw new Error(error?.message || payload.error || '请求失败');
+    if (!response.ok || error) {
+      const err = new Error(error?.message || payload.error || '请求失败');
+      err.details = error?.details || null;
+      err.status = response.status;
+      throw err;
+    }
     return data;
   } catch (err) {
     // 首次请求失败：自动切换到演示模式并重放本次请求
@@ -295,6 +300,11 @@ function renderExperiments(items) {
       </div>
     </div>
   `;}).join('') + `
+    <button type="button" class="card risk-card risk-card--new" data-action="experiment-new">
+      <span class="risk-card--new-plus" aria-hidden="true">＋</span>
+      <span class="risk-card--new-text">新建实验</span>
+      <span class="risk-card--new-sub">登记后自动进入风险守门预检</span>
+    </button>
     <button type="button" class="card risk-card risk-card--new" data-action="risk-new">
       <span class="risk-card--new-plus" aria-hidden="true">＋</span>
       <span class="risk-card--new-text">登记新风险</span>
@@ -741,7 +751,7 @@ async function runAnalysis() {
   const input = $('input[name="meeting"]:checked', $('#modalContent'));
   if (!input) return;
   const target = $('#analysisResult');
-  target.innerHTML = '<div id="streamSteps" style="display:flex;flex-direction:column;gap:var(--space-2);padding:var(--space-4);background:var(--color-bg-inverse);border-radius:var(--radius-lg);max-height:200px;overflow-y:auto;"></div>';
+  target.innerHTML = '<div id="streamSteps" class="stream-steps"></div>';
 
   const demo = window.LabFlowDemo;
   // 演示模式：用确定性的流式适配器替代真实 SSE
@@ -779,7 +789,7 @@ async function runAnalysis() {
       }
     }
   } catch (error) {
-    target.innerHTML = `<div style="padding:var(--space-3);background:var(--color-error-light);border-radius:var(--radius-md);color:var(--color-error);font-size:var(--text-sm);">${esc(error.message)}</div>`;
+    target.innerHTML = `<div class="stream-error">${esc(error.message)}</div>`;
   }
 }
 
@@ -787,13 +797,13 @@ async function runAnalysis() {
 function appendAnalysisStep(container, step) {
   const stepEl = document.createElement('div');
   stepEl.className = 'slide-up';
-  stepEl.style.cssText = 'display:flex;align-items:center;gap:10px;padding:6px 0;';
+    stepEl.className = 'slide-up stream-step';
   const agent = esc(step.agent || '');
   const message = esc(step.message || '');
   stepEl.innerHTML = `
-    <span style="font-size:10px;font-weight:800;color:#86efac;letter-spacing:0.08em;min-width:100px;">${agent}</span>
-    <span style="font-size:11px;color:rgba(255,255,255,0.7);">${message}</span>
-    <span style="color:#86efac;margin-left:auto;">✓</span>
+    <span class="stream-step-agent">${agent}</span>
+    <span class="stream-step-msg">${message}</span>
+    <span class="stream-step-check" aria-hidden="true">✓</span>
   `;
   container.appendChild(stepEl);
   stepEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -908,6 +918,139 @@ function taskModal() {
   });
 }
 
+/* ── 新建实验：本地风险预检 + 提交 ── */
+function experimentNewModal() {
+  const existing = ((state.overview && state.overview.experiments) || []).map(e => String(e.code || '').toUpperCase());
+  openModal(`
+    <h2 class="modal-title">新建实验</h2>
+    <p class="modal-intro">登记后自动进入「风险守门员」预检：参数越界立即拦截，相似实验与失败经验随创建结果返回。</p>
+    <form id="experimentForm" class="exp-form" novalidate>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field-label">实验编号 <em>*</em></span>
+          <input class="input" name="code" placeholder="如 B-18" maxlength="5" autocomplete="off" required />
+          <span class="field-error" data-for="code"></span>
+        </label>
+        <label class="field">
+          <span class="field-label">负责人 <em>*</em></span>
+          <input class="input" name="owner" value="林岚" maxlength="20" required />
+          <span class="field-error" data-for="owner"></span>
+        </label>
+      </div>
+      <label class="field">
+        <span class="field-label">实验名称 <em>*</em></span>
+        <input class="input" name="name" placeholder="如 候选化合物晶型筛选" maxlength="60" required />
+        <span class="field-error" data-for="name"></span>
+      </label>
+      <label class="field">
+        <span class="field-label">当前阶段</span>
+        <select class="select" name="stage">
+          <option>方案研讨</option><option>参数评审</option><option>实验执行</option><option>结果复盘</option><option>知识复用</option>
+        </select>
+      </label>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field-label">温度（°C）</span>
+          <input class="input" name="temperature" type="number" step="0.1" placeholder="15–40" />
+          <span class="field-error" data-for="temperature"></span>
+        </label>
+        <label class="field">
+          <span class="field-label">湿度（%RH）</span>
+          <input class="input" name="humidity" type="number" step="0.1" placeholder="30–80" />
+          <span class="field-error" data-for="humidity"></span>
+        </label>
+        <label class="field">
+          <span class="field-label">浓度（mol/L）</span>
+          <input class="input" name="concentration" type="number" step="0.01" placeholder="0–5" />
+          <span class="field-error" data-for="concentration"></span>
+        </label>
+      </div>
+      <div class="risk-hints" id="riskHints" aria-live="polite"></div>
+      <div class="modal-actions">
+        <button type="button" class="button button-secondary" data-action="close-modal">取消</button>
+        <button type="submit" class="button button-primary">创建并预检</button>
+      </div>
+    </form>
+  `);
+  const form = $('#experimentForm');
+  const hints = $('#riskHints');
+  const clearField = key => {
+    const el = form.querySelector('[data-for="' + key + '"]');
+    if (el) { el.textContent = ''; el.closest('.field')?.classList.remove('has-error'); }
+  };
+  form.querySelector('input[name="code"]').addEventListener('input', () => {
+    clearField('code');
+    const val = form.querySelector('input[name="code"]').value.trim().toUpperCase();
+    if (/^[A-Z]-\d{2}$/.test(val)) {
+      const similar = existing.filter(c => c.startsWith(val.split('-')[0]) && c !== val);
+      hints.innerHTML = similar.length
+        ? '<div class="risk-hint risk-hint--warn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span>存在相似实验 ' + similar.join('、') + '，创建后将自动挂接相似经验检索。</span></div>'
+        : '';
+    } else {
+      hints.innerHTML = '';
+    }
+  });
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    const errors = {};
+    const codeVal = String(data.code || '').trim().toUpperCase();
+    if (!codeVal) errors.code = '请填写实验编号';
+    else if (!/^[A-Z]-\d{2}$/.test(codeVal)) errors.code = '格式应为 字母-两位数字（如 B-18）';
+    else if (existing.includes(codeVal)) errors.code = '该编号已存在，请更换';
+    if (!String(data.name || '').trim()) errors.name = '请填写实验名称';
+    const ranges = { temperature: { min: 15, max: 40, label: '温度' }, humidity: { min: 30, max: 80, label: '湿度' }, concentration: { min: 0, max: 5, label: '浓度' } };
+    for (const key of Object.keys(ranges)) {
+      if (data[key] === '') continue;
+      const num = Number(data[key]);
+      if (Number.isNaN(num)) { errors[key] = '请输入数字'; continue; }
+      if (num < ranges[key].min || num > ranges[key].max) errors[key] = num + ' 超出安全范围（' + ranges[key].min + '–' + ranges[key].max + '）';
+    }
+    Object.keys(errors).forEach(key => {
+      const el = form.querySelector('[data-for="' + key + '"]');
+      if (el) { el.textContent = errors[key]; el.closest('.field')?.classList.add('has-error'); }
+    });
+    if (Object.keys(errors).length) {
+      const first = form.querySelector('.field.has-error .field-error');
+      if (first) first.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = '创建中…';
+    try {
+      const result = await api('/api/experiments', {
+        method: 'POST',
+        body: JSON.stringify({
+          code: codeVal, name: String(data.name).trim(), owner: String(data.owner).trim() || '林岚',
+          stage: data.stage, team: '晶型筛选组',
+          params: { temperature: data.temperature === '' ? undefined : Number(data.temperature), humidity: data.humidity === '' ? undefined : Number(data.humidity), concentration: data.concentration === '' ? undefined : Number(data.concentration) }
+        })
+      });
+      closeModal();
+      toast('实验 ' + result.item.code + ' 已创建并进入风险守门预检');
+      (result.warnings || []).forEach(w => toast(w));
+      if (state.overview) {
+        state.overview.experiments = [result.item, ...((state.overview.experiments) || [])];
+        state.overview.metrics = { ...(state.overview.metrics || {}), activeExperiments: (state.overview.metrics.activeExperiments || 0) + 1 };
+      }
+      const items = await api('/api/experiments');
+      renderExperiments(Array.isArray(items) ? items : (items.items || []));
+    } catch (error) {
+      if (error.details && error.details.field) {
+        const el = form.querySelector('[data-for="' + error.details.field + '"]');
+        if (el) { el.textContent = error.message; el.closest('.field')?.classList.add('has-error'); }
+        else toast('创建失败：' + error.message);
+      } else {
+        toast('创建失败：' + error.message);
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '创建并预检';
+    }
+  });
+}
+
 /* ── Event Delegation ── */
 document.addEventListener('click', event => {
   const view = event.target.closest('[data-view]');
@@ -924,6 +1067,7 @@ document.addEventListener('click', event => {
   if (action === 'resolve-risk') resolveRisk(event.target.closest('[data-id]').dataset.id);
   if (action === 'experiment-detail') experimentDetail(event.target.closest('[data-id]').dataset.id);
   if (action === 'close-modal') closeModal();
+  if (action === 'experiment-new') experimentNewModal();
   if (action === 'risk-new') toast('新风险登记：接入飞书/真实数据后可用');
     if (action === 'refresh-infra') renderInfra();
   if (action === 'approve-knowledge') approveKnowledge(event.target.closest('[data-id]').dataset.id);

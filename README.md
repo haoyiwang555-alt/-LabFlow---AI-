@@ -175,6 +175,7 @@ npm start
 GET  /api/health                  # 服务健康度检查
 GET  /api/overview                # 研发总览与看板指标获取（含风险数据）
 GET  /api/experiments             # 实验流转列表查询
+POST /api/experiments             # 新建实验（含风险前置校验：参数越界 422、相似实验/失败经验 warnings）
 GET  /api/experiments/:id         # 实验详情（含时间线、关联会议、关联知识、关联风险）
 GET  /api/knowledge               # 知识资产列表（支持 ?status= 过滤）
 GET  /api/risks                   # 风险列表查询（支持 P0-P3 分级）

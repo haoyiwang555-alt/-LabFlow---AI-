@@ -99,17 +99,17 @@
             <span class="quota-value">68%</span>
           </div>
           <div class="quota-track">
-            <div class="quota-fill" style="width:68%;"></div>
+            <div class="quota-fill quota-fill--68"></div>
           </div>
           <span class="text-xs text-tertiary">本月已节省 42.0 人时</span>
         </div>
         <div class="user-profile">
-          <div class="user-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">林</div>
+          <div class="user-avatar user-avatar--default">林</div>
           <div class="user-info">
             <div class="user-name">林岚</div>
             <div class="user-role">研发效能负责人</div>
           </div>
-          <button class="icon-button" aria-label="更多选项" style="color:var(--color-text-tertiary);">
+          <button class="icon-button icon-button--muted" aria-label="更多选项">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
           </button>
         </div>
@@ -242,9 +242,9 @@
               <p class="card-desc">从方案研讨到知识复用，每一步都留下一条可追溯的证据链。</p>
               <div class="pipeline-container" id="pipeline"></div>
               <div class="legend-row">
-                <span class="flex-gap-1"><span class="legend-dot" style="background:var(--color-success);"></span>已完成</span>
-                <span class="flex-gap-1"><span class="legend-dot" style="background:var(--color-primary);"></span>进行中</span>
-                <span class="flex-gap-1"><span class="legend-dot" style="background:var(--color-error);"></span>需关注</span>
+                <span class="flex-gap-1"><span class="legend-dot legend-dot--success"></span>已完成</span>
+                <span class="flex-gap-1"><span class="legend-dot legend-dot--primary"></span>进行中</span>
+                <span class="flex-gap-1"><span class="legend-dot legend-dot--error"></span>需关注</span>
                 <span class="spacer rate-strong">本周闭环率 <b>84.6%</b></span>
               </div>
             </div>
@@ -306,17 +306,17 @@
               <div class="progress-row">
                 <div class="grid-progress">
                   <span class="text-secondary">B-17</span>
-                  <div class="progress-track"><div style="width:94%;height:100%;background:var(--color-primary);border-radius:var(--radius-full);"></div></div>
+                  <div class="progress-track"><div class="grid-progress-fill grid-progress-fill--primary grid-progress-fill--94"></div></div>
                   <span class="progress-value">94%</span>
                 </div>
                 <div class="grid-progress">
                   <span class="text-secondary">A-09</span>
-                  <div class="progress-track"><div style="width:78%;height:100%;background:var(--color-warning);border-radius:var(--radius-full);"></div></div>
+                  <div class="progress-track"><div class="grid-progress-fill grid-progress-fill--warning grid-progress-fill--78"></div></div>
                   <span class="progress-value">78%</span>
                 </div>
                 <div class="grid-progress">
                   <span class="text-secondary">C-04</span>
-                  <div class="progress-track"><div style="width:63%;height:100%;background:var(--color-success);border-radius:var(--radius-full);"></div></div>
+                  <div class="progress-track"><div class="grid-progress-fill grid-progress-fill--success grid-progress-fill--63"></div></div>
                   <span class="progress-value">63%</span>
                 </div>
               </div>
@@ -433,11 +433,11 @@
               <canvas id="knowledgeCanvas"></canvas>
               <div class="graph-tooltip" id="graphTooltip"></div>
               <div class="knowledge-graph-legend">
-                <span class="legend-item"><span class="legend-dot" style="background:var(--color-primary);"></span>实验</span>
-                <span class="legend-item"><span class="legend-dot" style="background:var(--aqua);"></span>结论</span>
-                <span class="legend-item"><span class="legend-dot" style="background:var(--color-error);"></span>风险</span>
-                <span class="legend-item"><span class="legend-dot" style="background:var(--color-warning);"></span>规范</span>
-                <span class="legend-item"><span class="legend-dot" style="background:var(--color-success);"></span>会议</span>
+                <span class="legend-item"><span class="legend-dot legend-dot--primary"></span>实验</span>
+                <span class="legend-item"><span class="legend-dot legend-dot--aqua"></span>结论</span>
+                <span class="legend-item"><span class="legend-dot legend-dot--error"></span>风险</span>
+                <span class="legend-item"><span class="legend-dot legend-dot--warning"></span>规范</span>
+                <span class="legend-item"><span class="legend-dot legend-dot--success"></span>会议</span>
               </div>
             </div>
             <!-- Mobile-only list fallback (≤760px) so the graph stays readable on phones -->
@@ -572,7 +572,7 @@
             </p>
             <div class="agent-meta">
               <span>规则 + LLM</span>
-              <span class="agent-meta-value" style="color:var(--color-error);">3 个待处理风险</span>
+              <span class="agent-meta-value agent-meta-value--error">3 个待处理风险</span>
             </div>
             <button class="button button-secondary button-full-width" data-view="risks">
               处理风险
@@ -592,21 +592,21 @@
           <div class="run-list">
             <div class="run-row">
               <span class="run-time">09:52:14</span>
-              <span class="run-dot" style="background:var(--color-success);"></span>
+              <span class="run-dot run-dot--success"></span>
               <span class="font-semibold">MeetingParser</span>
               <span class="text-secondary">提取 B-17 参数决策 · 0.96 confidence</span>
               <span class="badge badge-success">DONE</span>
             </div>
             <div class="run-row">
               <span class="run-time">09:41:03</span>
-              <span class="run-dot" style="background:var(--color-primary);"></span>
+              <span class="run-dot run-dot--primary"></span>
               <span class="font-semibold">SimilarityReranker</span>
               <span class="text-secondary">关联 B-11 历史方案 · 6 个候选</span>
               <span class="badge badge-success">DONE</span>
             </div>
             <div class="run-row">
               <span class="run-time">09:27:56</span>
-              <span class="run-dot" style="background:var(--color-error);"></span>
+              <span class="run-dot run-dot--error"></span>
               <span class="font-semibold">RiskGuard</span>
               <span class="text-secondary">检测 A-09 环境数据缺口 · P1</span>
               <span class="badge badge-error">ACTION</span>
@@ -772,8 +772,8 @@
                   </span>
                 </div>
                 <div class="contract-bar-track">
-                  <div class="contract-bar"><i class="is-ok" style="width:18%;"></i></div>
-                  <span class="contract-bar-tick" data-label="目标 ≤ 2.0s" style="left: 25%;"></span>
+                  <div class="contract-bar"><i class="is-ok bar-w-18"></i></div>
+                  <span class="contract-bar-tick tick-left-25" data-label="目标 ≤ 2.0s"></span>
                 </div>
                 <div class="contract-row-meta">目标 ≤ 2.0s · 距阈值 <b>+0.6s 余量</b> · <span class="meta-trend-down">↑ 0.3s 较昨日</span></div>
               </li>
@@ -791,8 +791,8 @@
                   </span>
                 </div>
                 <div class="contract-bar-track">
-                  <div class="contract-bar"><i class="is-ok" style="width:98.6%;"></i></div>
-                  <span class="contract-bar-tick" data-label="目标 ≥ 95%" style="left: 95%;"></span>
+                  <div class="contract-bar"><i class="is-ok bar-w-986"></i></div>
+                  <span class="contract-bar-tick tick-left-95" data-label="目标 ≥ 95%"></span>
                 </div>
                 <div class="contract-row-meta">目标 ≥ 95% · <b>312 / 317</b> 成功 · <span class="meta-trend-up">+1.2pp 较昨日</span></div>
               </li>
@@ -810,8 +810,8 @@
                   </span>
                 </div>
                 <div class="contract-bar-track">
-                  <div class="contract-bar"><i class="is-warn" style="width:64%;"></i></div>
-                  <span class="contract-bar-tick" data-label="目标 ≥ 18" style="left: 92%;"></span>
+                  <div class="contract-bar"><i class="is-warn bar-w-64"></i></div>
+                  <span class="contract-bar-tick tick-left-92" data-label="目标 ≥ 18"></span>
                 </div>
                 <div class="contract-row-meta">目标 ≥ 18 · 距目标 <b>−6 项缺口</b> · <span class="meta-trend-up">+2 本周新增</span></div>
               </li>
@@ -829,8 +829,8 @@
                   </span>
                 </div>
                 <div class="contract-bar-track">
-                  <div class="contract-bar"><i class="is-bad" style="width:80%;"></i></div>
-                  <span class="contract-bar-tick" data-label="目标 ≤ 2" style="left: 40%;"></span>
+                  <div class="contract-bar"><i class="is-bad bar-w-80"></i></div>
+                  <span class="contract-bar-tick tick-left-40" data-label="目标 ≤ 2"></span>
                 </div>
                 <div class="contract-row-meta">目标 ≤ 2 · 超阈值 <b class="meta-trend-bad">+2 项</b> · 1 项 P1 优先级</div>
               </li>
@@ -1018,7 +1018,7 @@
 
   <!-- Toast -->
   <div class="toast-container">
-    <div class="toast" id="toast" role="status" style="display:none;"></div>
+    <div class="toast is-hidden" id="toast" role="status"></div>
   </div>
 
   <!-- Modal -->

@@ -73,3 +73,10 @@ Thumbs.db
 .gemini/
 brain/
 scratch/
+
+# NVIDIA Vision 本地子智能体（含 .env 密钥，绝不提交）
+scripts/nvidia_vision.mjs
+scripts/NVIDIA_VISION.md
+output/nvidia-*.md
+scripts/_nvidia*
+
