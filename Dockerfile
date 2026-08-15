@@ -8,6 +8,7 @@ ENV PORT=7860
 FROM base AS production
 COPY package.json ./
 COPY server.js ./
+COPY feishu.js ./
 COPY public ./public
 COPY data ./data
 EXPOSE 7860
