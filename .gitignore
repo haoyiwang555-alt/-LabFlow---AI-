@@ -21,6 +21,7 @@ yarn-error.log*
 我同学的简历以及信息/
 *.pdf
 *.png
+*.jpg
 !public/assets/*.jpg
 !public/favicon.svg
 !output/screenshots/*.png
@@ -33,6 +34,9 @@ yarn-error.log*
 docs/
 research/
 上一个AI最后输出的内容.txt
+交接信息*.txt
+_doc-*.md
+*.zip
 
 # Non-Project Build & Aux Scripts
 scripts/_old_generate_brief.py.bak
@@ -51,6 +55,14 @@ output/video_temp/
 output/pdf_preview/
 output/_ftest.pdf
 output/huihui_test.wav
+output/*.log
+output/layout-*.json
+data/runtime.json
+output/晶流LabFlow-Showtime*
+# one-off probe/diagnostic scripts
+scripts/_*.mjs
+scripts/probe-*.js
+scripts/detect_scenes.py
 # One-off screenshot diagnostics (keep master/round/view/qck-equivalent flow)
 output/screenshots/live/baseline-*
 output/screenshots/live/opt-*

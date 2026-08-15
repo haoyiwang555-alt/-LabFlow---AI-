@@ -9,7 +9,7 @@
 
 ---
 
-[![Build Status](https://img.shields.io/badge/Build-Passing-2ee6d6?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/)
+[![在线 Demo](https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF_Demo-%F0%9F%9F%A2_%E5%9C%A8%E7%BA%BF%E6%BC%94%E7%A4%BA-2ea44f?style=for-the-badge&logo=googlechrome&logoColor=white)](https://handlermapping-labflow-demo.ms.show/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-%3E%3D%2020.0-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Architecture](https://img.shields.io/badge/Architecture-Node--Native-2a9e76?style=for-the-badge&logo=diagramsdotnet&logoColor=white)](#-系统架构设计)
 [![Hybrid RAG](https://img.shields.io/badge/Hybrid--RAG-Design-0078D4?style=for-the-badge&logo=postgresql&logoColor=white)](#-核心技术栈)
@@ -19,6 +19,24 @@
 [🖥️ 系统演示](#-产品视觉展示) · [🏗️ 架构设计](#-系统架构设计) · [⚡ 核心功能](#-核心功能亮点) · [🚀 快速开始](#-快速开始与本地运行)
 
 </div>
+
+<details>
+<summary><b>📑 目录（点击展开）</b></summary>
+
+- [📖 项目简介](#-项目简介)
+- [🖼️ 产品视觉展示](#-产品视觉展示)
+- [✨ 核心功能亮点](#-核心功能亮点)
+- [🏗️ 系统架构设计](#-系统架构设计)
+- [🛠️ 核心技术栈](#-核心技术栈)
+- [🚀 在线 Demo 与部署](#-在线-demo-与部署)
+- [🚀 快速开始与本地运行](#-快速开始与本地运行)
+- [📁 项目目录结构](#-项目目录结构)
+- [🪢 飞书真实集成](#-飞书真实集成可选--配置后自动启用)
+- [🛡️ 可信 AI 与安全设计](#-可信-ai-与安全设计)
+- [❓ 常见问题 FAQ](#-常见问题-faq)
+- [📄 开源许可证](#-开源许可证)
+
+</details>
 
 ---
 
@@ -35,7 +53,7 @@
 ### 🖥️ 研发总览看板 (R&D Dashboard)
 > 实时监控 24h 知识 SLA 达标率、累计节省研发人时及多阶段实验闭环图谱。
 <div align="center">
-  <img src="output/screenshots/live/r12/overview-light-desktop.png" width="96%" alt="研发总览看板" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
+  <img src="output/screenshots/live/r14/overview-light-desktop.png" width="96%" alt="研发总览看板" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
 </div>
 
 <br />
@@ -50,7 +68,7 @@
     <td width="50%" align="center">
       <b>🕸️ 动态研发知识图谱 (Canvas)</b><br />
       <small>力导向布局 + 拖拽交互 + 悬停高亮关联</small><br /><br />
-      <img src="output/screenshots/live/r12/knowledge-light-desktop.png" width="100%" alt="研发知识湖" />
+      <img src="output/screenshots/live/r14/knowledge-light-desktop.png" width="100%" alt="研发知识湖" />
     </td>
   </tr>
 </table>
@@ -62,7 +80,7 @@
     <td width="50%" align="center">
       <b>🛡️ 风险守门员面板 (Risk Guard)</b><br />
       <small>P0-P3 分级、AI 建议、触发参数与一键关闭</small><br /><br />
-      <img src="output/screenshots/live/r12/risks-light-desktop.png" width="100%" alt="风险守门员" />
+      <img src="output/screenshots/live/r14/risks-light-desktop.png" width="100%" alt="风险守门员" />
     </td>
     <td width="50%" align="center">
       <b>🤖 AI 助理工作台 (Agents)</b><br />
@@ -72,7 +90,24 @@
     <td width="50%" align="center">
       <b>🔌 连接器真实状态 (Integrations)</b><br />
       <small>基础设施 / 飞书契约状态实时探测，诚实降级</small><br /><br />
-      <img src="output/screenshots/live/r12/integrations-light-desktop.png" width="100%" alt="连接器真实状态" />
+      <img src="output/screenshots/live/r14/integrations-light-desktop.png" width="100%" alt="连接器真实状态" />
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>🔄 实验流转看板 (Experiments)</b><br />
+      <small>五阶段实验闭环流转 · 新建实验前置风险校验</small><br /><br />
+      <img src="output/screenshots/live/r14/experiments-light-desktop.png" width="100%" alt="实验流转看板" />
+    </td>
+    <td width="50%" align="center">
+      <b>🔬 实验详情弹窗 (Experiment Detail)</b><br />
+      <small>5 阶段时间线 · 关联会议 / 知识 / 风险一屏尽览</small><br /><br />
+      <img src="output/screenshots/live/r14/r14-modal-exp-detail-light.png" width="100%" alt="实验详情弹窗" />
     </td>
   </tr>
 </table>
@@ -84,7 +119,9 @@
     <td width="50%" align="center">
       <b>🌙 深色主题 (Dark Theme)</b><br />
       <small>科研暗色 · 全站令牌统一</small><br /><br />
-      <img src="output/screenshots/live/r12/overview-dark-desktop.png" width="100%" alt="深色主题" />
+      <img src="output/screenshots/live/r14/overview-dark-desktop.png" width="100%" alt="深色主题" />
+    </td>
+  </tr>
 </table>
 
 <br />
@@ -92,12 +129,12 @@
 <div align="center">
   <b>📱 移动端响应式工作台 (Mobile Workbench)</b><br />
   <small>适配移动端体验，方便实验室现场随时查阅风控预警与实验流转</small><br /><br />
-  <img src="output/screenshots/live/r12/overview-light-mobile.png" width="36%" alt="移动端适配界面" />
+  <img src="output/screenshots/live/r14/overview-light-mobile.png" width="36%" alt="移动端适配界面" />
 </div>
 
 ---
 
-🎬 **系统演示视频**：`output/晶流LabFlow-系统演示视频.mp4`（1920×1080 · 约 2 分钟 · 2026-08-12 更新，覆盖当前 UI 全部主链路）
+🎬 **系统演示视频**：[▶️ 点击在线播放《晶流 LabFlow 系统演示》](output/晶流LabFlow-系统演示视频.mp4)（1920×1080 · 实际时长约 2 分 18 秒 · 2026-08-12 更新，覆盖当前 UI 全部主链路）
 
 ---
 
@@ -118,8 +155,6 @@
 - ✨ **微交互动画**：卡片悬停浮起、按钮点击缩放、页面切换淡入、进度条填充动画等细节打磨。
 
 ---
-
-## 🏗️ 系统架构设计
 
 ## 🏗️ 系统架构设计
 
@@ -147,7 +182,6 @@
 
 - **在线 Demo**：https://handlermapping-labflow-demo.ms.show/ （公网 HTTPS，可手机/桌面直接访问）
 - **一键部署配置**：`render.yaml` + `Dockerfile`（Node 22 Alpine，零第三方运行时依赖）；如当前实例需启用后端接口，见 `DEPLOYMENT.md` 重新部署
-- **一键部署配置**：`render.yaml` + `Dockerfile`（Node 22 Alpine，零第三方运行时依赖）
 - 详细步骤：见 `DEPLOYMENT.md`
 
 ## 🚀 快速开始与本地运行
@@ -199,7 +233,7 @@ OPTIONS /api/*                    # CORS 预检
 
 > 除健康检查与 SSE 外，所有 JSON API 统一返回 `{ data, meta: { requestId, mode, generatedAt }, error }` envelope；出错时 `error` 为 `{ code, message }`，HTTP 状态码保持语义。详细契约见 `API_DOCUMENTATION.md`。
 
-### 5. Docker 一键演示环境
+### 4. Docker 一键演示环境
 
 项目提供独立的 `labflow-net` 网络，不会修改其他项目的容器、网络或端口。应用使用 `4173`，Neo4j 映射到 `7475/7688`，Redis 映射到 `6380`；容器内通过 `labflow-neo4j` 与 `labflow-redis` 服务名通信。
 
@@ -218,10 +252,33 @@ Neo4j Browser 地址为 `http://localhost:7475`，演示账号为 `neo4j`，密�
 > **演示边界**：当前飞书连接器采用“正式契约 + 脱敏适配器”模式；LLM、飞书 API、Neo4j 与 Redis 均可替换为真实生产服务，但本仓库不包含任何真实企业凭证或企业数据。
 
 
-### 4. 恢复初始演示数据
+### 5. 恢复初始演示数据
 在现场演示或测试后，如需还原初始种子数据，请执行：
 ```powershell
 .\scripts\reset-demo.ps1
+```
+
+---
+
+## 📁 项目目录结构
+
+```text
+晶流LabFlow/
+├── server.js              # Node 原生 HTTP 后端入口（统一 envelope · SSE · 审计 · SLA）
+├── feishu.js              # 飞书集成层（token 缓存 · 妙记转写 · 多维表格读写 · 消息推送）
+├── public/                # 前端静态资源（原生 HTML / CSS / ES Modules，无框架无构建）
+│   ├── index.html         # 单页应用入口
+│   ├── app.js             # 前端交互逻辑
+│   ├── styles.css         # 全站样式与设计令牌（深浅主题）
+│   ├── demo-data.js       # 演示静态数据兜底
+│   └── assets/            # 图片 / 字体等静态资产
+├── data/
+│   └── seed.json          # 初始种子数据（实验 / 会议 / 知识 / 风险）
+├── scripts/               # 辅助脚本（reset-demo.ps1 数据重置 · 录屏 · 部署校验等）
+├── output/                # 截图 / 演示视频 / 架构图等生成产物
+├── API_DOCUMENTATION.md   # API 契约文档
+├── DEPLOYMENT.md          # 部署指南
+└── README.md              # 本文件
 ```
 
 ---
@@ -242,6 +299,19 @@ Neo4j Browser 地址为 `http://localhost:7475`，演示账号为 `neo4j`，密�
 2. **专家二审机制 (Human-in-the-Loop)**：高风险参数调整与置信度低于 `0.85` 的结论需经过专家确认后方可写入正式知识库。
 3. **Prompt 注入防护**：转写文本视为不可信输入，工具调用严格限制于白名单与类型校验。
 4. **ACL 权限继承**：继承团队既有协同权限，向量与图谱检索自动执行二次过滤。
+
+---
+
+## ❓ 常见问题 FAQ
+
+**Q1：未配置 `LLM_API_KEY`，系统为什么也能跑？**
+Agent 编排层内置**脱敏确定性适配器（demo-adapter）**：未配置 LLM 环境变量时自动降级，按确定性规则产出带证据时间戳的结构化结果，保证演示链路完整可复现；配置 OpenAI-compatible 接口后自动切换真实 LLM。连接器页会如实展示当前模式，绝不伪造连接。
+
+**Q2：魔搭在线 Demo 与本地运行有什么差异？**
+两者基于同一套代码。在线 Demo（ms.show）免装环境、公网 HTTPS 直接访问，适合快速体验完整交互；本地运行可按需启用 Docker 可选基础设施（Neo4j / Redis）、`.env` 密钥与飞书真实集成，适合深度评审与二次开发。
+
+**Q3：演示或测试后数据改乱了，如何恢复初始演示数据？**
+在项目根目录执行 `.\scripts\reset-demo.ps1`，即可将运行时数据还原为初始种子数据，恢复全部实验、会议、知识与风险演示内容。
 
 ---
 

@@ -14,87 +14,40 @@ if (!fs.existsSync(FINAL_OUTPUT_DIR)) fs.mkdirSync(FINAL_OUTPUT_DIR, { recursive
 
 async function run() {
   try {
-    console.log('=== 1/7: 开始生成旁白音频 (SAPI Speech Synthesis) ===');
+    console.log('=== 1/7: 开始生成旁白音频 (Edge TTS) ===');
     
-    // 写入具有 UTF-8 BOM 编码的 PowerShell 语音合成脚本，以防止中文乱码错误
-    const ps1Path = path.join(TEMP_DIR, 'generate_audio.ps1');
-    const ps1Content = `# ==============================================================================
-# 晶流 LabFlow - 语音合成脚本 (generate_audio.ps1)
-# ==============================================================================
+    const segments = [
+      { name: "intro", text: "大家好，我们是“知识催化剂”团队。今天为您演示的产品是“晶流 LabFlow——AI 实验研发加速器”。在日常的实验里，很多宝贵的失败经验和研发决策往往不知不觉就流失了。为此，晶流提出了“24小时知识 SLA”的概念，目前的达标率已经达到了 87%，让您的每一次讨论，都能在24小时内转化为真正可以复用的核心资产。" },
+      { name: "meeting", text: "首先，我们进入 AI 会议解析器，选择 B-17 评审会，开启流式解析功能。在这个过程中，多 Agent 相互协作，短短几秒钟就能为您提炼出结构化的决策内容。不仅包含清晰的行动项，而且每一条结论都附带精确到秒的原文证据时间戳，真正做到百分之百可追溯。" },
+      { name: "lake", text: "接下来看看研发知识湖。在这里，动态图谱会自动把 B-17 评审会和历史实验关联起来，并且精准命中了“失败案例 A-09”中的“湿度波动风险”。我们的系统支持统一的语义搜索，能够把那些无形的失败经验，标准化建模为具体的触发参数和规避策略。" },
+      { name: "approval", text: "另外，为了绝对保障企业的核心数据安全，晶流特别引入了“Human-in-the-Loop”，也就是人工参与的知识审批闭环。所有由 AI 提取出来的结论，都必须经过人工审核，不管是通过还是驳回，确认无误后才能正式进入知识湖，从根本上杜绝了 AI 幻觉带来的数据污染。" },
+      { name: "integrations", text: "在连接器页面中，您可以直观地看到各项基础设施真实的探测状态。比如当前的演示环境中，飞书连接器就处于“契约就绪”和“演示适配器”的状态。这种真实透明的服务状态，意味着我们随时都准备好，以完全合规的方式接入到真实的企业环境中。" },
+      { name: "outro", text: "目前，晶流 LabFlow 已经顺利完成了本地验证，您现在看到的是 6 个实验以及 4 个待处理的风险项。我们的初衷并不是去替代科研人员的专业判断，而是要让每一次判断都有迹可循，让以往的失败，成为您下一次科学发现的最短捷径。感谢大家的聆听！" }
+    ];
 
-$outputDir = "${TEMP_DIR.replace(/\\/g, '\\\\')}"
-if (-not (Test-Path $outputDir)) {
-    New-Item -ItemType Directory -Path $outputDir | Out-Null
-}
-
-Add-Type -AssemblyName System.Speech
-$synth = New-Object System.Speech.Synthesis.SpeechSynthesizer
-$synth.SelectVoice("Microsoft Huihui Desktop")
-
-$segments = @(
-    @{
-        name = "intro"
-        text = "大家好，我们是知识催化剂团队，为您带来『晶流 LabFlow——AI实验研发加速器』的演示。在实验室中，失败经验和研发决策常常散落遗失。晶流提出了『24小时知识 SLA』，目前达标率 87%，让每一次讨论在 24小时内沉淀为可复用的资产。"
-    },
-    @{
-        name = "meeting"
-        text = "进入 AI 会议解析器，我们选择 B-17 评审会，开启流式解析。多 Agent 协同在几秒内提炼出结构化决策，不仅有行动项，而且每一条结论都带有精确到秒的原文证据时间戳，确保百分之百可追溯。"
-    },
-    @{
-        name = "lake"
-        text = "在研发知识湖中，动态图谱将 B-17 自动关联到历史实验，并命中了失败案例 A-09 湿度波动风险。系统支持统一语义搜索，将无形的失败经验标准化建模为触发参数与规避策略。"
-    },
-    @{
-        name = "approval"
-        text = "为了保障企业核心数据安全，晶流采用了 Human-in-the-Loop 知识审批闭环。所有 AI 提取的结论必须经过人工通过或驳回，才能正式落入知识湖，防范幻觉污染。"
-    },
-    @{
-        name = "integrations"
-        text = "在连接器页面，您可以看到各基础设施的真实探测状态。当前演示环境飞书连接器处于契约就绪与演示适配器状态，展示了诚实的服务状态，随时准备通过合规方式接入真实企业环境。"
-    },
-    @{
-        name = "outro"
-        text = "晶流 LabFlow 已完成本地验证，当前展示了 6个实验与 4个待处理风险。我们不替代科研人员判断，而是让判断留下证据，让失败成为下一次发现的捷径。谢谢大家！"
-    }
-)
-
-Write-Host "正在开始语音合成..." -ForegroundColor Cyan
-
-foreach ($seg in $segments) {
-    $wavPath = Join-Path $outputDir ($seg.name + ".wav")
-    $synth.SetOutputToWaveFile($wavPath)
-    $synth.Speak($seg.text)
-    $synth.SetOutputToNull()
-    Write-Host "合成段 [$($seg.name)] 完成" -ForegroundColor Green
-}
-
-$synth.Dispose()
-Write-Host "语音合成脚本执行结束。"
-`;
-
-    fs.writeFileSync(ps1Path, '\ufeff' + ps1Content, 'utf16le');
-    
-    // 执行 PowerShell 脚本生成语音
-    console.log('执行 PowerShell 语音生成...');
-    execSync(`powershell -ExecutionPolicy Bypass -File "${ps1Path}"`, { stdio: 'inherit', cwd: ROOT });
-
-    // 从 Node.js 读取 WAV 文件大小，计算精确的音频时长
-    console.log('正在计算精确的语音时长...');
-    const segmentNames = ['intro', 'meeting', 'lake', 'approval', 'integrations', 'outro'];
+    console.log('正在调用 edge-tts 生成语音...');
     const durations = {};
-    for (const name of segmentNames) {
-      const wavPath = path.join(TEMP_DIR, `${name}.wav`);
-      if (fs.existsSync(wavPath)) {
-        const stats = fs.statSync(wavPath);
-        // SAPI 默认音频参数: 22050 Hz, 16-bit (2 bytes), mono (1 channel) -> 44100 bytes/sec
-        // PCM WAV 文件头部为 44 字节
-        const durationMs = Math.round(((stats.size - 44) / 44100) * 1000) + 1500; // 额外增加 1.5 秒余量确保画面流畅
-        durations[name] = durationMs;
-        console.log(`合成段 [${name}] 精确时长: ${durationMs} ms (音频大小: ${stats.size} 字节)`);
+    for (const seg of segments) {
+      const mp3Path = path.join(TEMP_DIR, `${seg.name}.mp3`);
+      execSync(`edge-tts --voice zh-CN-XiaoxiaoNeural --text "${seg.text}" --write-media "${mp3Path}"`, { stdio: 'inherit' });
+      console.log(`合成段 [${seg.name}] 完成`);
+      
+      if (fs.existsSync(mp3Path)) {
+        try {
+          const ffprobeOut = execSync(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${mp3Path}"`).toString();
+          const durationSec = parseFloat(ffprobeOut.trim());
+          const durationMs = Math.round(durationSec * 1000) + 1500; // 额外增加 1.5 秒余量确保画面流畅
+          durations[seg.name] = durationMs;
+          console.log(`[${seg.name}] 精确时长: ${durationMs} ms`);
+        } catch (e) {
+          console.warn(`无法读取 ${seg.name}.mp3 时长，使用默认 5000ms`);
+          durations[seg.name] = 5000;
+        }
       } else {
-        durations[name] = 3000; // 兜底
+        durations[seg.name] = 5000; // 兜底
       }
     }
+    
     const jsonPath = path.join(TEMP_DIR, 'durations.json');
     fs.writeFileSync(jsonPath, JSON.stringify(durations, null, 2), 'utf8');
     console.log('精确时长已写入 durations.json:', durations);
@@ -126,22 +79,22 @@ Write-Host "语音合成脚本执行结束。"
     serverProcess.kill();
 
     console.log('\n=== 6/7: 合并与处理音频文件 ===');
-    // 使用 FFmpeg 拼接 WAV 段
+    // 使用 FFmpeg 拼接 MP3 段
     const rawFileList = path.join(TEMP_DIR, 'audio_list.txt');
     const concatContent = [
-      `file 'intro.wav'`,
-      `file 'meeting.wav'`,
-      `file 'lake.wav'`,
-      `file 'approval.wav'`,
-      `file 'integrations.wav'`,
-      `file 'outro.wav'`
+      `file 'intro.mp3'`,
+      `file 'meeting.mp3'`,
+      `file 'lake.mp3'`,
+      `file 'approval.mp3'`,
+      `file 'integrations.mp3'`,
+      `file 'outro.mp3'`
     ].join('\n');
     
     fs.writeFileSync(rawFileList, concatContent, 'utf8');
     
-    const combinedWav = path.join(TEMP_DIR, 'voiceover.wav');
+    const combinedAudio = path.join(TEMP_DIR, 'voiceover.mp3');
     console.log('合并分段音频中...');
-    execSync(`ffmpeg -y -f concat -safe 0 -i "${rawFileList}" -c copy "${combinedWav}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -f concat -safe 0 -i "${rawFileList}" -c copy "${combinedAudio}"`, { stdio: 'inherit' });
 
     console.log('\n=== 7/7: 合并音视频并输出 MP4 ===');
     
@@ -159,7 +112,7 @@ Write-Host "语音合成脚本执行结束。"
     
     // 合并视频与音频，转换成通用的 H.264/AAC MP4 格式，截取最短流以防止超出时长
     console.log(`正在合成最终视频 -> ${finalMp4Path}`);
-    execSync(`ffmpeg -y -i "${rawWebmPath}" -i "${combinedWav}" -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest "${finalMp4Path}"`, { stdio: 'inherit' });
+    execSync(`ffmpeg -y -i "${rawWebmPath}" -i "${combinedAudio}" -c:v libx264 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest "${finalMp4Path}"`, { stdio: 'inherit' });
     
     console.log('\n==================================================');
     console.log('🎉 演示视频生成成功！');
